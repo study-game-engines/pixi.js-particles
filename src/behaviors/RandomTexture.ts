@@ -19,6 +19,7 @@ export class RandomTextureBehavior implements IEmitterBehavior {
 
     public static type = 'textureRandom'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private readonly textures: Texture[]
 

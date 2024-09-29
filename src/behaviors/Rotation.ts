@@ -22,6 +22,7 @@ export class RotationBehavior implements IEmitterBehavior {
 
     public static type = 'rotation'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private readonly minStart: number
     private readonly maxStart: number
@@ -84,6 +85,7 @@ export class StaticRotationBehavior implements IEmitterBehavior {
 
     public static type = 'rotationStatic'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private readonly min: number
     private readonly max: number
@@ -125,6 +127,7 @@ export class NoRotationBehavior implements IEmitterBehavior {
 
     public static type = 'noRotation'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Late + 1
     private readonly rotation: number
 

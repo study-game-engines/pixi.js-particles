@@ -25,6 +25,7 @@ export class PolygonalChain implements SpawnShape {
 
     public static type = 'polygonalChain'
     public static editorConfig: ListProperty = null
+
     private readonly segments: Segment[] // List of segment objects in the chain.
     private totalLength: number // Total length of all segments of the chain.
     private readonly countingLengths: number[] // Total length of segments up to and including the segment of the same index. Used for weighted random selection of segment.

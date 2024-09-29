@@ -20,6 +20,7 @@ export class Rectangle implements SpawnShape {
 
     public static type = 'rect'
     public static editorConfig: ObjectProperty = null
+
     public x: number
     public y: number
     public w: number

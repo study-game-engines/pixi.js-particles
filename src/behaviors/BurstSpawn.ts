@@ -20,6 +20,7 @@ export class BurstSpawnBehavior implements IEmitterBehavior {
 
     public static type = 'spawnBurst'
     public static editorConfig: BehaviorEditorConfig = null
+
     order = BehaviorOrder.Spawn
     private readonly spacing: number
     private readonly start: number

@@ -22,6 +22,7 @@ export class Torus implements SpawnShape {
 
     public static type = 'torus'
     public static editorConfig: ObjectProperty = null
+
     public x: number
     public y: number
     public radius: number

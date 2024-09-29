@@ -24,6 +24,7 @@ export class SpeedBehavior implements IEmitterBehavior {
 
     public static type = 'moveSpeed'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Late
     private list: PropertyList<number>
     private readonly minMult: number
@@ -79,6 +80,7 @@ export class StaticSpeedBehavior implements IEmitterBehavior {
 
     public static type = 'moveSpeedStatic'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Late
     private readonly min: number
     private readonly max: number

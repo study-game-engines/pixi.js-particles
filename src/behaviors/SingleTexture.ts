@@ -19,6 +19,7 @@ export class SingleTextureBehavior implements IEmitterBehavior {
 
     public static type = 'textureSingle'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private readonly texture: Texture
 

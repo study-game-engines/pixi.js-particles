@@ -68,6 +68,7 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
 
     public static type = 'animatedRandom'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private anims: ParsedAnimatedParticleArt[]
 

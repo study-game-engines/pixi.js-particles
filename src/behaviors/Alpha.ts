@@ -21,6 +21,7 @@ export class AlphaBehavior implements IEmitterBehavior {
 
     public static type = 'alpha'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private list: PropertyList<number>
 

@@ -15,6 +15,7 @@ export class PointSpawnBehavior implements IEmitterBehavior {
 
     public static type = 'spawnPoint'
     public static editorConfig: BehaviorEditorConfig = null
+
     order = BehaviorOrder.Spawn
 
     initParticles(first: Particle): void {

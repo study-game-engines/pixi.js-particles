@@ -22,6 +22,7 @@ export class ColorBehavior implements IEmitterBehavior {
 
     public static type = 'color'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private list: PropertyList<Color>
 
@@ -63,6 +64,7 @@ export class StaticColorBehavior implements IEmitterBehavior {
 
     public static type = 'colorStatic'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
     private value: number
 
