@@ -54,7 +54,6 @@ export class PropertyNode<V> {
             if (array.length > 2 || (array.length === 2 && array[1].value !== value)) {
                 for (let i = 1; i < array.length; ++i) {
                     const { value, time } = array[i];
-
                     node.next = new PropertyNode(typeof value === 'string' ? hexToRGB(value) : value, time);
                     node = node.next;
                 }

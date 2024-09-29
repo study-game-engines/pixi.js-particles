@@ -63,11 +63,9 @@ export class PolygonalChain implements SpawnShape {
         for (let i = 0; i < this.segments.length; ++i) {
             const { p1, p2 } = this.segments[i];
             const segLength = Math.sqrt(((p2.x - p1.x) * (p2.x - p1.x)) + ((p2.y - p1.y) * (p2.y - p1.y)));
-            // save length so we can turn a random number into a 0-1 interpolation value later
-            this.segments[i].l = segLength;
+            this.segments[i].l = segLength; // save length, so we can turn a random number into a 0-1 interpolation value later
             this.totalLength += segLength;
-            // keep track of the length so far, counting up
-            this.countingLengths.push(this.totalLength);
+            this.countingLengths.push(this.totalLength); // keep track of the length so far, counting up
         }
     }
 
@@ -75,26 +73,21 @@ export class PolygonalChain implements SpawnShape {
         const rand = Math.random() * this.totalLength; // select a random spot in the length of the chain
         let chosenSeg: Segment;
         let lerp: number;
-
-        // if only one segment, it wins
+        // if only one segment, it wins otherwise, go through countingLengths until we have determined which segment we chose
         if (this.segments.length === 1) {
             chosenSeg = this.segments[0];
             lerp = rand;
         } else {
-            // otherwise, go through countingLengths until we have determined which segment we chose
             for (let i = 0; i < this.countingLengths.length; ++i) {
                 if (rand < this.countingLengths[i]) {
                     chosenSeg = this.segments[i];
-                    // set lerp equal to the length into that segment (i.e. the remainder after subtracting all the segments before it)
-                    lerp = i === 0 ? rand : rand - this.countingLengths[i - 1];
+                    lerp = i === 0 ? rand : rand - this.countingLengths[i - 1]; // set lerp equal to the length into that segment (i.e. the remainder after subtracting all the segments before it)
                     break;
                 }
             }
         }
-        // divide lerp by the segment length, to result in a 0-1 number.
-        lerp /= chosenSeg.l || 1;
+        lerp /= chosenSeg.l || 1; // divide lerp by the segment length, to result in a 0-1 number.
         const { p1, p2 } = chosenSeg;
-        // now calculate the position in the segment that the lerp value represents
         out.x = p1.x + (lerp * (p2.x - p1.x));
         out.y = p1.y + (lerp * (p2.y - p1.y));
     }

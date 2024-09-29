@@ -6,18 +6,9 @@ import { BehaviorEditorConfig } from './editor/Types';
 
 // The format of a single animation to be used on a particle.
 export interface AnimatedParticleArt {
-
     framerate: -1 | number; // Framerate for the animation (in frames per second). A value of -1 will tie the framerate to the particle's lifetime so that the animation lasts exactly as long as the particle.
     loop?: boolean; // If the animation should loop. Defaults to false.
-    /**
-     * A list of textures or frame descriptions for duplicated frames.
-     * String values will be converted to textures with {@link ParticleUtils.GetTextureFromString}.
-     * Example of a texture repeated for 5 frames, followed by a second texture for one frame:
-     * ```javascript
-     * [{texture: 'myFirstTex', count: 5}, 'mySecondTex']
-     * ```
-     */
-    textures: (string | Texture | { texture: string | Texture; count: number })[];
+    textures: (string | Texture | { texture: string | Texture; count: number })[]; // A list of textures or frame descriptions for duplicated frames. Example of a texture repeated for 5 frames, followed by a second texture for one frame: ```[{texture: 'myFirstTex', count: 5}, 'mySecondTex']```
 }
 
 // Internal data format for playback.

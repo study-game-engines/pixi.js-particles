@@ -51,12 +51,10 @@ export class LinkedListContainer extends Container {
             }
             ++this._childCount; // update child count
             this._boundsID++; // ensure bounds will be recalculated
-            // TODO - lets either do all callbacks or all events.. not both!
             this.onChildrenChange();
             this.emit('childAdded', child, this, this._childCount);
             child.emit('added', this);
         }
-
         return children[0];
     }
 
@@ -72,25 +70,22 @@ export class LinkedListContainer extends Container {
         child.transform._parentID = -1; // ensure child transform will be recalculated
         const c = (child as any) as LinkedListChild;
         if (!this._firstChild) {
-            this._firstChild = this._lastChild = c; // if no children, do basic initialization
-        }
-        // add at beginning (back)
-        else if (index === 0) {
+            // if no children, do basic initialization
+            this._firstChild = this._lastChild = c;
+        } else if (index === 0) {
+            // add at beginning (back)
             this._firstChild.prevChild = c;
             c.nextChild = this._firstChild;
             this._firstChild = c;
-        }
-        // add at end (front)
-        else if (index === this._childCount) {
+        } else if (index === this._childCount) {
+            // add at end (front)
             this._lastChild.nextChild = c;
             c.prevChild = this._lastChild;
             this._lastChild = c;
-        }
-        // otherwise we have to start counting through the children to find the right one - SLOW, only provided to fully support the possibility of use
-        else {
+        } else {
+            // otherwise we have to start counting through the children to find the right one - SLOW, only provided to fully support the possibility of use
             let i = 0;
             let target = this._firstChild;
-
             while (i < index) {
                 target = target.nextChild;
                 ++i;
@@ -103,7 +98,6 @@ export class LinkedListContainer extends Container {
         }
         ++this._childCount; // update child count
         this._boundsID++; // ensure bounds will be recalculated
-        // TODO - lets either do all callbacks or all events.. not both!
         this.onChildrenChange(index);
         child.emit('added', this);
         this.emit('childAdded', child, this, index);
@@ -130,7 +124,6 @@ export class LinkedListContainer extends Container {
         }
         ++this._childCount; // update child count
         this._boundsID++; // ensure bounds will be recalculated
-        // TODO - lets either do all callbacks or all events.. not both!
         this.onChildrenChange();
         this.emit('childAdded', child, this, this._childCount);
         child.emit('added', this);
@@ -157,7 +150,6 @@ export class LinkedListContainer extends Container {
         }
         ++this._childCount; // update child count
         this._boundsID++; // ensure bounds will be recalculated
-        // TODO - lets either do all callbacks or all events.. not both!
         this.onChildrenChange();
         this.emit('childAdded', child, this, this._childCount);
         child.emit('added', this);

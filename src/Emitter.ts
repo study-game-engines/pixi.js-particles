@@ -337,8 +337,8 @@ export class Emitter {
             delta = ticker.elapsedMS * 0.001;
         }
         if (!this._parent) {
-            return;
-        } // if we don't have a parent to add particles to, then don't do anything. this also works as a isDestroyed check
+            return; // if we don't have a parent to add particles to, then don't do anything. this also works as a isDestroyed check
+        }
 
         /* update existing particles */
 
@@ -458,8 +458,7 @@ export class Emitter {
                     } else {
                         waveLast = waveFirst = particle;
                     }
-                    // increase our particle count
-                    ++this.particleCount;
+                    ++this.particleCount; // increase our particle count
                 }
 
                 if (waveFirst) {
