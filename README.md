@@ -1,3 +1,10 @@
+# How to Run
+
+```
+npm install
+npm run predocs-live
+```
+
 # PixiJS Particle Emitter
 
 [![Build Status](https://github.com/pixijs/particle-emitter/workflows/Build/badge.svg)](https://github.com/pixijs/particle-emitter/actions?query=workflow%3A%22Build%22) [![GitHub version](https://badge.fury.io/gh/pixijs%2Fparticle-emitter.svg)](https://github.com/pixijs/particle-emitter/releases/latest)
