@@ -6,11 +6,9 @@ function makeReadable(input: string) {
     for (let i = 0; i < words.length; ++i) {
         if (words[i] === 'SRC') {
             words[i] = 'Source';
-        }
-        else if (words[i] === 'DST') {
+        } else if (words[i] === 'DST') {
             words[i] = 'Destination';
-        }
-        else {
+        } else {
             words[i] = words[i][0] + words[i].substring(1)
                 .toLowerCase();
         }

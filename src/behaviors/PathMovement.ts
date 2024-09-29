@@ -123,8 +123,7 @@ export class PathBehavior implements IEmitterBehavior {
                     this.path = null;
                 }
             }
-        }
-        else {
+        } else {
             if (verbose) {
                 console.error('PathParticle requires a path value in its config!');
             }

@@ -131,15 +131,12 @@ export class Emitter {
         // do some error checking to prevent infinite loops
         if (typeof value === 'number' && value > 0) {
             this._frequency = value;
-        }
-        else {
+        } else {
             this._frequency = 1;
         }
     }
 
-    /**
-     * The container to add particles to. Settings this will dump any active particles.
-     */
+    // The container to add particles to. Settings this will dump any active particles.
     public get parent(): Container {
         return this._parent;
     }
@@ -149,10 +146,7 @@ export class Emitter {
         this._parent = value;
     }
 
-    /**
-     * Sets up the emitter based on the config settings.
-     * @param config A configuration object containing settings for the emitter.
-     */
+    // Sets up the emitter based on the config settings. @param config A configuration object containing settings for the emitter.
     public init(config: EmitterConfigV3): void {
         if (!config) {
             return;
@@ -187,8 +181,7 @@ export class Emitter {
         this.ownerPos.set(0);
         if (config.pos) {
             this.spawnPos.copyFrom(config.pos);
-        }
-        else {
+        } else {
             this.spawnPos.set(0);
         }
         this._prevEmitterPos.copyFrom(this.spawnPos);
@@ -213,8 +206,7 @@ export class Emitter {
         behaviors.sort((a, b) => {
             if (a === PositionParticle) {
                 return (b as IEmitterBehavior).order === BehaviorOrder.Spawn ? 1 : -1;
-            }
-            else if (b === PositionParticle) {
+            } else if (b === PositionParticle) {
                 return (a as IEmitterBehavior).order === BehaviorOrder.Spawn ? -1 : 1;
             }
             return (a as IEmitterBehavior).order - (b as IEmitterBehavior).order;
@@ -226,7 +218,9 @@ export class Emitter {
 
     // Gets the instantiated behavior of the specified type, if it is present on this emitter. @param type The behavior type to find.
     public getBehavior(type: string): IEmitterBehavior | null {
-        if (!Emitter.knownBehaviors[type]) return null; // bail if we don't know about such an emitter
+        if (!Emitter.knownBehaviors[type]) {
+            return null;
+        } // bail if we don't know about such an emitter
         return this.initBehaviors.find((b) => b instanceof Emitter.knownBehaviors[type]) as IEmitterBehavior || null; // find one that is an instance of the specified type
     }
 
@@ -267,7 +261,9 @@ export class Emitter {
 
     // Sets the rotation of the emitter to a new value. This rotates the spawn position in addition to particle direction. @param newRot The new rotation, in degrees.
     public rotate(newRot: number): void {
-        if (this.rotation === newRot) return;
+        if (this.rotation === newRot) {
+            return;
+        }
         const diff = newRot - this.rotation; // caclulate the difference in rotation for rotating spawnPos
         this.rotation = newRot;
         rotatePoint(diff, this.spawnPos); // rotate spawnPos
@@ -315,8 +311,7 @@ export class Emitter {
     public set autoUpdate(value: boolean) {
         if (this._autoUpdate && !value) {
             ticker.remove(this.update, this);
-        }
-        else if (!this._autoUpdate && value) {
+        } else if (!this._autoUpdate && value) {
             ticker.add(this.update, this);
         }
         this._autoUpdate = !!value;
@@ -341,7 +336,9 @@ export class Emitter {
         if (this._autoUpdate) {
             delta = ticker.elapsedMS * 0.001;
         }
-        if (!this._parent) return; // if we don't have a parent to add particles to, then don't do anything. this also works as a isDestroyed check
+        if (!this._parent) {
+            return;
+        } // if we don't have a parent to add particles to, then don't do anything. this also works as a isDestroyed check
 
         /* update existing particles */
 
@@ -351,8 +348,7 @@ export class Emitter {
             particle.age += delta; // increase age
             if (particle.age > particle.maxLife || particle.age < 0) {
                 this.recycle(particle); // recycle particle if it is too old
-            }
-            else {
+            } else {
                 // determine our interpolation value
                 let lerp = particle.age * particle.oneOverLife; // lifetime / maxLife;
                 // global ease affects all interpolation calculations
@@ -442,8 +438,7 @@ export class Emitter {
                         particle = this._poolFirst;
                         this._poolFirst = this._poolFirst.next;
                         particle.next = null;
-                    }
-                    else {
+                    } else {
                         particle = new Particle(this);
                     }
 
@@ -460,8 +455,7 @@ export class Emitter {
                         waveLast.next = particle;
                         particle.prev = waveLast;
                         waveLast = particle;
-                    }
-                    else {
+                    } else {
                         waveLast = waveFirst = particle;
                     }
                     // increase our particle count
@@ -474,8 +468,7 @@ export class Emitter {
                         this._activeParticlesLast.next = waveFirst;
                         waveFirst.prev = this._activeParticlesLast;
                         this._activeParticlesLast = waveLast;
-                    }
-                    else {
+                    } else {
                         this._activeParticlesFirst = waveFirst;
                         this._activeParticlesLast = waveLast;
                     }
@@ -588,8 +581,7 @@ export class Emitter {
             // add the particle to the display list
             if (this.addAtBack) {
                 this._parent.addChildAt(particle, 0);
-            }
-            else {
+            } else {
                 this._parent.addChild(particle);
             }
             // add particles to list of ones in this wave
@@ -610,8 +602,7 @@ export class Emitter {
                 this._activeParticlesLast.next = waveFirst;
                 waveFirst.prev = this._activeParticlesLast;
                 this._activeParticlesLast = waveLast;
-            }
-            else {
+            } else {
                 this._activeParticlesFirst = waveFirst;
                 this._activeParticlesLast = waveLast;
             }
@@ -634,8 +625,7 @@ export class Emitter {
                         particle.position.x += emitPosX;
                         particle.position.y += emitPosY;
                     }
-                }
-                else {
+                } else {
                     behavior.initParticles(waveFirst);
                 }
             }

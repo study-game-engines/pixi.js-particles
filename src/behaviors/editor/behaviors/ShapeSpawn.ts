@@ -11,6 +11,6 @@ ShapeSpawnBehavior.editorConfig = {
             description: 'The shape to use for picking spawn locations.',
             dictionaryProp: 'shapes',
             configName: 'data',
-        }
+        },
     ],
 };

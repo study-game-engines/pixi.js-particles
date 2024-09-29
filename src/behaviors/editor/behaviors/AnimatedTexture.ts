@@ -71,6 +71,6 @@ SingleAnimatedTextureBehavior.editorConfig = {
     category: 'art',
     title: 'Animated Texture (single)',
     props: [
-        AnimatedArt
+        AnimatedArt,
     ],
 };

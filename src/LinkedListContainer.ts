@@ -175,14 +175,12 @@ export class LinkedListContainer extends Container {
         (child2 as LinkedListChild).nextChild = nextChild;
         if (this._firstChild === child) {
             this._firstChild = child2 as LinkedListChild;
-        }
-        else if (this._firstChild === child2) {
+        } else if (this._firstChild === child2) {
             this._firstChild = child as LinkedListChild;
         }
         if (this._lastChild === child) {
             this._lastChild = child2 as LinkedListChild;
-        }
-        else if (this._lastChild === child2) {
+        } else if (this._lastChild === child2) {
             this._lastChild = child as LinkedListChild;
         }
         this.onChildrenChange();
@@ -231,13 +229,11 @@ export class LinkedListContainer extends Container {
         // do addChildAt
         if (!this._firstChild) {
             this._firstChild = this._lastChild = (child as LinkedListChild);
-        }
-        else if (index === 0) {
+        } else if (index === 0) {
             this._firstChild.prevChild = (child as LinkedListChild);
             (child as LinkedListChild).nextChild = this._firstChild;
             this._firstChild = (child as LinkedListChild);
-        }
-        else if (index === this._childCount) {
+        } else if (index === this._childCount) {
             this._lastChild.nextChild = (child as LinkedListChild);
             (child as LinkedListChild).prevChild = this._lastChild;
             this._lastChild = (child as LinkedListChild);
@@ -264,7 +260,9 @@ export class LinkedListContainer extends Container {
             }
         } else {
             const child = children[0] as LinkedListChild;
-            if (child.parent !== this) return null; // bail if not actually our child
+            if (child.parent !== this) {
+                return null;
+            } // bail if not actually our child
             child.parent = null;
             child.transform._parentID = -1; // ensure child transform will be recalculated
             // swap out child references

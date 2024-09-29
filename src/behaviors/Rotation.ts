@@ -48,8 +48,7 @@ export class RotationBehavior implements IEmitterBehavior {
         while (next) {
             if (this.minStart === this.maxStart) {
                 next.rotation += this.maxStart;
-            }
-            else {
+            } else {
                 next.rotation += (Math.random() * (this.maxStart - this.minStart)) + this.minStart;
             }
             next.config.rotSpeed = (Math.random() * (this.maxSpeed - this.minSpeed)) + this.minSpeed;
@@ -62,8 +61,7 @@ export class RotationBehavior implements IEmitterBehavior {
             const oldSpeed = particle.config.rotSpeed;
             particle.config.rotSpeed += this.accel * deltaSec;
             particle.rotation += (particle.config.rotSpeed + oldSpeed) / 2 * deltaSec;
-        }
-        else {
+        } else {
             particle.rotation += particle.config.rotSpeed * deltaSec;
         }
     }
@@ -103,8 +101,7 @@ export class StaticRotationBehavior implements IEmitterBehavior {
         while (next) {
             if (this.min === this.max) {
                 next.rotation += this.max;
-            }
-            else {
+            } else {
                 next.rotation += (Math.random() * (this.max - this.min)) + this.min;
             }
             next = next.next;

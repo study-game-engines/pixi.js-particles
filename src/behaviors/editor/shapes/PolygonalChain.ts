@@ -16,6 +16,6 @@ PolygonalChain.editorConfig = {
             title: 'Point',
             description: 'An individual point in a line segment',
             default: { x: 0, y: 0 },
-        }
+        },
     },
 };

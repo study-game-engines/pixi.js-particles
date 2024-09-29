@@ -2,12 +2,16 @@ import { Color, combineRGBComponents, SimpleEase } from './ParticleUtils';
 import { PropertyNode } from './PropertyNode';
 
 function intValueSimple(this: PropertyList<number>, lerp: number): number {
-    if (this.ease) lerp = this.ease(lerp);
+    if (this.ease) {
+        lerp = this.ease(lerp);
+    }
     return ((this.first.next.value - this.first.value) * lerp) + this.first.value;
 }
 
 function intColorSimple(this: PropertyList<Color>, lerp: number): number {
-    if (this.ease) lerp = this.ease(lerp);
+    if (this.ease) {
+        lerp = this.ease(lerp);
+    }
     const curVal = this.first.value;
     const nextVal = this.first.next.value;
     const r = ((nextVal.r - curVal.r) * lerp) + curVal.r;
@@ -17,7 +21,9 @@ function intColorSimple(this: PropertyList<Color>, lerp: number): number {
 }
 
 function intValueComplex(this: PropertyList<number>, lerp: number): number {
-    if (this.ease) lerp = this.ease(lerp);
+    if (this.ease) {
+        lerp = this.ease(lerp);
+    }
     let current = this.first;
     let next = current.next;
     while (lerp > next.time) {
@@ -29,7 +35,9 @@ function intValueComplex(this: PropertyList<number>, lerp: number): number {
 }
 
 function intColorComplex(this: PropertyList<Color>, lerp: number): number {
-    if (this.ease) lerp = this.ease(lerp);
+    if (this.ease) {
+        lerp = this.ease(lerp);
+    }
     let current = this.first;
     let next = current.next;
     while (lerp > next.time) {
@@ -46,7 +54,9 @@ function intColorComplex(this: PropertyList<Color>, lerp: number): number {
 }
 
 function intValueStepped(this: PropertyList<number>, lerp: number): number {
-    if (this.ease) lerp = this.ease(lerp);
+    if (this.ease) {
+        lerp = this.ease(lerp);
+    }
     let current = this.first;
     while (current.next && lerp > current.next.time) {
         current = current.next;
@@ -55,7 +65,9 @@ function intValueStepped(this: PropertyList<number>, lerp: number): number {
 }
 
 function intColorStepped(this: PropertyList<Color>, lerp: number): number {
-    if (this.ease) lerp = this.ease(lerp);
+    if (this.ease) {
+        lerp = this.ease(lerp);
+    }
     let current = this.first;
     while (current.next && lerp > current.next.time) {
         current = current.next;

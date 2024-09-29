@@ -45,8 +45,7 @@ export class Torus implements SpawnShape {
     getRandPos(particle: Particle): void {
         if (this.innerRadius !== this.radius) {
             particle.x = (Math.random() * (this.radius - this.innerRadius)) + this.innerRadius;
-        }
-        else {
+        } else {
             particle.x = this.radius;
         }
         particle.y = 0;

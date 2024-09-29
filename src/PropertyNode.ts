@@ -31,8 +31,7 @@ export class PropertyNode<V> {
         this.isStepped = false;
         if (ease) {
             this.ease = typeof ease === 'function' ? ease : generateEase(ease);
-        }
-        else {
+        } else {
             this.ease = null;
         }
     }

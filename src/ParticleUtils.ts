@@ -30,7 +30,9 @@ export const DEG_TO_RADS = Math.PI / 180;
 
 // Rotates a point by a given angle. @param angle The angle to rotate by in radians @param p The point to rotate around 0,0.
 export function rotatePoint(angle: number, p: IPointData): void {
-    if (!angle) return;
+    if (!angle) {
+        return;
+    }
     const s = Math.sin(angle);
     const c = Math.cos(angle);
     const xnew = (p.x * c) - (p.y * s);
@@ -80,8 +82,7 @@ export function hexToRGB(color: string, output?: Color): Color {
     }
     if (color.charAt(0) === '#') {
         color = color.substr(1);
-    }
-    else if (color.indexOf('0x') === 0) {
+    } else if (color.indexOf('0x') === 0) {
         color = color.substr(2);
     }
     let alpha;
@@ -123,8 +124,11 @@ export function generateEase(segments: EaseSegment[]): SimpleEase {
 
 // Gets a blend mode, ensuring that it is valid. @param name The name of the blend mode to get. @return The blend mode as specified in the PIXI.BLEND_MODES enumeration.
 export function getBlendMode(name: string): number {
-    if (!name) return BLEND_MODES.NORMAL;
-    name = name.toUpperCase().replace(/ /g, '_');
+    if (!name) {
+        return BLEND_MODES.NORMAL;
+    }
+    name = name.toUpperCase()
+        .replace(/ /g, '_');
     return (BLEND_MODES as any)[name] || BLEND_MODES.NORMAL;
 }
 
@@ -144,7 +148,6 @@ export function createSteppedGradient(list: ValueStep<string>[], numSteps = 10):
     let current = list[0];
     let nextIndex = 1;
     let next = list[nextIndex];
-
     for (let i = 1; i < numSteps; ++i) {
         let lerp = i / numSteps;
         // ensure we are on the right segment, if multiple

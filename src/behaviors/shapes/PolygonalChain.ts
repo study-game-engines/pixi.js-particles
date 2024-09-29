@@ -41,8 +41,7 @@ export class PolygonalChain implements SpawnShape {
     private init(data: IPointData[] | IPointData[][]): void {
         if (!data || !data.length) {
             this.segments.push({ p1: { x: 0, y: 0 }, p2: { x: 0, y: 0 }, l: 0 });
-        }
-        else if (Array.isArray(data[0])) {
+        } else if (Array.isArray(data[0])) {
             for (let i = 0; i < data.length; ++i) {
                 const chain = data[i] as IPointData[];
                 let prevPoint = chain[0] as IPointData;
@@ -52,8 +51,7 @@ export class PolygonalChain implements SpawnShape {
                     prevPoint = second;
                 }
             }
-        }
-        else {
+        } else {
             let prevPoint = data[0] as IPointData;
             for (let i = 1; i < data.length; ++i) {
                 const second = data[i] as IPointData;

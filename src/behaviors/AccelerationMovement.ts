@@ -52,8 +52,7 @@ export class AccelerationBehavior implements IEmitterBehavior {
             const speed = (Math.random() * (this.maxStart - this.minStart)) + this.minStart;
             if (!next.config.velocity) {
                 next.config.velocity = new Point(speed, 0);
-            }
-            else {
+            } else {
                 (next.config.velocity as Point).set(speed, 0);
             }
             rotatePoint(next.rotation, next.config.velocity);

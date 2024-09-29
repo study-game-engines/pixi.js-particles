@@ -127,8 +127,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 list = {
                     list: [{ time: 0, value: config.speed.start }],
                 };
-            }
-            else {
+            } else {
                 list = {
                     list: [
                         { time: 0, value: config.speed.start },
@@ -162,8 +161,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                             max: config.speed.start,
                         },
                     });
-                }
-                else {
+                } else {
                     const list: ValueList<number> = {
                         list: [
                             { time: 0, value: config.speed.start },
@@ -176,8 +174,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                         config: { speed: list, minMult: config.speed.minimumSpeedMultiplier },
                     });
                 }
-            }
-            else if (config.speed.list.length === 1) {
+            } else if (config.speed.list.length === 1) {
                 out.behaviors.push({
                     type: 'moveSpeedStatic',
                     config: {
@@ -185,8 +182,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                         max: config.speed.list[0].value,
                     },
                 });
-            }
-            else {
+            } else {
                 out.behaviors.push({
                     type: 'moveSpeed',
                     config: { speed: config.speed, minMult: ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1) },
@@ -221,8 +217,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                     config: { scale: list, minMult: mult },
                 });
             }
-        }
-        else if (config.scale.list.length === 1) {
+        } else if (config.scale.list.length === 1) {
             const mult = (config as EmitterConfigV2).minimumScaleMultiplier ?? 1;
             const scale = config.scale.list[0].value;
 
@@ -230,8 +225,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 type: 'scaleStatic',
                 config: { min: scale * mult, max: scale },
             });
-        }
-        else {
+        } else {
             out.behaviors.push({
                 type: 'scale',
                 config: { scale: config.scale, minMult: (config as EmitterConfigV2).minimumScaleMultiplier ?? 1 },
@@ -249,8 +243,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                         config: { color: config.color.start },
                     });
                 }
-            }
-            else {
+            } else {
                 const list: ValueList<string> = {
                     list: [
                         { time: 0, value: config.color.start },
@@ -263,16 +256,14 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                     config: { color: list },
                 });
             }
-        }
-        else if (config.color.list.length === 1) {
+        } else if (config.color.list.length === 1) {
             if (config.color.list[0].value !== 'ffffff') {
                 out.behaviors.push({
                     type: 'colorStatic',
                     config: { color: config.color.list[0].value },
                 });
             }
-        }
-        else {
+        } else {
             out.behaviors.push({
                 type: 'color',
                 config: { color: config.color },
@@ -292,8 +283,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 maxStart: config.startRotation?.max || 0,
             },
         });
-    }
-    else if (config.startRotation?.min || config.startRotation?.max) {
+    } else if (config.startRotation?.min || config.startRotation?.max) {
         out.behaviors.push({
             type: 'rotationStatic',
             config: {
@@ -332,8 +322,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 anims: art,
             },
         });
-    }
-    else if (typeof art !== 'string' && 'framerate' in art) {
+    } else if (typeof art !== 'string' && 'framerate' in art) {
         if (art.framerate === 'matchLife') {
             art.framerate = -1;
         }
@@ -406,8 +395,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                     affectRotation: true,
                 },
             };
-        }
-        else if (config.spawnType === 'circle') {
+        } else if (config.spawnType === 'circle') {
             shape = {
                 type: 'torus',
                 data: {
@@ -418,14 +406,12 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                     affectRotation: false,
                 },
             };
-        }
-        else if (config.spawnType === 'rect') {
+        } else if (config.spawnType === 'rect') {
             shape = {
                 type: 'rect',
                 data: config.spawnRect,
             };
-        }
-        else if (config.spawnType === 'polygonalChain') {
+        } else if (config.spawnType === 'polygonalChain') {
             shape = {
                 type: 'polygonalChain',
                 data: config.spawnPolygon,
