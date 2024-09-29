@@ -1,20 +1,7 @@
-(function (window)
-{
-    /* global PIXI */
-    /* eslint-disable newline-after-var,prefer-template */
-    /**
-    *  Basic example setup
-    *  @class ParticleExample
-    *  @constructor
-    *  @param {String[]} imagePaths The local path to the image source
-    *  @param {Object} config The emitter configuration
-    *  @param {boolean} [testContainers=false] If changing containers should be enabled.
-    *  @param {boolean} [stepColors=false] If the color settings should be manually stepped.
-    */
-    class ParticleExample
-    {
-        constructor(imagePaths, config, testContainers, stepColors)
-        {
+// eslint-disable-next-line func-names
+(function (window) {
+    class ParticleExample {
+        constructor(imagePaths, config, testContainers, stepColors) {
             const canvas = document.getElementById('stage');
             // Basic PIXI Setup
             const rendererOptions = {
@@ -25,6 +12,7 @@
             /* var preMultAlpha = !!options.preMultAlpha;
             if(rendererOptions.transparent && !preMultAlpha)
                 rendererOptions.transparent = 'notMultiplied';*/
+
             this.stage = new PIXI.Container();
             this.emitter = null;
             this.renderer = new PIXI.Renderer(rendererOptions);
@@ -39,36 +27,20 @@
             // Calculate the current time
             let elapsed = Date.now();
             let updateId;
-
-            // Update function every frame
-            const update = () =>
-            {
-                // Update the next frame
+            const update = () => {
                 updateId = requestAnimationFrame(update);
-
                 const now = Date.now();
-                if (this.emitter)
-                {
-                    // update emitter (convert to seconds)
+                if (this.emitter) {
                     this.emitter.update((now - elapsed) * 0.001);
                 }
-
-                // call update hook for specialist examples
-                if (this.updateHook)
-                {
+                if (this.updateHook) {
                     this.updateHook(now - elapsed);
                 }
-
                 framerate.innerHTML = `${(1000 / (now - elapsed)).toFixed(2)} fps`;
-
                 elapsed = now;
-
-                if (this.emitter && particleCount)
-                {
+                if (this.emitter && particleCount) {
                     particleCount.innerHTML = `${this.emitter.particleCount} particles`;
                 }
-
-                // render the stage
                 this.renderer.render(this.stage);
             };
 
@@ -116,6 +88,7 @@
                 this.stage.addChild(this.bg);
                 // Create the new emitter and attach it to the stage
                 let parentType = 0;
+
                 function getContainer()
                 {
                     switch (parentType)
@@ -137,6 +110,7 @@
                             return [new PIXI.Container(), 'PIXI.Container'];
                     }
                 }
+
                 let [emitterContainer, containerName] = getContainer();
                 this.stage.addChild(emitterContainer);
                 if (containerType) containerType.innerHTML = containerName;
@@ -148,12 +122,14 @@
                 if (stepColors)
                 {
                     // override the initialized list with our auto-stepped one
-                    this.emitter.getBehavior('color').list.reset(
-                        PIXI.particles.ParticleUtils.createSteppedGradient(
-                            config.behaviors.find((b) => b.type === 'color').config.color.list,
-                            stepColors,
-                        ),
-                    );
+                    this.emitter.getBehavior('color')
+                        .list
+                        .reset(
+                            PIXI.particles.ParticleUtils.createSteppedGradient(
+                                config.behaviors.find((b) => b.type === 'color').config.color.list,
+                                stepColors,
+                            ),
+                        );
                 }
 
                 // Center on the stage

@@ -6,28 +6,17 @@
 		<title>Cartoon Smoke Blast</title>
 		<meta name="description" content="smoke blast">
 		<link rel="stylesheet" href="css/main.css">
-
-		<!-- Required dependencies -->
 		<script src="libs/pixi.js/dist/browser/pixi.js"></script>
 		<script src="../dist/particle-emitter.js"></script>
-
-		<!-- Example scaffolding -->
 		<script src="js/ParticleExample.js"></script>
-
 	</head>
 	<body>
 		<div id="framerate"></div>
 		<div id="instructions">Click Anywhere</div>
 		<canvas id="stage" width="400" height="400"></canvas>
 		<script>
-
-			// See js/ParticleExample.js for actual setup
 			new ParticleExample(
-				// The image to use
 				["images/CartoonSmoke.png"],
-
-				// Emitter configuration, edit this to change the look
-				// of the emitter
 				{
 					"lifetime": {
 						"min": 0.5,

@@ -4,7 +4,7 @@ import { EmitterConfigV3 } from './EmitterConfig';
 import { Container } from '@pixi/display';
 import { Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
-import { BehaviorOrder, IEmitterBehavior, IEmitterBehaviorClass } from './behaviors/Behaviors';
+import { BehaviorOrder, IEmitterBehavior, IEmitterBehaviorClass } from './behaviors';
 // get the shared ticker, only supports V5 and V6 with individual packages
 /**
  * @hidden
