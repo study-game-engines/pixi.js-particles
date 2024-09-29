@@ -21,9 +21,9 @@ export class BurstSpawnBehavior implements IEmitterBehavior {
     public static type = 'spawnBurst';
     public static editorConfig: BehaviorEditorConfig = null;
     order = BehaviorOrder.Spawn;
-    private spacing: number;
-    private start: number;
-    private distance: number;
+    private readonly spacing: number;
+    private readonly start: number;
+    private readonly distance: number;
 
     constructor(config: {
         spacing: number; // Description: Spacing between each particle spawned in a wave, in degrees.

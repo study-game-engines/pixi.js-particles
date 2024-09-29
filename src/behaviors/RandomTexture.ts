@@ -20,7 +20,7 @@ export class RandomTextureBehavior implements IEmitterBehavior {
     public static type = 'textureRandom';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
-    private textures: Texture[];
+    private readonly textures: Texture[];
 
     constructor(config: {
         textures: (Texture | string)[]; // Images to use for each particle, randomly chosen from the list.

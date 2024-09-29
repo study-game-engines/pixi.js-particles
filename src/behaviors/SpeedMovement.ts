@@ -26,7 +26,7 @@ export class SpeedBehavior implements IEmitterBehavior {
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Late;
     private list: PropertyList<number>;
-    private minMult: number;
+    private readonly minMult: number;
 
     constructor(config: {
         speed: ValueList<number>; // Speed of the particles in world units/second, with a minimum value of 0
@@ -80,8 +80,8 @@ export class StaticSpeedBehavior implements IEmitterBehavior {
     public static type = 'moveSpeedStatic';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Late;
-    private min: number;
-    private max: number;
+    private readonly min: number;
+    private readonly max: number;
 
     constructor(config: {
         min: number; // Minimum speed when initializing the particle.

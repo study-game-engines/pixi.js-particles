@@ -9,8 +9,7 @@ function makeReadable(input: string) {
         } else if (words[i] === 'DST') {
             words[i] = 'Destination';
         } else {
-            words[i] = words[i][0] + words[i].substring(1)
-            .toLowerCase();
+            words[i] = words[i][0] + words[i].substring(1).toLowerCase();
         }
     }
     return words.join(' ');

@@ -20,7 +20,7 @@ export class SingleTextureBehavior implements IEmitterBehavior {
     public static type = 'textureSingle';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
-    private texture: Texture;
+    private readonly texture: Texture;
 
     constructor(config: {
         texture: Texture | string; // Image to use for each particle.

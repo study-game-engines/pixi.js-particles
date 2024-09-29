@@ -25,7 +25,7 @@ export class ScaleBehavior implements IEmitterBehavior {
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
     private list: PropertyList<number>;
-    private minMult: number;
+    private readonly minMult: number;
 
     constructor(config: {
         scale: ValueList<number>; // Scale of the particles, with a minimum value of 0
@@ -69,8 +69,8 @@ export class StaticScaleBehavior implements IEmitterBehavior {
     public static type = 'scaleStatic';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
-    private min: number;
-    private max: number;
+    private readonly min: number;
+    private readonly max: number;
 
     constructor(config: {
         min: number; // Minimum scale of the particles, with a minimum value of 0

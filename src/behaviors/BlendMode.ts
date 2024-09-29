@@ -19,7 +19,7 @@ export class BlendModeBehavior implements IEmitterBehavior {
     public static type = 'blendMode';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
-    private value: string;
+    private readonly value: string;
 
     constructor(config: {
         blendMode: string; // Blend mode of all particles https://pixijs.download/release/docs/PIXI.html#BLEND_MODES

@@ -23,11 +23,11 @@ export class RotationBehavior implements IEmitterBehavior {
     public static type = 'rotation';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
-    private minStart: number;
-    private maxStart: number;
-    private minSpeed: number;
-    private maxSpeed: number;
-    private accel: number;
+    private readonly minStart: number;
+    private readonly maxStart: number;
+    private readonly minSpeed: number;
+    private readonly maxSpeed: number;
+    private readonly accel: number;
 
     constructor(config: {
         minStart: number; // Minimum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
@@ -85,8 +85,8 @@ export class StaticRotationBehavior implements IEmitterBehavior {
     public static type = 'rotationStatic';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
-    private min: number;
-    private max: number;
+    private readonly min: number;
+    private readonly max: number;
 
     constructor(config: {
         min: number; // Minimum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
@@ -126,7 +126,7 @@ export class NoRotationBehavior implements IEmitterBehavior {
     public static type = 'noRotation';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Late + 1;
-    private rotation: number;
+    private readonly rotation: number;
 
     constructor(config: {
         rotation?: number; // Locked rotation of the particles, in degrees. 0 is facing right, 90 is upwards.

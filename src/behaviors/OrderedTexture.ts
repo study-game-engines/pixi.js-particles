@@ -20,7 +20,7 @@ export class OrderedTextureBehavior implements IEmitterBehavior {
     public static type = 'textureOrdered';
     public static editorConfig: BehaviorEditorConfig = null;
     public order = BehaviorOrder.Normal;
-    private textures: Texture[];
+    private readonly textures: Texture[];
     private index: number;
 
     constructor(config: {
