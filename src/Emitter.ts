@@ -9,7 +9,7 @@ import { BehaviorOrder, IEmitterBehavior, IEmitterBehaviorClass } from './behavi
 const ticker: Ticker = Ticker.shared
 
 // Key used in sorted order to determine when to set particle position from the emitter position and rotation.
-const PositionParticle = Symbol('Position particle per emitter position')
+const PositionParticle: unique symbol = Symbol('Position particle per emitter position')
 
 export class Emitter {
 

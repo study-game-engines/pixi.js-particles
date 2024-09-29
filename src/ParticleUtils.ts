@@ -85,7 +85,7 @@ export function hexToRGB(color: string, output?: Color): Color {
     } else if (color.indexOf('0x') === 0) {
         color = color.substr(2)
     }
-    let alpha
+    let alpha: string
     if (color.length === 8) {
         alpha = color.substr(0, 2)
         color = color.substr(2)

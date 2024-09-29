@@ -1,5 +1,5 @@
 import { Container, DisplayObject } from '@pixi/display'
-import { Renderer, MaskData } from '@pixi/core'
+import { Renderer, MaskData, Filter } from '@pixi/core'
 import { Rectangle } from '@pixi/math'
 
 // Interface for a child of a LinkedListContainer (has the prev/next properties added)
@@ -84,8 +84,8 @@ export class LinkedListContainer extends Container {
             this._lastChild = c
         } else {
             // otherwise we have to start counting through the children to find the right one - SLOW, only provided to fully support the possibility of use
-            let i = 0
-            let target = this._firstChild
+            let i: number = 0
+            let target: LinkedListChild = this._firstChild
             while (i < index) {
                 target = target.nextChild
                 ++i
@@ -251,7 +251,7 @@ export class LinkedListContainer extends Container {
                 this.removeChild(children[i]) // loop through the arguments property and remove all children
             }
         } else {
-            const child = children[0] as LinkedListChild
+            const child: LinkedListChild = children[0] as LinkedListChild
             if (child.parent !== this) {
                 return null
             } // bail if not actually our child
@@ -291,8 +291,8 @@ export class LinkedListContainer extends Container {
             return this._lastChild // add at end (front)
         }
         // otherwise we have to start counting through the children to find the right one  SLOW, only provided to fully support the possibility of use
-        let i = 0
-        let target = this._firstChild
+        let i: number = 0
+        let target: LinkedListChild = this._firstChild
         while (i < index) {
             target = target.nextChild
             ++i
@@ -329,12 +329,12 @@ export class LinkedListContainer extends Container {
     }
 
     public removeChildren(beginIndex = 0, endIndex = this._childCount): DisplayObject[] {
-        const begin = beginIndex
+        const begin: number = beginIndex
         if (endIndex === 0 && this._childCount > 0) {
             endIndex = this._childCount // because Container.destroy() has removeChildren(0, this.children.count), assume that an end index of 0 should actually be _childCount.
         }
-        const end = endIndex
-        const range = end - begin
+        const end: number = endIndex
+        const range: number = end - begin
         if (range > 0 && range <= end) {
             const removed: LinkedListChild[] = []
             let child = this._firstChild
@@ -343,8 +343,8 @@ export class LinkedListContainer extends Container {
                     removed.push(child)
                 }
             }
-            const prevChild = removed[0].prevChild // child before removed section
-            const nextChild = removed[removed.length - 1].nextChild // child after removed section
+            const prevChild: LinkedListChild = removed[0].prevChild // child before removed section
+            const nextChild: LinkedListChild = removed[removed.length - 1].nextChild // child after removed section
             if (!nextChild) {
                 this._lastChild = prevChild // if we removed the last child, then the new last child is the one before the removed section
             } else {
@@ -382,8 +382,8 @@ export class LinkedListContainer extends Container {
         this._boundsID++
         this.transform.updateTransform(this.parent.transform)
         this.worldAlpha = this.alpha * this.parent.worldAlpha
-        let child
-        let next
+        let child: LinkedListChild | null
+        let next: LinkedListChild | null
         for (child = this._firstChild; child; child = next) {
             next = child.nextChild
             if (child.visible) {
@@ -396,8 +396,8 @@ export class LinkedListContainer extends Container {
     calculateBounds(): void {
         this._bounds.clear()
         this._calculateBounds()
-        let child
-        let next
+        let child: LinkedListChild | null
+        let next: LinkedListChild | null
         for (child = this._firstChild; child; child = next) {
             next = child.nextChild
             if (!child.visible || !child.renderable) {
@@ -421,8 +421,8 @@ export class LinkedListContainer extends Container {
     public getLocalBounds(rect?: Rectangle, skipChildrenUpdate = false): Rectangle {
         const result = DisplayObject.prototype.getLocalBounds.call(this, rect) // skip Container's getLocalBounds, go directly to DisplayObject
         if (!skipChildrenUpdate) {
-            let child
-            let next
+            let child: LinkedListChild | null
+            let next: LinkedListChild | null
             for (child = this._firstChild; child; child = next) {
                 next = child.nextChild
                 if (child.visible) {
@@ -455,8 +455,8 @@ export class LinkedListContainer extends Container {
     // Render the object using the WebGL renderer and advanced features. Copied from and overrides PixiJS v5 method
     protected renderAdvanced(renderer: Renderer): void {
         renderer.batch.flush()
-        const filters = this.filters
-        const mask = this._mask
+        const filters: Filter[] = this.filters
+        const mask: Container | MaskData = this._mask
         // _enabledFilters note: As of development, _enabledFilters is not documented in pixi.js types but is in code of current release (5.2.4).
         // push filter first as we need to ensure the stencil buffer is correct for any masking
         if (filters) {
@@ -477,8 +477,8 @@ export class LinkedListContainer extends Container {
             renderer.mask.push(this, this._mask)
         }
         this._render(renderer) // add this object to the batch, only rendered if it has a texture.
-        let child
-        let next
+        let child: LinkedListChild | null
+        let next: LinkedListChild | null
         // now loop through the children and make sure they get rendered
         for (child = this._firstChild; child; child = next) {
             next = child.nextChild
@@ -502,8 +502,8 @@ export class LinkedListContainer extends Container {
             renderer.maskManager.pushMask(this._mask)
         }
         (this as any)._renderCanvas(renderer)
-        let child
-        let next
+        let child: LinkedListChild | null
+        let next: LinkedListChild | null
         for (child = this._firstChild; child; child = next) {
             next = child.nextChild;
             (child as any).renderCanvas(renderer)

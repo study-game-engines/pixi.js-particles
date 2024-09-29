@@ -100,7 +100,6 @@ export class PropertyList<V> {
         } else if (first.isStepped) {
             this.interpolate = this.isColor ? intColorStepped : intValueStepped
             this.interpolate = this.isColor ? intColorComplex : intValueComplex
-        } else {
         }
         this.ease = this.first.ease
     }
