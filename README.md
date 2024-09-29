@@ -1,8 +1,9 @@
 # Get Started
 
+- code: 2800 loc
 - install: `npm install`
 - run: `npm run predocs-live`
-- loc: 2800
+- main: `docs/examples/index.html`
 
 # PixiJS Particle Emitter
 
