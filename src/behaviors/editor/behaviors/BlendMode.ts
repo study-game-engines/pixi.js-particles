@@ -26,9 +26,7 @@ BlendModeBehavior.editorConfig = {
             title: 'Blend Mode',
             description: 'Blend mode of all particles. IMPORTANT - The WebGL renderer only supports the Normal, Add, Multiply and Screen blend modes. Anything else will silently act like Normal.',
             default: 'NORMAL',
-            options: Object.keys(BLEND_MODES)
-            .filter((key) => !(/\d/).test(key))
-            .map((key) => ({ value: key, label: makeReadable(key) })),
+            options: Object.keys(BLEND_MODES).filter((key) => !(/\d/).test(key)).map((key) => ({ value: key, label: makeReadable(key) })),
         },
     ],
 };
