@@ -1,4 +1,4 @@
-import { AlphaBehavior, StaticAlphaBehavior } from '../../Alpha';
+import { AlphaBehavior, StaticAlphaBehavior } from '../../Alpha'
 
 AlphaBehavior.editorConfig = {
     category: 'alpha',
@@ -14,7 +14,7 @@ AlphaBehavior.editorConfig = {
             max: 1,
         },
     ],
-};
+}
 
 StaticAlphaBehavior.editorConfig = {
     category: 'alpha',
@@ -30,4 +30,4 @@ StaticAlphaBehavior.editorConfig = {
             max: 1,
         },
     ],
-};
+}

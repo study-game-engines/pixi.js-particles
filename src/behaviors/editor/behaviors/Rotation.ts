@@ -1,4 +1,4 @@
-import { RotationBehavior, StaticRotationBehavior, NoRotationBehavior } from '../../Rotation';
+import { RotationBehavior, StaticRotationBehavior, NoRotationBehavior } from '../../Rotation'
 
 RotationBehavior.editorConfig = {
     category: 'rotation',
@@ -40,7 +40,7 @@ RotationBehavior.editorConfig = {
             default: 0,
         },
     ],
-};
+}
 
 StaticRotationBehavior.editorConfig = {
     category: 'rotation',
@@ -61,10 +61,10 @@ StaticRotationBehavior.editorConfig = {
             default: 0,
         },
     ],
-};
+}
 
 NoRotationBehavior.editorConfig = {
     category: 'rotation',
     title: 'No Rotation',
     props: [],
-};
+}

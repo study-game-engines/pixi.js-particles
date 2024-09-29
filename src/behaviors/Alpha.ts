@@ -1,8 +1,8 @@
-import { Particle } from '../Particle';
-import { PropertyList } from '../PropertyList';
-import { PropertyNode, ValueList } from '../PropertyNode';
-import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
-import { BehaviorEditorConfig } from './editor/Types';
+import { Particle } from '../Particle'
+import { PropertyList } from '../PropertyList'
+import { PropertyNode, ValueList } from '../PropertyNode'
+import { IEmitterBehavior, BehaviorOrder } from './Behaviors'
+import { BehaviorEditorConfig } from './editor/Types'
 
 /**
  * An Alpha behavior that applies an interpolated or stepped list of values to the particle's opacity.
@@ -19,28 +19,28 @@ import { BehaviorEditorConfig } from './editor/Types';
  */
 export class AlphaBehavior implements IEmitterBehavior {
 
-    public static type = 'alpha';
-    public static editorConfig: BehaviorEditorConfig = null;
-    public order = BehaviorOrder.Normal;
-    private list: PropertyList<number>;
+    public static type = 'alpha'
+    public static editorConfig: BehaviorEditorConfig = null
+    public order = BehaviorOrder.Normal
+    private list: PropertyList<number>
 
     constructor(config: {
-        alpha: ValueList<number>;
+        alpha: ValueList<number>
     }) {
-        this.list = new PropertyList(false);
-        this.list.reset(PropertyNode.createList(config.alpha));
+        this.list = new PropertyList(false)
+        this.list.reset(PropertyNode.createList(config.alpha))
     }
 
     initParticles(first: Particle): void {
-        let next = first;
+        let next = first
         while (next) {
-            next.alpha = this.list.first.value;
-            next = next.next;
+            next.alpha = this.list.first.value
+            next = next.next
         }
     }
 
     updateParticle(particle: Particle): void {
-        particle.alpha = this.list.interpolate(particle.agePercent);
+        particle.alpha = this.list.interpolate(particle.agePercent)
     }
 
 }
@@ -58,23 +58,23 @@ export class AlphaBehavior implements IEmitterBehavior {
  */
 export class StaticAlphaBehavior implements IEmitterBehavior {
 
-    public static type = 'alphaStatic';
-    public static editorConfig: BehaviorEditorConfig = null;
+    public static type = 'alphaStatic'
+    public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal;
-    private value: number;
+    public order = BehaviorOrder.Normal
+    private value: number
 
     constructor(config: {
-        alpha: number;
+        alpha: number
     }) {
-        this.value = config.alpha;
+        this.value = config.alpha
     }
 
     initParticles(first: Particle): void {
-        let next = first;
+        let next = first
         while (next) {
-            next.alpha = this.value;
-            next = next.next;
+            next.alpha = this.value
+            next = next.next
         }
     }
 

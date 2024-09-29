@@ -1,3 +1,3 @@
-import './behaviors/editor';
+import './behaviors/editor'
 
-export * from './index';
+export * from './index'

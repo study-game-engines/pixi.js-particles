@@ -1,4 +1,4 @@
-import { ColorBehavior, StaticColorBehavior } from '../../Color';
+import { ColorBehavior, StaticColorBehavior } from '../../Color'
 
 ColorBehavior.editorConfig = {
     category: 'color',
@@ -12,7 +12,7 @@ ColorBehavior.editorConfig = {
             default: '#ffffff',
         },
     ],
-};
+}
 
 StaticColorBehavior.editorConfig = {
     category: 'color',
@@ -26,4 +26,4 @@ StaticColorBehavior.editorConfig = {
             default: '#ffffff',
         },
     ],
-};
+}

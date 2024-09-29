@@ -1,4 +1,4 @@
-import { ShapeSpawnBehavior } from '../../ShapeSpawn';
+import { ShapeSpawnBehavior } from '../../ShapeSpawn'
 
 ShapeSpawnBehavior.editorConfig = {
     category: 'spawn',
@@ -13,4 +13,4 @@ ShapeSpawnBehavior.editorConfig = {
             configName: 'data',
         },
     ],
-};
+}

@@ -1,4 +1,4 @@
-import { PolygonalChain } from '../../shapes';
+import { PolygonalChain } from '../../shapes'
 
 PolygonalChain.editorConfig = {
     type: 'list',
@@ -18,4 +18,4 @@ PolygonalChain.editorConfig = {
             default: { x: 0, y: 0 },
         },
     },
-};
+}

@@ -1,4 +1,4 @@
-import { OrderedTextureBehavior } from '../../OrderedTexture';
+import { OrderedTextureBehavior } from '../../OrderedTexture'
 
 OrderedTextureBehavior.editorConfig = {
     category: 'art',
@@ -17,4 +17,4 @@ OrderedTextureBehavior.editorConfig = {
             },
         },
     ],
-};
+}

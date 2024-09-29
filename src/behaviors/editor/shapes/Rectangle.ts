@@ -1,4 +1,4 @@
-import { Rectangle } from '../../shapes';
+import { Rectangle } from '../../shapes'
 
 Rectangle.editorConfig = {
     type: 'object',
@@ -35,4 +35,4 @@ Rectangle.editorConfig = {
             default: 10,
         },
     ],
-};
+}

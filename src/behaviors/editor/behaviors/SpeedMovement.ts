@@ -1,4 +1,4 @@
-import { SpeedBehavior, StaticSpeedBehavior } from '../../SpeedMovement';
+import { SpeedBehavior, StaticSpeedBehavior } from '../../SpeedMovement'
 
 SpeedBehavior.editorConfig = {
     category: 'movement',
@@ -23,7 +23,7 @@ SpeedBehavior.editorConfig = {
             max: 1,
         },
     ],
-};
+}
 
 StaticSpeedBehavior.editorConfig = {
     category: 'movement',
@@ -46,4 +46,4 @@ StaticSpeedBehavior.editorConfig = {
             min: 0,
         },
     ],
-};
+}

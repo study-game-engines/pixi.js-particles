@@ -1,4 +1,4 @@
-import { PathBehavior } from '../../PathMovement';
+import { PathBehavior } from '../../PathMovement'
 
 PathBehavior.editorConfig = {
     category: 'movement',
@@ -29,4 +29,4 @@ PathBehavior.editorConfig = {
             max: 1,
         },
     ],
-};
+}

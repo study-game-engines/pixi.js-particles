@@ -1,5 +1,5 @@
-import { RandomAnimatedTextureBehavior, SingleAnimatedTextureBehavior } from '../../AnimatedTexture';
-import { ObjectProperty } from '../Types';
+import { RandomAnimatedTextureBehavior, SingleAnimatedTextureBehavior } from '../../AnimatedTexture'
+import { ObjectProperty } from '../Types'
 
 const AnimatedArt: ObjectProperty = {
     type: 'object',
@@ -51,7 +51,7 @@ const AnimatedArt: ObjectProperty = {
             },
         },
     ],
-};
+}
 
 RandomAnimatedTextureBehavior.editorConfig = {
     category: 'art',
@@ -65,7 +65,7 @@ RandomAnimatedTextureBehavior.editorConfig = {
             entryType: AnimatedArt,
         },
     ],
-};
+}
 
 SingleAnimatedTextureBehavior.editorConfig = {
     category: 'art',
@@ -73,4 +73,4 @@ SingleAnimatedTextureBehavior.editorConfig = {
     props: [
         AnimatedArt,
     ],
-};
+}

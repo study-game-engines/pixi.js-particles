@@ -1,4 +1,4 @@
-import { RandomTextureBehavior } from '../../RandomTexture';
+import { RandomTextureBehavior } from '../../RandomTexture'
 
 RandomTextureBehavior.editorConfig = {
     category: 'art',
@@ -17,4 +17,4 @@ RandomTextureBehavior.editorConfig = {
             },
         },
     ],
-};
+}

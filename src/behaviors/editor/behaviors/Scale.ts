@@ -1,4 +1,4 @@
-import { ScaleBehavior, StaticScaleBehavior } from '../../Scale';
+import { ScaleBehavior, StaticScaleBehavior } from '../../Scale'
 
 ScaleBehavior.editorConfig = {
     category: 'scale',
@@ -23,7 +23,7 @@ ScaleBehavior.editorConfig = {
             max: 1,
         },
     ],
-};
+}
 
 StaticScaleBehavior.editorConfig = {
     category: 'scale',
@@ -46,4 +46,4 @@ StaticScaleBehavior.editorConfig = {
             min: 0,
         },
     ],
-};
+}

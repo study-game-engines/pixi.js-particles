@@ -1,4 +1,4 @@
-import { BurstSpawnBehavior } from '../../BurstSpawn';
+import { BurstSpawnBehavior } from '../../BurstSpawn'
 
 BurstSpawnBehavior.editorConfig = {
     category: 'spawn',
@@ -27,4 +27,4 @@ BurstSpawnBehavior.editorConfig = {
             min: 0,
         },
     ],
-};
+}

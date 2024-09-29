@@ -1,4 +1,4 @@
-import { AccelerationBehavior } from '../../AccelerationMovement';
+import { AccelerationBehavior } from '../../AccelerationMovement'
 
 AccelerationBehavior.editorConfig = {
     category: 'movement',
@@ -44,4 +44,4 @@ AccelerationBehavior.editorConfig = {
             min: 0,
         },
     ],
-};
+}

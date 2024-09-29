@@ -1,9 +1,9 @@
-import { Particle } from '../Particle';
-import { Color, combineRGBComponents } from '../ParticleUtils';
-import { PropertyList } from '../PropertyList';
-import { PropertyNode, ValueList } from '../PropertyNode';
-import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
-import { BehaviorEditorConfig } from './editor/Types';
+import { Particle } from '../Particle'
+import { Color, combineRGBComponents } from '../ParticleUtils'
+import { PropertyList } from '../PropertyList'
+import { PropertyNode, ValueList } from '../PropertyNode'
+import { IEmitterBehavior, BehaviorOrder } from './Behaviors'
+import { BehaviorEditorConfig } from './editor/Types'
 
 /**
  * A Color behavior that applies an interpolated or stepped list of values to the particle's tint property.
@@ -20,30 +20,30 @@ import { BehaviorEditorConfig } from './editor/Types';
  */
 export class ColorBehavior implements IEmitterBehavior {
 
-    public static type = 'color';
-    public static editorConfig: BehaviorEditorConfig = null;
-    public order = BehaviorOrder.Normal;
-    private list: PropertyList<Color>;
+    public static type = 'color'
+    public static editorConfig: BehaviorEditorConfig = null
+    public order = BehaviorOrder.Normal
+    private list: PropertyList<Color>
 
     constructor(config: {
-        color: ValueList<string>; // Color of the particles as 6 digit hex codes.
+        color: ValueList<string> // Color of the particles as 6 digit hex codes.
     }) {
-        this.list = new PropertyList(true);
-        this.list.reset(PropertyNode.createList(config.color));
+        this.list = new PropertyList(true)
+        this.list.reset(PropertyNode.createList(config.color))
     }
 
     initParticles(first: Particle): void {
-        let next = first;
-        const color = this.list.first.value;
-        const tint = combineRGBComponents(color.r, color.g, color.b);
+        let next = first
+        const color = this.list.first.value
+        const tint = combineRGBComponents(color.r, color.g, color.b)
         while (next) {
-            next.tint = tint;
-            next = next.next;
+            next.tint = tint
+            next = next.next
         }
     }
 
     updateParticle(particle: Particle): void {
-        particle.tint = this.list.interpolate(particle.agePercent);
+        particle.tint = this.list.interpolate(particle.agePercent)
     }
 
 }
@@ -61,28 +61,28 @@ export class ColorBehavior implements IEmitterBehavior {
  */
 export class StaticColorBehavior implements IEmitterBehavior {
 
-    public static type = 'colorStatic';
-    public static editorConfig: BehaviorEditorConfig = null;
-    public order = BehaviorOrder.Normal;
-    private value: number;
+    public static type = 'colorStatic'
+    public static editorConfig: BehaviorEditorConfig = null
+    public order = BehaviorOrder.Normal
+    private value: number
 
     constructor(config: {
-        color: string; // Color of the particles as 6 digit hex codes.
+        color: string // Color of the particles as 6 digit hex codes.
     }) {
-        let color = config.color;
+        let color = config.color
         if (color.charAt(0) === '#') {
-            color = color.substr(1);
+            color = color.substr(1)
         } else if (color.indexOf('0x') === 0) {
-            color = color.substr(2);
+            color = color.substr(2)
         }
-        this.value = parseInt(color, 16);
+        this.value = parseInt(color, 16)
     }
 
     initParticles(first: Particle): void {
-        let next = first;
+        let next = first
         while (next) {
-            next.tint = this.value;
-            next = next.next;
+            next.tint = this.value
+            next = next.next
         }
     }
 

@@ -1,18 +1,18 @@
-import { BlendModeBehavior } from '../../BlendMode';
-import { BLEND_MODES } from '@pixi/constants';
+import { BlendModeBehavior } from '../../BlendMode'
+import { BLEND_MODES } from '@pixi/constants'
 
 function makeReadable(input: string) {
-    const words = input.split('_');
+    const words = input.split('_')
     for (let i = 0; i < words.length; ++i) {
         if (words[i] === 'SRC') {
-            words[i] = 'Source';
+            words[i] = 'Source'
         } else if (words[i] === 'DST') {
-            words[i] = 'Destination';
+            words[i] = 'Destination'
         } else {
-            words[i] = words[i][0] + words[i].substring(1).toLowerCase();
+            words[i] = words[i][0] + words[i].substring(1).toLowerCase()
         }
     }
-    return words.join(' ');
+    return words.join(' ')
 }
 
 BlendModeBehavior.editorConfig = {
@@ -28,4 +28,4 @@ BlendModeBehavior.editorConfig = {
             options: Object.keys(BLEND_MODES).filter((key) => !(/\d/).test(key)).map((key) => ({ value: key, label: makeReadable(key) })),
         },
     ],
-};
+}

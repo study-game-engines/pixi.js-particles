@@ -1,4 +1,4 @@
-import { SingleTextureBehavior } from '../../SingleTexture';
+import { SingleTextureBehavior } from '../../SingleTexture'
 
 SingleTextureBehavior.editorConfig = {
     category: 'art',
@@ -11,4 +11,4 @@ SingleTextureBehavior.editorConfig = {
             description: 'Image to use for each particle',
         },
     ],
-};
+}
