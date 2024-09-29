@@ -1,9 +1,8 @@
-# How to Run
+# Get Started
 
-```
-npm install
-npm run predocs-live
-```
+- install: `npm install`
+- run: `npm run predocs-live`
+- loc: 2800
 
 # PixiJS Particle Emitter
 
