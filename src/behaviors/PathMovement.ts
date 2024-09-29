@@ -52,15 +52,12 @@ const MATH_FUNCS = [
     'tanh',
 ];
 
-// create an actual regular expression object from the string
-const WHITELISTER = new RegExp([
-    '[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]', // Allow the 4 basic operations, parentheses and all numbers/decimals, as well as 'x', for the variable usage.
-].concat(MATH_FUNCS)
-    .join('|'), 'g');
+// Allow the 4 basic operations, parentheses and all numbers/decimals, as well as 'x', for the variable usage.
+const WHITE_LISTER = new RegExp(['[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]'].concat(MATH_FUNCS).join('|'), 'g');
 
 // Parses a string into a function for path following. This involves whitelisting the string for safety, inserting "Math." to math function names, and using `new Function()` to generate a function.
 function parsePath(pathString: string): (x: number) => number {
-    const matches = pathString.match(WHITELISTER);
+    const matches = pathString.match(WHITE_LISTER);
     for (let i = matches.length - 1; i >= 0; --i) {
         if (MATH_FUNCS.indexOf(matches[i]) >= 0) {
             matches[i] = `Math.${matches[i]}`;
@@ -138,9 +135,8 @@ export class PathBehavior implements IEmitterBehavior {
         let next = first;
         while (next) {
             next.config.initRotation = next.rotation; // The initial rotation in degrees of the particle, because the direction of the path is based on that.
-            // The initial position of the particle, as all path movement is added to that
             if (!next.config.initPosition) {
-                next.config.initPosition = new Point(next.x, next.y);
+                next.config.initPosition = new Point(next.x, next.y); // The initial position of the particle, as all path movement is added to that
             } else {
                 (next.config.initPosition as Point).copyFrom(next.position);
             }

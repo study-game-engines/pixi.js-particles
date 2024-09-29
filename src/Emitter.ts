@@ -15,12 +15,7 @@ export class Emitter {
 
     private static knownBehaviors: { [key: string]: IEmitterBehaviorClass } = {};
 
-    /**
-     * Registers a new behavior, so that it will be recognized when initializing emitters.
-     * Behaviors registered later with duplicate types will override older ones, although there is no limit on
-     * the allowed types.
-     * @param constructor The behavior class to register.
-     */
+    // Registers a new behavior, so that it will be recognized when initializing emitters. Behaviors registered later with duplicate types will override older ones, although there is no limit on the allowed types.
     public static registerBehavior(constructor: IEmitterBehaviorClass): void {
         Emitter.knownBehaviors[constructor.type] = constructor;
     }
@@ -29,13 +24,13 @@ export class Emitter {
     protected updateBehaviors: IEmitterBehavior[]; // Active update behaviors for this emitter.
     protected recycleBehaviors: IEmitterBehavior[]; // Active recycle behaviors for this emitter.
 
-    /* properties for individual particles */
+    /* individual particles */
 
     public minLifetime: number; // The minimum lifetime for a particle, in seconds.
     public maxLifetime: number; // The maximum lifetime for a particle, in seconds.
     public customEase: SimpleEase; // An easing function for nonlinear interpolation of values. Accepts a single parameter of time as a value from 0-1, inclusive. Expected outputs are values from 0-1, inclusive.
 
-    /* properties for spawning particles */
+    /* spawning particles */
 
     protected _frequency: number; // Time between particle spawns in seconds.
     public spawnChance: number; // Chance that a particle will be spawned on each opportunity to spawn one. 0 is 0%, 1 is 100%.
@@ -73,11 +68,15 @@ export class Emitter {
         this.initBehaviors = [];
         this.updateBehaviors = [];
         this.recycleBehaviors = [];
-        // properties for individual particles
+
+        /* individual particles */
+
         this.minLifetime = 0;
         this.maxLifetime = 0;
         this.customEase = null;
-        // properties for spawning particles
+
+        /* spawning particles */
+
         this._frequency = 1;
         this.spawnChance = 1;
         this.maxParticles = 1000;
@@ -104,14 +103,16 @@ export class Emitter {
         this._destroyWhenComplete = false;
         this._completeCallback = null;
 
-        // set the initial parent
+        /* initial parent */
+
         this.parent = particleParent;
 
         if (config) {
             this.init(config);
         }
 
-        // save often used functions on the instance instead of the prototype for better speed
+        /* save often used functions on the instance instead of the prototype for better speed */
+
         this.recycle = this.recycle;
         this.update = this.update;
         this.rotate = this.rotate;
@@ -200,7 +201,7 @@ export class Emitter {
             }
             return new constructor(data.config);
         })
-            .filter((b) => !!b);
+        .filter((b) => !!b);
 
         behaviors.push(PositionParticle);
         behaviors.sort((a, b) => {
@@ -277,11 +278,7 @@ export class Emitter {
         this.spawnPos.y = y;
     }
 
-    /**
-     * Changes the position of the emitter's owner. You should call this if you are adding particles to the world container that your emitter's owner is moving around in.
-     * @param x The new x value of the emitter's owner.
-     * @param y The new y value of the emitter's owner.
-     */
+    // Changes the position of the emitter's owner. You should call this if you are adding particles to the world container that your emitter's owner is moving around in.
     public updateOwnerPos(x: number, y: number): void {
         this._posChanged = true;
         this.ownerPos.x = x;
@@ -340,7 +337,7 @@ export class Emitter {
             return; // if we don't have a parent to add particles to, then don't do anything. this also works as a isDestroyed check
         }
 
-        /* update existing particles */
+        /* existing particles */
 
         // update all particle lifetimes before turning them over to behaviors
         for (let particle = this._activeParticlesFirst, next; particle; particle = next) {
@@ -382,7 +379,7 @@ export class Emitter {
         const curX = this.ownerPos.x + this.spawnPos.x;
         const curY = this.ownerPos.y + this.spawnPos.y;
 
-        /* spawn new particles */
+        /* new particles */
 
         if (this._emit) {
             this._spawnTimer -= delta < 0 ? 0 : delta; // decrease spawn timer
@@ -442,7 +439,8 @@ export class Emitter {
                         particle = new Particle(this);
                     }
 
-                    // initialize particle
+                    /* initialize */
+
                     particle.init(lifetime);
                     // add the particle to the display list
                     if (this.addAtBack) {
@@ -609,18 +607,15 @@ export class Emitter {
             for (let i = 0; i < this.initBehaviors.length; ++i) {
                 const behavior = this.initBehaviors[i];
 
-                // if we hit our special key, interrupt behaviors to apply
-                // emitter position/rotation
+                // if we hit our special key, interrupt behaviors to apply emitter position/rotation
                 if (behavior === PositionParticle) {
                     for (let particle = waveFirst, next; particle; particle = next) {
-                        // save next particle in case we recycle this one
-                        next = particle.next;
+                        next = particle.next; // save next particle in case we recycle this one
                         // rotate the particle's position by the emitter's rotation
                         if (this.rotation !== 0) {
                             rotatePoint(this.rotation, particle.position);
                             particle.rotation += this.rotation;
                         }
-                        // offset by the emitter's position
                         particle.position.x += emitPosX;
                         particle.position.y += emitPosY;
                     }
@@ -654,7 +649,7 @@ export class Emitter {
         this.cleanup(); // puts all active particles in the pool, and removes them from the particle parent
         let next; // wipe the pool clean
         for (let particle = this._poolFirst; particle; particle = next) {
-            next = particle.next; // store next value so we don't lose it in our destroy call
+            next = particle.next; // store next value, so we don't lose it in our destroy call
             particle.destroy();
         }
         this._poolFirst = this._parent = this.spawnPos = this.ownerPos = this.customEase = this._completeCallback = null;

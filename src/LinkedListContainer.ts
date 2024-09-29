@@ -270,12 +270,10 @@ export class LinkedListContainer extends Container {
             if (this._lastChild === child) {
                 this._lastChild = child.prevChild;
             }
-            // clear sibling references
             child.nextChild = null;
             child.prevChild = null;
             --this._childCount; // update child count
             this._boundsID++; // ensure bounds will be recalculated
-            // TODO - lets either do all callbacks or all events.. not both!
             this.onChildrenChange();
             child.emit('removed', this);
             this.emit('childRemoved', child, this);
@@ -324,7 +322,6 @@ export class LinkedListContainer extends Container {
         child.prevChild = null;
         --this._childCount; // update child count
         this._boundsID++; // ensure bounds will be recalculated
-        // TODO - lets either do all callbacks or all events.. not both!
         this.onChildrenChange(index);
         child.emit('removed', this);
         this.emit('childRemoved', child, this, index);
@@ -384,7 +381,7 @@ export class LinkedListContainer extends Container {
     updateTransform(): void {
         this._boundsID++;
         this.transform.updateTransform(this.parent.transform);
-        this.worldAlpha = this.alpha * this.parent.worldAlpha; // TODO: check render flags, how to process stuff here
+        this.worldAlpha = this.alpha * this.parent.worldAlpha;
         let child;
         let next;
         for (child = this._firstChild; child; child = next) {
@@ -407,7 +404,6 @@ export class LinkedListContainer extends Container {
                 continue;
             }
             child.calculateBounds();
-            // TODO: filter+mask, need to mask both somehow
             if (child._mask) {
                 const maskObject = ((child._mask as MaskData).maskObject || child._mask) as Container;
                 maskObject.calculateBounds();

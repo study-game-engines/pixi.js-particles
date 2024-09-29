@@ -126,8 +126,7 @@ export function getBlendMode(name: string): number {
     if (!name) {
         return BLEND_MODES.NORMAL;
     }
-    name = name.toUpperCase()
-        .replace(/ /g, '_');
+    name = name.toUpperCase().replace(/ /g, '_');
     return (BLEND_MODES as any)[name] || BLEND_MODES.NORMAL;
 }
 

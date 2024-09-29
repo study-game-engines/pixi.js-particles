@@ -18,7 +18,7 @@ export class PointSpawnBehavior implements IEmitterBehavior {
     order = BehaviorOrder.Spawn;
 
     initParticles(_first: Particle): void {
-        // really just a no-op
+        // no op
     }
 
 }

@@ -22,7 +22,7 @@ export class BlendModeBehavior implements IEmitterBehavior {
     private value: string;
 
     constructor(config: {
-        blendMode: string; // Blend mode of all particles. This value is a key from [PixiJs's BLEND_MODE enum](https://pixijs.download/release/docs/PIXI.html#BLEND_MODES).
+        blendMode: string; // Blend mode of all particles https://pixijs.download/release/docs/PIXI.html#BLEND_MODES
     }) {
         this.value = config.blendMode;
     }

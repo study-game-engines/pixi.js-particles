@@ -38,9 +38,9 @@ export interface RandNumber {
  */
 export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: any): EmitterConfigV3 {
     if ('behaviors' in config) {
-        return config; // just ensure we aren't given any V3 config data
+        return config; // ensure we aren't given any V3 config data
     }
-    const out: EmitterConfigV3 = {
+    const result: EmitterConfigV3 = {
         lifetime: config.lifetime,
         ease: config.ease,
         particlesPerWave: config.particlesPerWave,
@@ -54,13 +54,11 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
         autoUpdate: config.autoUpdate,
         behaviors: [],
     };
-
-    //
     if (config.alpha) {
         if ('start' in config.alpha) {
             if (config.alpha.start === config.alpha.end) {
                 if (config.alpha.start !== 1) {
-                    out.behaviors.push({
+                    result.behaviors.push({
                         type: 'alphaStatic',
                         config: { alpha: config.alpha.start },
                     });
@@ -73,27 +71,25 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                     ],
                 };
 
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'alpha',
                     config: { alpha: list },
                 });
             }
         } else if (config.alpha.list.length === 1) {
             if (config.alpha.list[0].value !== 1) {
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'alphaStatic',
                     config: { alpha: config.alpha.list[0].value },
                 });
             }
         } else {
-            out.behaviors.push({
+            result.behaviors.push({
                 type: 'alpha',
                 config: { alpha: config.alpha },
             });
         }
     }
-
-    // acceleration movement
     if (config.acceleration && (config.acceleration.x || config.acceleration.y)) {
         let minStart: number;
         let maxStart: number;
@@ -104,7 +100,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
             minStart = config.speed.list[0].value * ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1);
             maxStart = config.speed.list[0].value;
         }
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'moveAcceleration',
             config: {
                 accel: config.acceleration,
@@ -114,10 +110,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 maxSpeed: config.maxSpeed,
             },
         });
-    }
-
-    // path movement
-    else if (config.extraData?.path) {
+    } else if (config.extraData?.path) {
         let list: ValueList<number>;
         let mult: number;
 
@@ -139,7 +132,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
             list = config.speed;
             mult = ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1);
         }
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'movePath',
             config: {
                 path: config.extraData.path,
@@ -147,14 +140,11 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 minMult: mult,
             },
         });
-    }
-
-    // normal speed movement
-    else {
+    } else {
         if (config.speed) {
             if ('start' in config.speed) {
                 if (config.speed.start === config.speed.end) {
-                    out.behaviors.push({
+                    result.behaviors.push({
                         type: 'moveSpeedStatic',
                         config: {
                             min: config.speed.start * (config.speed.minimumSpeedMultiplier ?? 1),
@@ -168,14 +158,13 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                             { time: 1, value: config.speed.end },
                         ],
                     };
-
-                    out.behaviors.push({
+                    result.behaviors.push({
                         type: 'moveSpeed',
                         config: { speed: list, minMult: config.speed.minimumSpeedMultiplier },
                     });
                 }
             } else if (config.speed.list.length === 1) {
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'moveSpeedStatic',
                     config: {
                         min: config.speed.list[0].value * ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1),
@@ -183,21 +172,18 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                     },
                 });
             } else {
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'moveSpeed',
                     config: { speed: config.speed, minMult: ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1) },
                 });
             }
         }
     }
-
-    // scale
     if (config.scale) {
         if ('start' in config.scale) {
-            const mult = config.scale.minimumScaleMultiplier ?? 1;
-
+            const mult: number = config.scale.minimumScaleMultiplier ?? 1;
             if (config.scale.start === config.scale.end) {
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'scaleStatic',
                     config: {
                         min: config.scale.start * mult,
@@ -211,8 +197,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                         { time: 1, value: config.scale.end },
                     ],
                 };
-
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'scale',
                     config: { scale: list, minMult: mult },
                 });
@@ -220,25 +205,22 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
         } else if (config.scale.list.length === 1) {
             const mult = (config as EmitterConfigV2).minimumScaleMultiplier ?? 1;
             const scale = config.scale.list[0].value;
-
-            out.behaviors.push({
+            result.behaviors.push({
                 type: 'scaleStatic',
                 config: { min: scale * mult, max: scale },
             });
         } else {
-            out.behaviors.push({
+            result.behaviors.push({
                 type: 'scale',
                 config: { scale: config.scale, minMult: (config as EmitterConfigV2).minimumScaleMultiplier ?? 1 },
             });
         }
     }
-
-    // color
     if (config.color) {
         if ('start' in config.color) {
             if (config.color.start === config.color.end) {
                 if (config.color.start !== 'ffffff') {
-                    out.behaviors.push({
+                    result.behaviors.push({
                         type: 'colorStatic',
                         config: { color: config.color.start },
                     });
@@ -250,30 +232,27 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                         { time: 1, value: config.color.end },
                     ],
                 };
-
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'color',
                     config: { color: list },
                 });
             }
         } else if (config.color.list.length === 1) {
             if (config.color.list[0].value !== 'ffffff') {
-                out.behaviors.push({
+                result.behaviors.push({
                     type: 'colorStatic',
                     config: { color: config.color.list[0].value },
                 });
             }
         } else {
-            out.behaviors.push({
+            result.behaviors.push({
                 type: 'color',
                 config: { color: config.color },
             });
         }
     }
-
-    // rotation
     if (config.rotationAcceleration || config.rotationSpeed?.min || config.rotationSpeed?.max) {
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'rotation',
             config: {
                 accel: config.rotationAcceleration || 0,
@@ -284,7 +263,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
             },
         });
     } else if (config.startRotation?.min || config.startRotation?.max) {
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'rotationStatic',
             config: {
                 min: config.startRotation?.min || 0,
@@ -293,30 +272,26 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
         });
     }
     if (config.noRotation) {
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'noRotation',
             config: {},
         });
     }
-
-    // blend mode
     if (config.blendMode && config.blendMode !== 'normal') {
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'blendMode',
             config: {
                 blendMode: config.blendMode,
             },
         });
     }
-
-    // animated
     if (Array.isArray(art) && typeof art[0] !== 'string' && 'framerate' in art[0]) {
         for (let i = 0; i < art.length; ++i) {
             if (art[i].framerate === 'matchLife') {
                 art[i].framerate = -1;
             }
         }
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'animatedRandom',
             config: {
                 anims: art,
@@ -326,44 +301,36 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
         if (art.framerate === 'matchLife') {
             art.framerate = -1;
         }
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'animatedSingle',
             config: {
                 anim: art,
             },
         });
-    }
-    // ordered art
-    else if (config.orderedArt && Array.isArray(art)) {
-        out.behaviors.push({
+    } else if (config.orderedArt && Array.isArray(art)) {
+        result.behaviors.push({
             type: 'textureOrdered',
             config: {
                 textures: art,
             },
         });
-    }
-    // random texture
-    else if (Array.isArray(art)) {
-        out.behaviors.push({
+    } else if (Array.isArray(art)) {
+        result.behaviors.push({
             type: 'textureRandom',
             config: {
                 textures: art,
             },
         });
-    }
-    // single texture
-    else {
-        out.behaviors.push({
+    } else {
+        result.behaviors.push({
             type: 'textureSingle',
             config: {
                 texture: art,
             },
         });
     }
-
-    // spawn burst
     if (config.spawnType === 'burst') {
-        out.behaviors.push({
+        result.behaviors.push({
             type: 'spawnBurst',
             config: {
                 start: config.angleStart || 0,
@@ -372,18 +339,13 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 distance: 0,
             },
         });
-    }
-    // spawn point
-    else if (config.spawnType === 'point') {
-        out.behaviors.push({
+    } else if (config.spawnType === 'point') {
+        result.behaviors.push({
             type: 'spawnPoint',
             config: {},
         });
-    }
-    // spawn shape
-    else {
+    } else {
         let shape: any;
-
         if (config.spawnType === 'ring') {
             shape = {
                 type: 'torus',
@@ -417,16 +379,14 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 data: config.spawnPolygon,
             };
         }
-
         if (shape) {
-            out.behaviors.push({
+            result.behaviors.push({
                 type: 'spawnShape',
                 config: shape,
             });
         }
     }
-
-    return out;
+    return result;
 }
 
 // The obsolete emitter configuration format from version 3.0.0 of the library. This type information is kept to make it easy to upgrade, but otherwise configuration should be made as {@link EmitterConfigV3}.
@@ -448,7 +408,7 @@ export interface EmitterConfigV2 {
     ease?: SimpleEase | EaseSegment[];
     extraData?: any;
     particlesPerWave?: number;
-    spawnType?: string; // Really "rect"|"circle"|"ring"|"burst"|"point"|"polygonalChain", but that tends to be too strict for random object creation.
+    spawnType?: string; // Really "rect" | "circle" | "ring" | "burst" | "point" | "polygonalChain", but that tends to be too strict for random object creation.
     spawnRect?: { x: number; y: number; w: number; h: number };
     spawnCircle?: { x: number; y: number; r: number; minR?: number };
     particleSpacing?: number;
@@ -487,7 +447,7 @@ export interface EmitterConfigV1 {
     ease?: SimpleEase | EaseSegment[];
     extraData?: any;
     particlesPerWave?: number;
-    spawnType?: string; // Really "rect"|"circle"|"ring"|"burst"|"point"|"polygonalChain", but that tends to be too strict for random object creation.
+    spawnType?: string; // because "rect" | "circle" | "ring" | "burst" | "point" | "polygonalChain" is too strict for random object creation
     spawnRect?: { x: number; y: number; w: number; h: number };
     spawnCircle?: { x: number; y: number; r: number; minR?: number };
     particleSpacing?: number;
