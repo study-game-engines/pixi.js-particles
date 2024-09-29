@@ -61,7 +61,7 @@ export class PropertyNode<V> {
             first.isStepped = !!data.isStepped
             return first as PropertyNode<T extends string ? Color : T>
         }
-        const start = new PropertyNode(typeof data.start === 'string' ? hexToRGB(data.start) : data.start, 0) // Handle deprecated version here
+        const start: PropertyNode<Color | T> = new PropertyNode(typeof data.start === 'string' ? hexToRGB(data.start) : data.start, 0) // Handle deprecated version here
         if (data.end !== data.start) {
             start.next = new PropertyNode(typeof data.end === 'string' ? hexToRGB(data.end) : data.end, 1) // only set up a next value if it is different from the starting value
         }
