@@ -16,32 +16,25 @@ import { BehaviorEditorConfig } from './editor/Types';
  * }
  * ```
  */
-export class BlendModeBehavior implements IEmitterBehavior
-{
+export class BlendModeBehavior implements IEmitterBehavior {
+
     public static type = 'blendMode';
     public static editorConfig: BehaviorEditorConfig = null;
-
     public order = BehaviorOrder.Normal;
     private value: string;
+
     constructor(config: {
-        /**
-         * Blend mode of all particles. This value is a key from
-         * [PixiJs's BLEND_MODE enum](https://pixijs.download/release/docs/PIXI.html#BLEND_MODES).
-         */
-        blendMode: string;
-    })
-    {
+        blendMode: string; // Blend mode of all particles. This value is a key from [PixiJs's BLEND_MODE enum](https://pixijs.download/release/docs/PIXI.html#BLEND_MODES).
+    }) {
         this.value = config.blendMode;
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
+        while (next) {
             next.blendMode = getBlendMode(this.value);
             next = next.next;
         }
     }
+
 }

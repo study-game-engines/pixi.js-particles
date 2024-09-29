@@ -1,53 +1,19 @@
 import { Particle } from '../Particle';
 import { BehaviorEditorConfig } from './editor/Types';
 
-/**
- * All behaviors instances must implement this interface, and the class must match the
- * {@link IEmitterBehaviorClass} interface. All behaviors must have an order property and
- * `initParticles` method. Implementing the `updateParticle` or `recycleParticle` methods is optional.
- */
+// All behaviors instances must implement this interface, and the class must match the {@link IEmitterBehaviorClass} interface. All behaviors must have an order property and `initParticles` method. Implementing the `updateParticle` or `recycleParticle` methods is optional.
 export interface IEmitterBehavior {
-    /**
-     * Order in which the behavior will be handled. Lower numbers are handled earlier, with an order of 0 getting
-     * special treatment before the Emitter's transformation is applied.
-     */
-    order: number;
-    /**
-     * Called to initialize a wave of particles, with a reference to the first particle in the linked list.
-     * @param first The first (maybe only) particle in a newly spawned wave of particles.
-     */
-    initParticles(first: Particle): void;
-    /**
-     * Updates a single particle for a given period of time elapsed. Return `true` to recycle the particle.
-     * @param particle The particle to update.
-     * @param deltaSec The time to advance the particle by in seconds.
-     */
-    updateParticle?(particle: Particle, deltaSec: number): void | boolean;
-    /**
-     * A hook for when a particle is recycled.
-     * @param particle The particle that was just recycled.
-     * @param natural `true` if the reycling was due to natural lifecycle, `false` if it was due to emitter cleanup.
-     */
-    recycleParticle?(particle: Particle, natural: boolean): void;
+    order: number; // Order in which the behavior will be handled. Lower numbers are handled earlier, with an order of 0 getting special treatment before the Emitter's transformation is applied.
+    initParticles(first: Particle): void; // Called to initialize a wave of particles, with a reference to the first particle in the linked list. * @param first The first (maybe only) particle in a newly spawned wave of particles.
+    updateParticle?(particle: Particle, deltaSec: number): void | boolean; // Updates a single particle for a given period of time elapsed. Return `true` to recycle the particle. @param particle The particle to update. @param deltaSec The time to advance the particle by in seconds.
+    recycleParticle?(particle: Particle, natural: boolean): void; // A hook for when a particle is recycled. @param particle The particle that was just recycled. @param natural `true` if the reycling was due to natural lifecycle, `false` if it was due to emitter cleanup.
 }
 
-/**
- * All behavior classes must match this interface. The instances need to implement the {@link IEmitterBehavior} interface.
- */
+// All behavior classes must match this interface. The instances need to implement the {@link IEmitterBehavior} interface.
 export interface IEmitterBehaviorClass {
-    /**
-     * The unique type name that the behavior is registered under.
-     */
-    type: string;
-    /**
-     * Configuration data for an editor to display this behavior. Does not need to exist in production code.
-     */
-    editorConfig?: BehaviorEditorConfig;
-    /**
-     * The behavior constructor itself.
-     * @param config The config for the behavior, which should match its defined specifications.
-     */
-    new(config: any): IEmitterBehavior;
+    type: string; // The unique type name that the behavior is registered under.
+    editorConfig?: BehaviorEditorConfig; // Configuration data for an editor to display this behavior. Does not need to exist in production code.
+    new(config: any): IEmitterBehavior; // The behavior constructor itself. @param config The config for the behavior, which should match its defined specifications.
 }
 
 /**
@@ -57,17 +23,7 @@ export interface IEmitterBehaviorClass {
  * interfere with each other.
  */
 export enum BehaviorOrder {
-    /**
-     * Spawn - initial placement and/or rotation. This happens before rotation/translation due to
-     * emitter rotation/position is applied.
-     */
-    Spawn = 0,
-    /**
-     * Normal priority, for things that don't matter when they are applied.
-     */
-    Normal = 2,
-    /**
-     * Delayed priority, for things that need to read other values in order to act correctly.
-     */
-    Late = 5,
+    Spawn = 0, // Spawn - initial placement and/or rotation. This happens before rotation/translation due to emitter rotation/position is applied.
+    Normal = 2, // Normal priority, for things that don't matter when they are applied.
+    Late = 5, // Delayed priority, for things that need to read other values in order to act correctly.
 }

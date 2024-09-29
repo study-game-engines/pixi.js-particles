@@ -6,17 +6,9 @@ import { PropertyNode, ValueList } from '../PropertyNode';
 import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
 import { BehaviorEditorConfig } from './editor/Types';
 
-/**
- * A helper point for math things.
- * @hidden
- */
 const helperPoint = new Point();
 
-/**
- * A hand picked list of Math functions (and a couple properties) that are
- * allowable. They should be used without the preceding "Math."
- * @hidden
- */
+// A hand-picked list of Math functions (and a couple properties) that are allowable. They should be used without the preceding "Math."
 const MATH_FUNCS = [
     'E',
     'LN2',
@@ -59,39 +51,22 @@ const MATH_FUNCS = [
     'tan',
     'tanh',
 ];
-/**
- * create an actual regular expression object from the string
- * @hidden
- */
-const WHITELISTER = new RegExp(
-    [
-        // Allow the 4 basic operations, parentheses and all numbers/decimals, as well
-        // as 'x', for the variable usage.
-        '[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]',
-    ].concat(MATH_FUNCS).join('|'),
-    'g',
-);
 
-/**
- * Parses a string into a function for path following.
- * This involves whitelisting the string for safety, inserting "Math." to math function
- * names, and using `new Function()` to generate a function.
- * @hidden
- * @param pathString The string to parse.
- * @return The path function - takes x, outputs y.
- */
-function parsePath(pathString: string): (x: number) => number
-{
+// create an actual regular expression object from the string
+const WHITELISTER = new RegExp([
+    '[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]', // Allow the 4 basic operations, parentheses and all numbers/decimals, as well as 'x', for the variable usage.
+].concat(MATH_FUNCS)
+    .join('|'), 'g');
+
+// Parses a string into a function for path following. This involves whitelisting the string for safety, inserting "Math." to math function names, and using `new Function()` to generate a function.
+function parsePath(pathString: string): (x: number) => number {
     const matches = pathString.match(WHITELISTER);
-
-    for (let i = matches.length - 1; i >= 0; --i)
-    {
-        if (MATH_FUNCS.indexOf(matches[i]) >= 0)
-        { matches[i] = `Math.${matches[i]}`; }
+    for (let i = matches.length - 1; i >= 0; --i) {
+        if (MATH_FUNCS.indexOf(matches[i]) >= 0) {
+            matches[i] = `Math.${matches[i]}`;
+        }
     }
     pathString = matches.join('');
-
-    // eslint-disable-next-line no-new-func
     return new Function('x', `return ${pathString};`) as (x: number) => number;
 }
 
@@ -129,65 +104,38 @@ function parsePath(pathString: string): (x: number) => number
  *     }
  *}
  */
-export class PathBehavior implements IEmitterBehavior
-{
+export class PathBehavior implements IEmitterBehavior {
+
     public static type = 'movePath';
     public static editorConfig: BehaviorEditorConfig = null;
-
-    // *MUST* happen after other behaviors do initialization so that we can read initial transformations
-    public order = BehaviorOrder.Late;
-    /**
-     * The function representing the path the particle should take.
-     */
-    private path: (x: number) => number;
+    public order = BehaviorOrder.Late; // *MUST* happen after other behaviors do initialization so that we can read initial transformations
+    private path: (x: number) => number; // The function representing the path the particle should take.
     private list: PropertyList<number>;
     private minMult: number;
+
     constructor(config: {
-        /**
-         * Algebraic expression describing the movement of the particle.
-         */
-        path: string|((x: number) => number);
-        /**
-         * Speed of the particles in world units/second. This affects the x value in the path.
-         * Unlike normal speed movement, this can have negative values.
-         */
-        speed: ValueList<number>;
-        /**
-         * A value between minimum speed multipler and 1 is randomly generated and multiplied
-         * with each speed value to generate the actual speed for each particle.
-         */
-        minMult: number;
-    })
-    {
-        if (config.path)
-        {
-            if (typeof config.path === 'function')
-            {
+        path: string | ((x: number) => number); // Algebraic expression describing the movement of the particle.
+        speed: ValueList<number>; // Speed of the particles in world units/second. This affects the x value in the path. Unlike normal speed movement, this can have negative values.
+        minMult: number; // A value between minimum speed multipler and 1 is randomly generated and multiplied with each speed value to generate the actual speed for each particle.
+    }) {
+        if (config.path) {
+            if (typeof config.path === 'function') {
                 this.path = config.path;
-            }
-            else
-            {
-                try
-                {
+            } else {
+                try {
                     this.path = parsePath(config.path);
-                }
-                catch (e)
-                {
-                    if (verbose)
-                    {
+                } catch (e) {
+                    if (verbose) {
                         console.error('PathParticle: error in parsing path expression', e);
                     }
                     this.path = null;
                 }
             }
         }
-        else
-        {
-            if (verbose)
-            {
+        else {
+            if (verbose) {
                 console.error('PathParticle requires a path value in its config!');
             }
-            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             this.path = (x) => x;
         }
         this.list = new PropertyList(false);
@@ -195,49 +143,31 @@ export class PathBehavior implements IEmitterBehavior
         this.minMult = config.minMult ?? 1;
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
-            /*
-             * The initial rotation in degrees of the particle, because the direction of the path
-             * is based on that.
-             */
-            next.config.initRotation = next.rotation;
-            /* The initial position of the particle, as all path movement is added to that. */
-            if (!next.config.initPosition)
-            {
+        while (next) {
+            next.config.initRotation = next.rotation; // The initial rotation in degrees of the particle, because the direction of the path is based on that.
+            // The initial position of the particle, as all path movement is added to that
+            if (!next.config.initPosition) {
                 next.config.initPosition = new Point(next.x, next.y);
-            }
-            else
-            {
+            } else {
                 (next.config.initPosition as Point).copyFrom(next.position);
             }
-            /* Total single directional movement, due to speed. */
-            next.config.movement = 0;
-
-            // also do speed multiplier, since this includes basic speed movement
-            const mult = (Math.random() * (1 - this.minMult)) + this.minMult;
-
+            next.config.movement = 0; // Total single directional movement, due to speed
+            const mult = (Math.random() * (1 - this.minMult)) + this.minMult; // also do speed multiplier, since this includes basic speed movement
             next.config.speedMult = mult;
-
             next = next.next;
         }
     }
 
-    updateParticle(particle: Particle, deltaSec: number): void
-    {
-        // increase linear movement based on speed
-        const speed = this.list.interpolate(particle.agePercent) * particle.config.speedMult;
-
+    updateParticle(particle: Particle, deltaSec: number): void {
+        const speed = this.list.interpolate(particle.agePercent) * particle.config.speedMult; // increase linear movement based on speed
         particle.config.movement += speed * deltaSec;
-        // set up the helper point for rotation
         helperPoint.x = particle.config.movement;
         helperPoint.y = this.path(helperPoint.x);
         rotatePoint(particle.config.initRotation, helperPoint);
         particle.position.x = particle.config.initPosition.x + helperPoint.x;
         particle.position.y = particle.config.initPosition.y + helperPoint.y;
     }
+
 }

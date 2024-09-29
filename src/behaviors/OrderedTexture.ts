@@ -1,6 +1,6 @@
 import { Texture } from '@pixi/core';
 import { Particle } from '../Particle';
-import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
+import { BehaviorOrder, IEmitterBehavior } from './Behaviors';
 import { GetTextureFromString } from '../ParticleUtils';
 import { BehaviorEditorConfig } from './editor/Types';
 
@@ -18,37 +18,30 @@ import { BehaviorEditorConfig } from './editor/Types';
  * }
  * ```
  */
-export class OrderedTextureBehavior implements IEmitterBehavior
-{
+export class OrderedTextureBehavior implements IEmitterBehavior {
+
     public static type = 'textureOrdered';
     public static editorConfig: BehaviorEditorConfig = null;
-
     public order = BehaviorOrder.Normal;
     private textures: Texture[];
     private index: number;
+
     constructor(config: {
-        /**
-         * Images to use for each particle, used in order before looping around
-         */
-        textures: Texture[];
-    })
-    {
+        textures: Texture[]; // Images to use for each particle, used in order before looping around
+    }) {
         this.index = 0;
         this.textures = config.textures.map((tex) => (typeof tex === 'string' ? GetTextureFromString(tex) : tex));
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
+        while (next) {
             next.texture = this.textures[this.index];
-            if (++this.index >= this.textures.length)
-            {
+            if (++this.index >= this.textures.length) {
                 this.index = 0;
             }
             next = next.next;
         }
     }
+
 }

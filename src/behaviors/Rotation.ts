@@ -20,40 +20,24 @@ import { BehaviorEditorConfig } from './editor/Types';
  *}
  * ```
  */
-export class RotationBehavior implements IEmitterBehavior
-{
+export class RotationBehavior implements IEmitterBehavior {
+
     public static type = 'rotation';
     public static editorConfig: BehaviorEditorConfig = null;
-
     public order = BehaviorOrder.Normal;
     private minStart: number;
     private maxStart: number;
     private minSpeed: number;
     private maxSpeed: number;
     private accel: number;
+
     constructor(config: {
-        /**
-         * Minimum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
-         */
-        minStart: number;
-        /**
-         * Maximum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
-         */
-        maxStart: number;
-        /**
-         * Minimum rotation speed of the particles, in degrees/second. Positive is counter-clockwise.
-         */
-        minSpeed: number;
-        /**
-         * Maximum rotation speed of the particles, in degrees/second. Positive is counter-clockwise.
-         */
-        maxSpeed: number;
-        /**
-         * Constant rotational acceleration of the particles, in degrees/second/second.
-         */
-        accel: number;
-    })
-    {
+        minStart: number; // Minimum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
+        maxStart: number; // Maximum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
+        minSpeed: number; // Minimum rotation speed of the particles, in degrees/second. Positive is counter-clockwise.
+        maxSpeed: number; // Maximum rotation speed of the particles, in degrees/second. Positive is counter-clockwise.
+        accel: number; // Constant rotational acceleration of the particles, in degrees/second/second.
+    }) {
         this.minStart = config.minStart * DEG_TO_RADS;
         this.maxStart = config.maxStart * DEG_TO_RADS;
         this.minSpeed = config.minSpeed * DEG_TO_RADS;
@@ -61,40 +45,29 @@ export class RotationBehavior implements IEmitterBehavior
         this.accel = config.accel * DEG_TO_RADS;
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
-            if (this.minStart === this.maxStart)
-            {
+        while (next) {
+            if (this.minStart === this.maxStart) {
                 next.rotation += this.maxStart;
-            }
-            else
-            {
+            } else {
                 next.rotation += (Math.random() * (this.maxStart - this.minStart)) + this.minStart;
             }
             next.config.rotSpeed = (Math.random() * (this.maxSpeed - this.minSpeed)) + this.minSpeed;
-
             next = next.next;
         }
     }
 
-    updateParticle(particle: Particle, deltaSec: number): void
-    {
-        if (this.accel)
-        {
+    updateParticle(particle: Particle, deltaSec: number): void {
+        if (this.accel) {
             const oldSpeed = particle.config.rotSpeed;
-
             particle.config.rotSpeed += this.accel * deltaSec;
             particle.rotation += (particle.config.rotSpeed + oldSpeed) / 2 * deltaSec;
-        }
-        else
-        {
+        } else {
             particle.rotation += particle.config.rotSpeed * deltaSec;
         }
     }
+
 }
 
 /**
@@ -111,47 +84,34 @@ export class RotationBehavior implements IEmitterBehavior
  *}
  * ```
  */
-export class StaticRotationBehavior implements IEmitterBehavior
-{
+export class StaticRotationBehavior implements IEmitterBehavior {
+
     public static type = 'rotationStatic';
     public static editorConfig: BehaviorEditorConfig = null;
-
     public order = BehaviorOrder.Normal;
     private min: number;
     private max: number;
+
     constructor(config: {
-        /**
-         * Minimum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
-         */
-        min: number;
-        /**
-         * Maximum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
-         */
-        max: number;
-    })
-    {
+        min: number; // Minimum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
+        max: number; // Maximum starting rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
+    }) {
         this.min = config.min * DEG_TO_RADS;
         this.max = config.max * DEG_TO_RADS;
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
-            if (this.min === this.max)
-            {
+        while (next) {
+            if (this.min === this.max) {
                 next.rotation += this.max;
-            }
-            else
-            {
+            } else {
                 next.rotation += (Math.random() * (this.max - this.min)) + this.min;
             }
-
             next = next.next;
         }
     }
+
 }
 
 /**
@@ -168,33 +128,25 @@ export class StaticRotationBehavior implements IEmitterBehavior
  *}
  * ```
  */
-export class NoRotationBehavior implements IEmitterBehavior
-{
+export class NoRotationBehavior implements IEmitterBehavior {
+
     public static type = 'noRotation';
     public static editorConfig: BehaviorEditorConfig = null;
-
     public order = BehaviorOrder.Late + 1;
-
     private rotation: number;
+
     constructor(config: {
-        /**
-         * Locked rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
-         */
-        rotation?: number;
-    })
-    {
+        rotation?: number; // Locked rotation of the particles, in degrees. 0 is facing right, 90 is upwards.
+    }) {
         this.rotation = (config.rotation || 0) * DEG_TO_RADS;
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
+        while (next) {
             next.rotation = this.rotation;
-
             next = next.next;
         }
     }
+
 }

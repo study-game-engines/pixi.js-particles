@@ -13,16 +13,14 @@ import { BehaviorEditorConfig } from './editor/Types';
  * }
  * ```
  */
-export class PointSpawnBehavior implements IEmitterBehavior
-{
+export class PointSpawnBehavior implements IEmitterBehavior {
+
     public static type = 'spawnPoint';
     public static editorConfig: BehaviorEditorConfig = null;
-
     order = BehaviorOrder.Spawn;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    initParticles(_first: Particle): void
-    {
+    initParticles(_first: Particle): void {
         // really just a no-op
     }
+
 }

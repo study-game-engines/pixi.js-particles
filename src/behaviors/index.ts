@@ -6,7 +6,7 @@ export * from './Behaviors';
 import * as editor from './editor/Types';
 export { editor };
 
-// export all of the individual behaviors
+// export all the individual behaviors
 export * from './AccelerationMovement';
 export * from './Alpha';
 export * from './AnimatedTexture';

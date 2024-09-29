@@ -18,34 +18,26 @@ import { BehaviorEditorConfig } from './editor/Types';
  * }
  * ```
  */
-export class RandomTextureBehavior implements IEmitterBehavior
-{
+export class RandomTextureBehavior implements IEmitterBehavior {
+
     public static type = 'textureRandom';
     public static editorConfig: BehaviorEditorConfig = null;
-
     public order = BehaviorOrder.Normal;
     private textures: Texture[];
+
     constructor(config: {
-        /**
-         * Images to use for each particle, randomly chosen from the list.
-         */
-        textures: (Texture|string)[];
-    })
-    {
+        textures: (Texture | string)[]; // Images to use for each particle, randomly chosen from the list.
+    }) {
         this.textures = config.textures.map((tex) => (typeof tex === 'string' ? GetTextureFromString(tex) : tex));
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
+        while (next) {
             const index = Math.floor(Math.random() * this.textures.length);
-
             next.texture = this.textures[index];
-
             next = next.next;
         }
     }
+
 }

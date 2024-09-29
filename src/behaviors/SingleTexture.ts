@@ -5,7 +5,7 @@ import { GetTextureFromString } from '../ParticleUtils';
 import { BehaviorEditorConfig } from './editor/Types';
 
 /**
- * A Textuure behavior that assigns a single texture to each particle.
+ * A Texture behavior that assigns a single texture to each particle.
  * String values will be converted to textures with {@link ParticleUtils.GetTextureFromString}.
  *
  * Example config:
@@ -18,32 +18,25 @@ import { BehaviorEditorConfig } from './editor/Types';
  * }
  * ```
  */
-export class SingleTextureBehavior implements IEmitterBehavior
-{
+export class SingleTextureBehavior implements IEmitterBehavior {
+
     public static type = 'textureSingle';
     public static editorConfig: BehaviorEditorConfig = null;
-
     public order = BehaviorOrder.Normal;
     private texture: Texture;
+
     constructor(config: {
-        /**
-         * Image to use for each particle.
-         */
-        texture: Texture|string;
-    })
-    {
+        texture: Texture | string; // Image to use for each particle.
+    }) {
         this.texture = typeof config.texture === 'string' ? GetTextureFromString(config.texture) : config.texture;
     }
 
-    initParticles(first: Particle): void
-    {
+    initParticles(first: Particle): void {
         let next = first;
-
-        while (next)
-        {
+        while (next) {
             next.texture = this.texture;
-
             next = next.next;
         }
     }
+
 }
