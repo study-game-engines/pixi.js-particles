@@ -10,10 +10,7 @@ export interface Segment {
 }
 
 /**
- * A spawn shape that picks a random position along a series of line segments. If those
- * line segments form a polygon, particles will only be placed on the perimeter of that polygon.
- *
- * Example config:
+ * A spawn shape that picks a random position along a series of line segments. If those line segments form a polygon, particles will only be placed on the perimeter of that polygon.
  * ```javascript
  * {
  *      type: 'polygonalChain',
@@ -32,9 +29,7 @@ export class PolygonalChain implements SpawnShape {
     private totalLength: number; // Total length of all segments of the chain.
     private countingLengths: number[]; // Total length of segments up to and including the segment of the same index. Used for weighted random selection of segment.
 
-    /**
-     * @param data Point data for polygon chains. Either a list of points for a single chain, or a list of chains.
-     */
+    // @param data Point data for polygon chains. Either a list of points for a single chain, or a list of chains.
     constructor(data: IPointData[] | IPointData[][]) {
         this.segments = [];
         this.countingLengths = [];
@@ -42,9 +37,7 @@ export class PolygonalChain implements SpawnShape {
         this.init(data);
     }
 
-    /**
-     * @param data Point data for polygon chains. Either a list of points for a single chain, or a list of chains.
-     */
+    // @param data Point data for polygon chains. Either a list of points for a single chain, or a list of chains.
     private init(data: IPointData[] | IPointData[][]): void {
         if (!data || !data.length) {
             this.segments.push({ p1: { x: 0, y: 0 }, p2: { x: 0, y: 0 }, l: 0 });
@@ -81,8 +74,7 @@ export class PolygonalChain implements SpawnShape {
     }
 
     public getRandPos(out: IPointData): void {
-        // select a random spot in the length of the chain
-        const rand = Math.random() * this.totalLength;
+        const rand = Math.random() * this.totalLength; // select a random spot in the length of the chain
         let chosenSeg: Segment;
         let lerp: number;
 

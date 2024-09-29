@@ -5,10 +5,7 @@ import { GetTextureFromString } from '../ParticleUtils';
 import { BehaviorEditorConfig } from './editor/Types';
 
 /**
- * A Texture behavior that assigns a texture to each particle from its list, in order, before looping around to the first
- * texture again. String values will be converted to textures with {@link ParticleUtils.GetTextureFromString}.
- *
- * Example config:
+ * A Texture behavior that assigns a texture to each particle from its list, in order, before looping around to the first texture again
  * ```javascript
  * {
  *     type: 'textureOrdered',

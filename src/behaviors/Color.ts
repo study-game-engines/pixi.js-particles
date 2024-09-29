@@ -7,8 +7,6 @@ import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * A Color behavior that applies an interpolated or stepped list of values to the particle's tint property.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'color',
@@ -52,8 +50,6 @@ export class ColorBehavior implements IEmitterBehavior {
 
 /**
  * A Color behavior that applies a single color to the particle's tint property at initialization.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'colorStatic',

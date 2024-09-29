@@ -1,14 +1,11 @@
 import { Texture } from '@pixi/core';
 import { Particle } from '../Particle';
-import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
+import { BehaviorOrder, IEmitterBehavior } from './Behaviors';
 import { GetTextureFromString } from '../ParticleUtils';
 import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * A Texture behavior that assigns a single texture to each particle.
- * String values will be converted to textures with {@link ParticleUtils.GetTextureFromString}.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'textureSingle',

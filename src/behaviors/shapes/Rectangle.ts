@@ -4,8 +4,6 @@ import { SpawnShape } from './SpawnShape';
 
 /**
  * A SpawnShape that randomly picks locations inside a rectangle.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'rect',

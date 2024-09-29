@@ -6,8 +6,6 @@ import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * An Alpha behavior that applies an interpolated or stepped list of values to the particle's opacity.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'alpha',
@@ -49,8 +47,6 @@ export class AlphaBehavior implements IEmitterBehavior {
 
 /**
  * An Alpha behavior that applies a static value to the particle's opacity at particle initialization.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'alphaStatic',

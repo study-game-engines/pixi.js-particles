@@ -4,10 +4,7 @@ import { ObjectProperty } from '../editor/Types';
 import { SpawnShape } from './SpawnShape';
 
 /**
- * A class for spawning particles in a circle or ring.
- * Can optionally apply rotation to particles so that they are aimed away from the center of the circle.
- *
- * Example config:
+ * A class for spawning particles in a circle or ring. Can optionally apply rotation to particles so that they are aimed away from the center of the circle.
  * ```javascript
  * {
  *     type: 'torus',

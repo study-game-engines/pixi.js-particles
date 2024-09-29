@@ -1,12 +1,10 @@
 import { Particle } from '../Particle';
 import { DEG_TO_RADS } from '../ParticleUtils';
-import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
+import { BehaviorOrder, IEmitterBehavior } from './Behaviors';
 import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * A Rotation behavior that handles starting rotation, rotation speed, and rotational acceleration.
- *
- * Example configuration:
  * ```javascript
  * {
  *     "type": "rotation",
@@ -50,7 +48,8 @@ export class RotationBehavior implements IEmitterBehavior {
         while (next) {
             if (this.minStart === this.maxStart) {
                 next.rotation += this.maxStart;
-            } else {
+            }
+            else {
                 next.rotation += (Math.random() * (this.maxStart - this.minStart)) + this.minStart;
             }
             next.config.rotSpeed = (Math.random() * (this.maxSpeed - this.minSpeed)) + this.minSpeed;
@@ -63,7 +62,8 @@ export class RotationBehavior implements IEmitterBehavior {
             const oldSpeed = particle.config.rotSpeed;
             particle.config.rotSpeed += this.accel * deltaSec;
             particle.rotation += (particle.config.rotSpeed + oldSpeed) / 2 * deltaSec;
-        } else {
+        }
+        else {
             particle.rotation += particle.config.rotSpeed * deltaSec;
         }
     }
@@ -72,8 +72,6 @@ export class RotationBehavior implements IEmitterBehavior {
 
 /**
  * A Rotation behavior that handles starting rotation.
- *
- * Example configuration:
  * ```javascript
  * {
  *     "type": "rotationStatic",
@@ -105,7 +103,8 @@ export class StaticRotationBehavior implements IEmitterBehavior {
         while (next) {
             if (this.min === this.max) {
                 next.rotation += this.max;
-            } else {
+            }
+            else {
                 next.rotation += (Math.random() * (this.max - this.min)) + this.min;
             }
             next = next.next;
@@ -115,10 +114,7 @@ export class StaticRotationBehavior implements IEmitterBehavior {
 }
 
 /**
- * A Rotation behavior that blocks all rotation caused by spawn settings,
- * by resetting it to the specified rotation (or 0).
- *
- * Example configuration:
+ * A Rotation behavior that blocks all rotation caused by spawn settings, by resetting it to the specified rotation (or 0).
  * ```javascript
  * {
  *     "type": "noRotation",

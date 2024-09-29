@@ -71,27 +71,18 @@ function parsePath(pathString: string): (x: number) => number {
 }
 
 /**
- * A particle that follows a path defined by an algebraic expression, e.g. "sin(x)" or
- * "5x + 3".
- * To use this class, the behavior config must have a "path" string or function.
+ * A particle that follows a path defined by an algebraic expression, e.g. "sin(x)" or "5x + 3". To use this class, the behavior config must have a "path" string or function.
+ * A string should have "x" in it to represent movement (from the speed settings of the behavior). It may have numbers, parentheses, the four basic operations, and any Math functions or
+ * properties (without the preceding "Math."). The overall movement of the particle and the expression value become x and y positions for the particle, respectively. The final position
+ * is rotated by the spawn rotation/angle of the particle. A function merely needs to accept the "x" argument and output the a corresponding "y" value.
  *
- * A string should have "x" in it to represent movement (from the
- * speed settings of the behavior). It may have numbers, parentheses, the four basic
- * operations, and any Math functions or properties (without the preceding "Math.").
- * The overall movement of the particle and the expression value become x and y positions for
- * the particle, respectively. The final position is rotated by the spawn rotation/angle of
- * the particle.
- *
- * A function merely needs to accept the "x" argument and output the a corresponding "y" value.
- *
- * Some example paths:
+ * Examples:
  *
  * * `"sin(x/10) * 20"` A sine wave path.
  * * `"cos(x/100) * 30"` Particles curve counterclockwise (for medium speed/low lifetime particles)
  * * `"pow(x/10, 2) / 2"` Particles curve clockwise (remember, +y is down).
  * * `(x) => Math.floor(x) * 3` Supplying an existing function should look like this
  *
- * Example configuration:
  * ```javascript
  * {
  *     "type": "movePath",
@@ -103,6 +94,7 @@ function parsePath(pathString: string): (x: number) => number {
  *          "minMult": 0.8
  *     }
  *}
+ *```
  */
 export class PathBehavior implements IEmitterBehavior {
 

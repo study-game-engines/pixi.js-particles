@@ -5,8 +5,6 @@ import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * A Blend Mode behavior that applies a blend mode value to the particle at initialization.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'blendMode',

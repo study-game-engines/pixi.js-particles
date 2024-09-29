@@ -6,8 +6,6 @@ import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * A Movement behavior that handles movement by applying a constant acceleration to all particles.
- *
- * Example configuration:
  * ```javascript
  * {
  *     "type": "moveAcceleration",
@@ -71,9 +69,8 @@ export class AccelerationBehavior implements IEmitterBehavior {
         vel.y += this.accel.y * deltaSec;
         if (this.maxSpeed) {
             const currentSpeed = length(vel);
-            // if we are going faster than we should, clamp at the max speed DO NOT recalculate vector length
             if (currentSpeed > this.maxSpeed) {
-                scaleBy(vel, this.maxSpeed / currentSpeed);
+                scaleBy(vel, this.maxSpeed / currentSpeed); // if we are going faster than we should, clamp at the max speed DO NOT recalculate vector length
             }
         }
         particle.x += (oldVX + vel.x) / 2 * deltaSec;

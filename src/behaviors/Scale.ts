@@ -6,8 +6,6 @@ import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * A Scale behavior that applies an interpolated or stepped list of values to the particle's x & y scale.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'scale',
@@ -56,8 +54,6 @@ export class ScaleBehavior implements IEmitterBehavior {
 
 /**
  * A Scale behavior that applies a randomly picked value to the particle's x & y scale at initialization.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'scaleStatic',

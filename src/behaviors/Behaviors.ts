@@ -19,8 +19,7 @@ export interface IEmitterBehaviorClass {
 /**
  * Standard behavior order values, specifying when/how they are used. Other numeric values can be used,
  * but only the Spawn value will be handled in a special way. All other values will be sorted numerically.
- * Behaviors with the same value will not be given any specific sort order, as they are assumed to not
- * interfere with each other.
+ * Behaviors with the same value will not be given any specific sort order, as they are assumed to not interfere with each other.
  */
 export enum BehaviorOrder {
     Spawn = 0, // Spawn - initial placement and/or rotation. This happens before rotation/translation due to emitter rotation/position is applied.

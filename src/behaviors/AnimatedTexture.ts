@@ -53,9 +53,6 @@ function getTextures(textures: (string | Texture | { texture: string | Texture; 
 
 /**
  * A Texture behavior that picks a random animation for each particle to play.
- * See {@link AnimatedParticleArt} for detailed configuration info.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'animatedRandom',
@@ -138,9 +135,6 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
 
 /**
  * A Texture behavior that uses a single animation for each particle to play.
- * See {@link AnimatedParticleArt} for detailed configuration info.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'animatedSingle',

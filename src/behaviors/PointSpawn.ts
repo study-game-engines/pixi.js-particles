@@ -4,8 +4,6 @@ import { BehaviorEditorConfig } from './editor/Types';
 
 /**
  * A Spawn behavior that sends particles out from a single point at the emitter's position.
- *
- * Example config:
  * ```javascript
  * {
  *     type: 'spawnPoint',

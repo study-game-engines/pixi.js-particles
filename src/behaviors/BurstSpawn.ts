@@ -4,10 +4,7 @@ import { DEG_TO_RADS, rotatePoint } from '../ParticleUtils';
 import { BehaviorEditorConfig } from './editor/Types';
 
 /**
- * A Spawn behavior that sends particles out from a single point or ring, and is capable of evenly spacing
- * the particle's starting angles.
- *
- * Example config:
+ * A Spawn behavior that sends particles out from a single point or ring, and is capable of evenly spacing the particle's starting angles.
  * ```javascript
  * {
  *     type: 'spawnBurst',

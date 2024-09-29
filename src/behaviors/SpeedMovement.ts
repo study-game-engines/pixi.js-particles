@@ -7,10 +7,7 @@ import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
 import { BehaviorEditorConfig } from './editor/Types';
 
 /**
- * A Movement behavior that uses an interpolated or stepped list of values for a particles speed at any given moment.
- * Movement direction is controlled by the particle's starting rotation.
- *
- * Example config:
+ * A Movement behavior that uses an interpolated or stepped list of values for a particles speed at any given moment. Movement direction is controlled by the particle's starting rotation.
  * ```javascript
  * {
  *     type: 'moveSpeed',
@@ -67,10 +64,7 @@ export class SpeedBehavior implements IEmitterBehavior {
 }
 
 /**
- * A Movement behavior that uses a randomly picked constant speed throughout a particle's lifetime.
- * Movement direction is controlled by the particle's starting rotation.
- *
- * Example config:
+ * A Movement behavior that uses a randomly picked constant speed throughout a particle's lifetime. Movement direction is controlled by the particle's starting rotation.
  * ```javascript
  * {
  *     type: 'moveSpeedStatic',

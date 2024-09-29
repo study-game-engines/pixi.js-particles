@@ -5,10 +5,7 @@ import { GetTextureFromString } from '../ParticleUtils';
 import { BehaviorEditorConfig } from './editor/Types';
 
 /**
- * A Texture behavior that assigns a random texture to each particle from its list.
- * String values will be converted to textures with {@link ParticleUtils.GetTextureFromString}.
- *
- * Example config:
+ * A Texture behavior that assigns a random texture to each particle from its list
  * ```javascript
  * {
  *     type: 'textureRandom',
