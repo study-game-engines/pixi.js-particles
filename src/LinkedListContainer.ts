@@ -8,13 +8,8 @@ export interface LinkedListChild extends DisplayObject {
     prevChild: LinkedListChild | null;
 }
 
-/**
- * A semi-experimental Container that uses a doubly linked list to manage children instead of an
- * array. This means that adding/removing children often is not the same performance hit that
- * it would to be continually pushing/splicing.
- * However, this is primarily intended to be used for heavy particle usage, and may not handle
- * edge cases well if used as a complete Container replacement.
- */
+// A semi-experimental Container that uses a doubly linked list to manage children instead of an array. This means that adding/removing children often is not the same performance hit that
+// it would to be continually pushing/splicing. However, this is primarily intended to be used for heavy particle usage, and may not handle edge cases well if used as a complete Container replacement.
 export class LinkedListContainer extends Container {
 
     private _firstChild: LinkedListChild | null = null;
@@ -45,27 +40,17 @@ export class LinkedListContainer extends Container {
             }
             child.parent = this;
             this.sortDirty = true;
-
-            // ensure child transform will be recalculated
-            child.transform._parentID = -1;
-
-            // add to list if we have a list
+            child.transform._parentID = -1; // ensure child transform will be recalculated
+            // add to list if we have a list otherwise initialize the list
             if (this._lastChild) {
                 this._lastChild.nextChild = child;
                 child.prevChild = this._lastChild;
                 this._lastChild = child;
-            }
-            // otherwise initialize the list
-            else {
+            } else {
                 this._firstChild = this._lastChild = child;
             }
-
-            // update child count
-            ++this._childCount;
-
-            // ensure bounds will be recalculated
-            this._boundsID++;
-
+            ++this._childCount; // update child count
+            this._boundsID++; // ensure bounds will be recalculated
             // TODO - lets either do all callbacks or all events.. not both!
             this.onChildrenChange();
             this.emit('childAdded', child, this, this._childCount);
@@ -84,15 +69,10 @@ export class LinkedListContainer extends Container {
         }
         child.parent = this;
         this.sortDirty = true;
-
-        // ensure child transform will be recalculated
-        child.transform._parentID = -1;
-
+        child.transform._parentID = -1; // ensure child transform will be recalculated
         const c = (child as any) as LinkedListChild;
-
-        // if no children, do basic initialization
         if (!this._firstChild) {
-            this._firstChild = this._lastChild = c;
+            this._firstChild = this._lastChild = c; // if no children, do basic initialization
         }
         // add at beginning (back)
         else if (index === 0) {
@@ -106,8 +86,7 @@ export class LinkedListContainer extends Container {
             c.prevChild = this._lastChild;
             this._lastChild = c;
         }
-            // otherwise we have to start counting through the children to find the right one
-        // - SLOW, only provided to fully support the possibility of use
+        // otherwise we have to start counting through the children to find the right one - SLOW, only provided to fully support the possibility of use
         else {
             let i = 0;
             let target = this._firstChild;
@@ -122,18 +101,12 @@ export class LinkedListContainer extends Container {
             c.nextChild = target;
             target.prevChild = c;
         }
-
-        // update child count
-        ++this._childCount;
-
-        // ensure bounds will be recalculated
-        this._boundsID++;
-
+        ++this._childCount; // update child count
+        this._boundsID++; // ensure bounds will be recalculated
         // TODO - lets either do all callbacks or all events.. not both!
         this.onChildrenChange(index);
         child.emit('added', this);
         this.emit('childAdded', child, this, index);
-
         return child;
     }
 
@@ -291,14 +264,9 @@ export class LinkedListContainer extends Container {
             }
         } else {
             const child = children[0] as LinkedListChild;
-
-            // bail if not actually our child
-            if (child.parent !== this) return null;
-
+            if (child.parent !== this) return null; // bail if not actually our child
             child.parent = null;
-            // ensure child transform will be recalculated
-            child.transform._parentID = -1;
-
+            child.transform._parentID = -1; // ensure child transform will be recalculated
             // swap out child references
             if (child.nextChild) {
                 child.nextChild.prevChild = child.prevChild;
@@ -315,21 +283,13 @@ export class LinkedListContainer extends Container {
             // clear sibling references
             child.nextChild = null;
             child.prevChild = null;
-
-            // update child count
-            --this._childCount;
-
-            // ensure bounds will be recalculated
-            this._boundsID++;
-
+            --this._childCount; // update child count
+            this._boundsID++; // ensure bounds will be recalculated
             // TODO - lets either do all callbacks or all events.. not both!
             this.onChildrenChange();
             child.emit('removed', this);
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             this.emit('childRemoved', child, this);
         }
-
         return children[0];
     }
 
@@ -339,10 +299,8 @@ export class LinkedListContainer extends Container {
         }
         if (index === 0) {
             return this._firstChild;
-        }
-        // add at end (front)
-        else if (index === this._childCount) {
-            return this._lastChild;
+        } else if (index === this._childCount) {
+            return this._lastChild; // add at end (front)
         }
         // otherwise we have to start counting through the children to find the right one  SLOW, only provided to fully support the possibility of use
         let i = 0;
@@ -385,10 +343,8 @@ export class LinkedListContainer extends Container {
 
     public removeChildren(beginIndex = 0, endIndex = this._childCount): DisplayObject[] {
         const begin = beginIndex;
-
-        // because Container.destroy() has removeChildren(0, this.children.count), assume that an end index of 0 should actually be _childCount.
         if (endIndex === 0 && this._childCount > 0) {
-            endIndex = this._childCount;
+            endIndex = this._childCount; // because Container.destroy() has removeChildren(0, this.children.count), assume that an end index of 0 should actually be _childCount.
         }
         const end = endIndex;
         const range = end - begin;
@@ -477,8 +433,7 @@ export class LinkedListContainer extends Container {
 
     // Retrieves the local bounds of the displayObject as a rectangle object. Copied from and overrides PixiJS v5 method
     public getLocalBounds(rect?: Rectangle, skipChildrenUpdate = false): Rectangle {
-        // skip Container's getLocalBounds, go directly to DisplayObject
-        const result = DisplayObject.prototype.getLocalBounds.call(this, rect);
+        const result = DisplayObject.prototype.getLocalBounds.call(this, rect); // skip Container's getLocalBounds, go directly to DisplayObject
         if (!skipChildrenUpdate) {
             let child;
             let next;
@@ -504,7 +459,6 @@ export class LinkedListContainer extends Container {
             this._render(renderer);
             let child;
             let next;
-            // simple render children!
             for (child = this._firstChild; child; child = next) {
                 next = child.nextChild;
                 child.render(renderer);

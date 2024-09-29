@@ -6,7 +6,7 @@ import { Point } from '@pixi/math';
 import { Ticker } from '@pixi/ticker';
 import { BehaviorOrder, IEmitterBehavior, IEmitterBehaviorClass } from './behaviors';
 
-const ticker = Ticker.shared;
+const ticker: Ticker = Ticker.shared;
 
 // Key used in sorted order to determine when to set particle position from the emitter position and rotation.
 const PositionParticle = Symbol('Position particle per emitter position');
@@ -157,23 +157,16 @@ export class Emitter {
         if (!config) {
             return;
         }
-        // clean up any existing particles
-        this.cleanup();
+        this.cleanup(); // clean up any existing particles
+        this._origConfig = config; // store the original config and particle images, in case we need to re-initialize when the particle constructor is changed
 
-        // store the original config and particle images, in case we need to re-initialize
-        // when the particle constructor is changed
-        this._origConfig = config;
-
-        // /////////////////////////
-        // Particle Properties    //
-        // /////////////////////////
+        /* Particle Properties */
 
         // set up the lifetime
         this.minLifetime = config.lifetime.min;
         this.maxLifetime = config.lifetime.max;
-        // use the custom ease if provided
         if (config.ease) {
-            this.customEase = typeof config.ease === 'function' ? config.ease : generateEase(config.ease);
+            this.customEase = typeof config.ease === 'function' ? config.ease : generateEase(config.ease); // use the custom ease if provided
         } else {
             this.customEase = null;
         }
@@ -185,16 +178,11 @@ export class Emitter {
         if (config.particlesPerWave && config.particlesPerWave > 1) {
             this.particlesPerWave = config.particlesPerWave;
         }
-        // set the spawning frequency
-        this.frequency = config.frequency;
+        this.frequency = config.frequency; // set the spawning frequency
         this.spawnChance = (typeof config.spawnChance === 'number' && config.spawnChance > 0) ? config.spawnChance : 1;
-        // set the emitter lifetime
-        this.emitterLifetime = config.emitterLifetime || -1;
-        // set the max particles
-        this.maxParticles = config.maxParticles > 0 ? config.maxParticles : 1000;
-        // determine if we should add the particle at the back of the list or not
-        this.addAtBack = !!config.addAtBack;
-        // reset the emitter position and rotation variables
+        this.emitterLifetime = config.emitterLifetime || -1; // set the emitter lifetime
+        this.maxParticles = config.maxParticles > 0 ? config.maxParticles : 1000; // set the max particles
+        this.addAtBack = !!config.addAtBack; // determine if we should add the particle at the back of the list or not
         this.rotation = 0;
         this.ownerPos.set(0);
         if (config.pos) {
@@ -203,11 +191,8 @@ export class Emitter {
         else {
             this.spawnPos.set(0);
         }
-
         this._prevEmitterPos.copyFrom(this.spawnPos);
-        // previous emitter position is invalid and should not be used for interpolation
-        this._prevPosIsValid = false;
-        // start emitting
+        this._prevPosIsValid = false; // previous emitter position is invalid and should not be used for interpolation
         this._spawnTimer = 0;
         this.emit = config.emit === undefined ? true : !!config.emit;
         this.autoUpdate = !!config.autoUpdate;
@@ -216,13 +201,10 @@ export class Emitter {
 
         const behaviors: (IEmitterBehavior | typeof PositionParticle)[] = config.behaviors.map((data) => {
             const constructor = Emitter.knownBehaviors[data.type];
-
             if (!constructor) {
                 console.error(`Unknown behavior: ${data.type}`);
-
                 return null;
             }
-
             return new constructor(data.config);
         })
             .filter((b) => !!b);
@@ -235,7 +217,6 @@ export class Emitter {
             else if (b === PositionParticle) {
                 return (a as IEmitterBehavior).order === BehaviorOrder.Spawn ? -1 : 1;
             }
-
             return (a as IEmitterBehavior).order - (b as IEmitterBehavior).order;
         });
         this.initBehaviors = behaviors.slice();
@@ -243,19 +224,13 @@ export class Emitter {
         this.recycleBehaviors = behaviors.filter((b) => b !== PositionParticle && b.recycleParticle) as IEmitterBehavior[];
     }
 
-    /**
-     * Gets the instantiated behavior of the specified type, if it is present on this emitter.
-     * @param type The behavior type to find.
-     */
+    // Gets the instantiated behavior of the specified type, if it is present on this emitter. @param type The behavior type to find.
     public getBehavior(type: string): IEmitterBehavior | null {
         if (!Emitter.knownBehaviors[type]) return null; // bail if we don't know about such an emitter
         return this.initBehaviors.find((b) => b instanceof Emitter.knownBehaviors[type]) as IEmitterBehavior || null; // find one that is an instance of the specified type
     }
 
-    /**
-     * Fills the pool with the specified number of particles, so that they don't have to be instantiated later.
-     * @param count The number of particles to create.
-     */
+    // Fills the pool with the specified number of particles, so that they don't have to be instantiated later. @param count The number of particles to create.
     public fillPool(count: number): void {
         for (; count > 0; --count) {
             const p = new Particle(this);
@@ -281,16 +256,13 @@ export class Emitter {
         if (particle === this._activeParticlesFirst) {
             this._activeParticlesFirst = particle.next;
         }
-        // add to pool
         particle.prev = null;
         particle.next = this._poolFirst;
         this._poolFirst = particle;
-        // remove child from display, or make it invisible if it is in a ParticleContainer
         if (particle.parent) {
-            particle.parent.removeChild(particle);
+            particle.parent.removeChild(particle); // remove child from display, or make it invisible if it is in a ParticleContainer
         }
-        // decrease count
-        --this.particleCount;
+        --this.particleCount; // decrease count
     }
 
     // Sets the rotation of the emitter to a new value. This rotates the spawn position in addition to particle direction. @param newRot The new rotation, in degrees.
@@ -375,13 +347,10 @@ export class Emitter {
 
         // update all particle lifetimes before turning them over to behaviors
         for (let particle = this._activeParticlesFirst, next; particle; particle = next) {
-            // save next particle in case we recycle this one
-            next = particle.next;
-            // increase age
-            particle.age += delta;
-            // recycle particle if it is too old
+            next = particle.next; // save next particle in case we recycle this one
+            particle.age += delta; // increase age
             if (particle.age > particle.maxLife || particle.age < 0) {
-                this.recycle(particle);
+                this.recycle(particle); // recycle particle if it is too old
             }
             else {
                 // determine our interpolation value
@@ -465,11 +434,9 @@ export class Emitter {
                     } else {
                         lifetime = (Math.random() * (this.maxLifetime - this.minLifetime)) + this.minLifetime;
                     }
-                    // only make the particle if it wouldn't immediately destroy itself
                     if (-this._spawnTimer >= lifetime) {
-                        continue;
+                        continue; // only make the particle if it wouldn't immediately destroy itself
                     }
-
                     let particle: Particle;
                     if (this._poolFirst) {
                         particle = this._poolFirst;

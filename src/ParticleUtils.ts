@@ -69,9 +69,7 @@ export function scaleBy(point: IPointData, value: number): void {
 }
 
 /**
- * Converts a hex string from "#AARRGGBB", "#RRGGBB", "0xAARRGGBB", "0xRRGGBB",
- * "AARRGGBB", or "RRGGBB" to an object of ints of 0-255, as
- * {r, g, b, (a)}.
+ * Converts a hex string from "#AARRGGBB", "#RRGGBB", "0xAARRGGBB", "0xRRGGBB", "AARRGGBB", or "RRGGBB" to an object of ints of 0-255, as {r, g, b, (a)}.
  * @param color The input color string.
  * @param output An object to put the output in. If omitted, a new object is created.
  * @return The object with r, g, and b properties, possibly with an a property.
@@ -102,20 +100,18 @@ export function hexToRGB(color: string, output?: Color): Color {
 }
 
 /**
- * Generates a custom ease function, based on the GreenSock custom ease, as demonstrated
- * by the related tool at http://www.greensock.com/customease/.
- * @param segments An array of segments, as created by
- * http://www.greensock.com/customease/.
+ * Generates a custom ease function, based on the GreenSock custom ease, as demonstrated by the related tool at http://www.greensock.com/customease/.
+ * @param segments An array of segments, as created by http://www.greensock.com/customease/.
  * @return A function that calculates the percentage of change at a given point in time (0-1 inclusive).
  */
 export function generateEase(segments: EaseSegment[]): SimpleEase {
     const qty = segments.length;
     const oneOverQty = 1 / qty;
+
     /*
     * Calculates the percentage of change at a given point in time (0-1 inclusive).
     * @param {Number} time The time of the ease, 0-1 inclusive.
-    * @return {Number} The percentage of the change, 0-1 inclusive (unless your
-    *                  ease goes outside those bounds).
+    * @return {Number} The percentage of the change, 0-1 inclusive (unless your ease goes outside those bounds).
     */
     return function (time: number): number {
         const i = (qty * time) | 0;// do a quick floor operation
@@ -133,9 +129,7 @@ export function getBlendMode(name: string): number {
 }
 
 /**
- * Converts a list of {value, time} objects starting at time 0 and ending at time 1 into an evenly
- * spaced stepped list of PropertyNodes for color values. This is primarily to handle conversion of
- * linear gradients to fewer colors, allowing for some optimization for Canvas2d fallbacks.
+ * Converts a list of {value, time} objects starting at time 0 and ending at time 1 into an evenly spaced stepped list of PropertyNodes for color values. This is primarily to handle conversion of linear gradients to fewer colors, allowing for some optimization for Canvas2d fallbacks.
  * @param list The list of data to convert.
  * @param [numSteps=10] The number of steps to use.
  * @return The blend mode as specified in the PIXI.blendModes enumeration.
@@ -158,8 +152,7 @@ export function createSteppedGradient(list: ValueStep<string>[], numSteps = 10):
             current = next;
             next = list[++nextIndex];
         }
-        // convert the lerp value to the segment range
-        lerp = (lerp - current.time) / (next.time - current.time);
+        lerp = (lerp - current.time) / (next.time - current.time); // convert the lerp value to the segment range
         const curVal = hexToRGB(current.value);
         const nextVal = hexToRGB(next.value);
         const output: Color = {

@@ -22,7 +22,7 @@ export interface BehaviorEntry {
     config: any; // Configuration data specific to that behavior.
 }
 
-// Configuration for how to pick a random number (inclusive).
+// Configuration for how to pick a random number (inclusive)
 export interface RandNumber {
     max: number; // Maximum pickable value.
     min: number; // Minimum pickable value.
@@ -30,8 +30,6 @@ export interface RandNumber {
 
 /**
  * Converts emitter configuration from pre-5.0.0 library values into the current version.
- *
- * Example usage:
  * ```javascript
  * const emitter = new Emitter(myContainer, upgradeConfig(myOldConfig, [myTexture, myOtherTexture]));
  * ```
