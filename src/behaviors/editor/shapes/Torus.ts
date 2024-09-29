@@ -1,4 +1,4 @@
-import { Torus } from '../../shapes/Torus';
+import { Torus } from '../../shapes';
 
 Torus.editorConfig = {
     type: 'object',

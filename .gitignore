@@ -2,7 +2,7 @@
 .grunt
 docs/dist
 docs/docs
-docs/examples/libs
+docs/examples/libs/pixi.js
 node_modules
 assets
 npm-debug.log

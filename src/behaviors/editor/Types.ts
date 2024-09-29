@@ -42,7 +42,7 @@ export interface PointProperty
     name: string;
     title: string;
     description: string;
-    default: {x: number, y: number};
+    default: { x: number, y: number };
 }
 
 export interface NumberListProperty
@@ -97,7 +97,7 @@ export interface SelectProperty
     name: string;
     title: string;
     description: string;
-    options: {label: string, value: string}[];
+    options: { label: string, value: string }[];
     default: string;
 }
 
@@ -118,7 +118,7 @@ export type Property = NumberProperty | ColorProperty | BooleanProperty | TextPr
 
 export interface BehaviorEditorConfig
 {
-    category: 'art'|'color'|'alpha'|'scale'|'movement'|'rotation'|'blend'|'spawn'|'other';
+    category: 'art' | 'color' | 'alpha' | 'scale' | 'movement' | 'rotation' | 'blend' | 'spawn' | 'other';
     title: string;
     props: Property[];
 }

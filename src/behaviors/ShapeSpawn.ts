@@ -1,6 +1,6 @@
 import { Particle } from '../Particle';
 import { IEmitterBehavior, BehaviorOrder } from './Behaviors';
-import { SpawnShape, SpawnShapeClass } from './shapes/SpawnShape';
+import { SpawnShape, SpawnShapeClass } from './shapes';
 import { PolygonalChain } from './shapes/PolygonalChain';
 import { Rectangle } from './shapes/Rectangle';
 import { Torus } from './shapes/Torus';
