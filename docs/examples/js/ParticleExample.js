@@ -39,7 +39,6 @@
                 canvas.height = window.innerHeight;
                 this.renderer.resize(canvas.width, canvas.height);
                 if (this.bg) {
-                    // bg is a 1px by 1px image
                     this.bg.scale.x = canvas.width;
                     this.bg.scale.y = canvas.height;
                 }

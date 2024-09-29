@@ -1,5 +1,4 @@
-export interface NumberProperty
-{
+export interface NumberProperty {
     type: 'number';
     name: string;
     title: string;
@@ -9,8 +8,7 @@ export interface NumberProperty
     max?: number;
 }
 
-export interface ColorProperty
-{
+export interface ColorProperty {
     type: 'color';
     name: string;
     title: string;
@@ -18,8 +16,7 @@ export interface ColorProperty
     default: string;
 }
 
-export interface BooleanProperty
-{
+export interface BooleanProperty {
     type: 'boolean';
     name: string;
     title: string;
@@ -27,8 +24,7 @@ export interface BooleanProperty
     default: boolean;
 }
 
-export interface TextProperty
-{
+export interface TextProperty {
     type: 'text';
     name: string;
     title: string;
@@ -36,8 +32,7 @@ export interface TextProperty
     default: string;
 }
 
-export interface PointProperty
-{
+export interface PointProperty {
     type: 'point';
     name: string;
     title: string;
@@ -45,8 +40,7 @@ export interface PointProperty
     default: { x: number, y: number };
 }
 
-export interface NumberListProperty
-{
+export interface NumberListProperty {
     type: 'numberList';
     name: string;
     title: string;
@@ -56,8 +50,7 @@ export interface NumberListProperty
     max?: number;
 }
 
-export interface ColorListProperty
-{
+export interface ColorListProperty {
     type: 'colorList';
     name: string;
     title: string;
@@ -65,16 +58,14 @@ export interface ColorListProperty
     default: string;
 }
 
-export interface ImageProperty
-{
+export interface ImageProperty {
     type: 'image';
     name: string;
     title: string;
     description: string;
 }
 
-export interface ListProperty
-{
+export interface ListProperty {
     type: 'list';
     name: string;
     title: string;
@@ -82,8 +73,7 @@ export interface ListProperty
     entryType: Property;
 }
 
-export interface ObjectProperty
-{
+export interface ObjectProperty {
     type: 'object';
     name: string;
     title: string;
@@ -91,8 +81,7 @@ export interface ObjectProperty
     props: Property[];
 }
 
-export interface SelectProperty
-{
+export interface SelectProperty {
     type: 'select';
     name: string;
     title: string;
@@ -101,23 +90,19 @@ export interface SelectProperty
     default: string;
 }
 
-export interface SelectSubConfigProperty
-{
+export interface SelectSubConfigProperty {
     type: 'subconfig';
-    /** Name of property where the type of the config is stored */
     name: string;
     title: string;
     description: string;
     dictionaryProp: string;
-    /** Name of property in which the config should be stored */
     configName: string;
 }
 
 export type Property = NumberProperty | ColorProperty | BooleanProperty | TextProperty | PointProperty | NumberListProperty |
     ColorListProperty | ImageProperty | ListProperty | ObjectProperty | SelectProperty | SelectSubConfigProperty;
 
-export interface BehaviorEditorConfig
-{
+export interface BehaviorEditorConfig {
     category: 'art' | 'color' | 'alpha' | 'scale' | 'movement' | 'rotation' | 'blend' | 'spawn' | 'other';
     title: string;
     props: Property[];

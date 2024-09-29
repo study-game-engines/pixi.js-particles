@@ -6,8 +6,7 @@ import { BehaviorEditorConfig } from './editor/Types';
  * {@link IEmitterBehaviorClass} interface. All behaviors must have an order property and
  * `initParticles` method. Implementing the `updateParticle` or `recycleParticle` methods is optional.
  */
-export interface IEmitterBehavior
-{
+export interface IEmitterBehavior {
     /**
      * Order in which the behavior will be handled. Lower numbers are handled earlier, with an order of 0 getting
      * special treatment before the Emitter's transformation is applied.
@@ -23,7 +22,7 @@ export interface IEmitterBehavior
      * @param particle The particle to update.
      * @param deltaSec The time to advance the particle by in seconds.
      */
-    updateParticle?(particle: Particle, deltaSec: number): void|boolean;
+    updateParticle?(particle: Particle, deltaSec: number): void | boolean;
     /**
      * A hook for when a particle is recycled.
      * @param particle The particle that was just recycled.
@@ -35,8 +34,7 @@ export interface IEmitterBehavior
 /**
  * All behavior classes must match this interface. The instances need to implement the {@link IEmitterBehavior} interface.
  */
-export interface IEmitterBehaviorClass
-{
+export interface IEmitterBehaviorClass {
     /**
      * The unique type name that the behavior is registered under.
      */
@@ -49,7 +47,7 @@ export interface IEmitterBehaviorClass
      * The behavior constructor itself.
      * @param config The config for the behavior, which should match its defined specifications.
      */
-    new (config: any): IEmitterBehavior;
+    new(config: any): IEmitterBehavior;
 }
 
 /**
@@ -58,8 +56,7 @@ export interface IEmitterBehaviorClass
  * Behaviors with the same value will not be given any specific sort order, as they are assumed to not
  * interfere with each other.
  */
-export enum BehaviorOrder
-{
+export enum BehaviorOrder {
     /**
      * Spawn - initial placement and/or rotation. This happens before rotation/translation due to
      * emitter rotation/position is applied.
