@@ -1,30 +1,21 @@
-// eslint-disable-next-line func-names
 (function (window) {
     class ParticleExample {
         constructor(imagePaths, config, testContainers, stepColors) {
             const canvas = document.getElementById('stage');
-            // Basic PIXI Setup
             const rendererOptions = {
                 width: canvas.width,
                 height: canvas.height,
                 view: canvas,
             };
-            /* var preMultAlpha = !!options.preMultAlpha;
-            if(rendererOptions.transparent && !preMultAlpha)
-                rendererOptions.transparent = 'notMultiplied';*/
-
             this.stage = new PIXI.Container();
             this.emitter = null;
             this.renderer = new PIXI.Renderer(rendererOptions);
             this.bg = null;
             this.updateHook = null;
             this.containerHook = null;
-
             const framerate = document.getElementById('framerate');
             const particleCount = document.getElementById('particleCount');
             const containerType = document.getElementById('containerType');
-
-            // Calculate the current time
             let elapsed = Date.now();
             let updateId;
             const update = () => {
@@ -43,56 +34,41 @@
                 }
                 this.renderer.render(this.stage);
             };
-
-            // Resize the canvas to the size of the window
-            window.onresize = () =>
-            {
+            window.onresize = () => {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 this.renderer.resize(canvas.width, canvas.height);
-                if (this.bg)
-                {
+                if (this.bg) {
                     // bg is a 1px by 1px image
                     this.bg.scale.x = canvas.width;
                     this.bg.scale.y = canvas.height;
                 }
             };
             window.onresize();
-
-            // Preload the particle images and create PIXI textures from it
             let urls;
-            if (imagePaths.spritesheet)
-            {
+            if (imagePaths.spritesheet) {
                 urls = [imagePaths.spritesheet];
             }
-            else if (imagePaths.textures)
-            {
+            else if (imagePaths.textures) {
                 urls = imagePaths.textures.slice();
             }
-            else
-            {
+            else {
                 urls = imagePaths.slice();
             }
             const loader = PIXI.Loader.shared;
-            for (let i = 0; i < urls.length; ++i)
-            {
+            for (let i = 0; i < urls.length; ++i) {
                 loader.add('img' + i, urls[i]);
             }
-            loader.load(() =>
-            {
+            loader.load(() => {
                 this.bg = new PIXI.Sprite(PIXI.Texture.WHITE);
-                // bg is a 1px by 1px image
                 this.bg.scale.x = canvas.width;
                 this.bg.scale.y = canvas.height;
                 this.bg.tint = 0x000000;
                 this.stage.addChild(this.bg);
-                // Create the new emitter and attach it to the stage
                 let parentType = 0;
 
-                function getContainer()
-                {
-                    switch (parentType)
-                    {
+                function getContainer() {
+                    switch (parentType) {
                         case 1:
                             const pc = new PIXI.ParticleContainer();
                             pc.setProperties({
@@ -102,7 +78,6 @@
                                 uvs: true,
                                 alpha: true,
                             });
-
                             return [pc, 'PIXI.ParticleContainer'];
                         case 2:
                             return [new PIXI.particles.LinkedListContainer(), 'PIXI.particles.LinkedListContainer'];
@@ -114,37 +89,17 @@
                 let [emitterContainer, containerName] = getContainer();
                 this.stage.addChild(emitterContainer);
                 if (containerType) containerType.innerHTML = containerName;
-
-                window.emitter = this.emitter = new PIXI.particles.Emitter(
-                    emitterContainer,
-                    config,
-                );
-                if (stepColors)
-                {
-                    // override the initialized list with our auto-stepped one
+                window.emitter = this.emitter = new PIXI.particles.Emitter(emitterContainer, config);
+                if (stepColors) {
                     this.emitter.getBehavior('color')
                         .list
-                        .reset(
-                            PIXI.particles.ParticleUtils.createSteppedGradient(
-                                config.behaviors.find((b) => b.type === 'color').config.color.list,
-                                stepColors,
-                            ),
-                        );
+                        .reset(PIXI.particles.ParticleUtils.createSteppedGradient(config.behaviors.find((b) => b.type === 'color').config.color.list, stepColors));
                 }
-
-                // Center on the stage
                 this.emitter.updateOwnerPos(window.innerWidth / 2, window.innerHeight / 2);
-
-                // Click on the canvas to trigger
-                canvas.addEventListener('mouseup', (e) =>
-                {
+                canvas.addEventListener('mouseup', (e) => {
                     if (!this.emitter) return;
-
-                    // right click (or anything but left click)
-                    if (e.button)
-                    {
-                        if (testContainers)
-                        {
+                    if (e.button) {
+                        if (testContainers) {
                             if (++parentType >= 3) parentType = 0;
                             const oldParent = emitterContainer;
                             [emitterContainer, containerName] = getContainer();
@@ -153,51 +108,31 @@
                             this.emitter.parent = emitterContainer;
                             this.stage.removeChild(oldParent);
                             oldParent.destroy();
-
-                            if (this.containerHook)
-                            {
+                            if (this.containerHook) {
                                 this.containerHook();
                             }
                         }
                     }
-                    else
-                    {
+                    else {
                         this.emitter.emit = true;
                         this.emitter.resetPositionTracking();
                         this.emitter.updateOwnerPos(e.offsetX || e.layerX, e.offsetY || e.layerY);
                     }
                 });
-
-                document.body.addEventListener('contextmenu', (e) =>
-                {
+                document.body.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
-
                     return false;
                 });
-
-                // Start the update
                 update();
-
-                // for testing and debugging
-                window.destroyEmitter = () =>
-                {
+                window.destroyEmitter = () => {
                     this.emitter.destroy();
                     this.emitter = null;
                     window.destroyEmitter = null;
-                    // cancelAnimationFrame(updateId);
-
-                    // reset SpriteRenderer's batching to fully release particles for GC
-                    // if (this.renderer.plugins && this.renderer.plugins.sprite && this.renderer.plugins.sprite.sprites)
-                    // {
-                    //     this.renderer.plugins.sprite.sprites.length = 0;
-                    // }
-
                     this.renderer.render(this.stage);
                 };
             });
         }
     }
 
-    // Assign to global space
     window.ParticleExample = ParticleExample;
 })(window);
