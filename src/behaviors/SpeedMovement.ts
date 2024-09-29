@@ -1,4 +1,4 @@
-import { Point } from '@pixi/math'
+import { IPointData, Point } from '@pixi/math'
 import { Particle } from '../Particle'
 import { rotatePoint, normalize, scaleBy } from '../ParticleUtils'
 import { PropertyList } from '../PropertyList'
@@ -22,10 +22,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class SpeedBehavior implements IEmitterBehavior {
 
-    public static type = 'moveSpeed'
+    public static type: string = 'moveSpeed'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Late
+    public order: BehaviorOrder = BehaviorOrder.Late
     private list: PropertyList<number>
     private readonly minMult: number
 
@@ -39,7 +39,7 @@ export class SpeedBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             const mult = (Math.random() * (1 - this.minMult)) + this.minMult
             next.config.speedMult = mult
@@ -54,8 +54,8 @@ export class SpeedBehavior implements IEmitterBehavior {
     }
 
     updateParticle(particle: Particle, deltaSec: number): void {
-        const speed = this.list.interpolate(particle.agePercent) * particle.config.speedMult
-        const vel = particle.config.velocity
+        const speed: number = this.list.interpolate(particle.agePercent) * particle.config.speedMult
+        const vel: IPointData = particle.config.velocity
         normalize(vel)
         scaleBy(vel, speed)
         particle.x += vel.x * deltaSec
@@ -78,10 +78,10 @@ export class SpeedBehavior implements IEmitterBehavior {
  */
 export class StaticSpeedBehavior implements IEmitterBehavior {
 
-    public static type = 'moveSpeedStatic'
+    public static type: string = 'moveSpeedStatic'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Late
+    public order: BehaviorOrder = BehaviorOrder.Late
     private readonly min: number
     private readonly max: number
 
@@ -94,7 +94,7 @@ export class StaticSpeedBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             const speed = (Math.random() * (this.max - this.min)) + this.min
             if (!next.config.velocity) {
@@ -108,7 +108,7 @@ export class StaticSpeedBehavior implements IEmitterBehavior {
     }
 
     updateParticle(particle: Particle, deltaSec: number): void {
-        const velocity = particle.config.velocity
+        const velocity: any = particle.config.velocity
         particle.x += velocity.x * deltaSec
         particle.y += velocity.y * deltaSec
     }

@@ -3,7 +3,7 @@ import type { ListProperty, ObjectProperty } from '../editor/Types'
 
 // Any shape capable of generating a random position for the {@link ShapeSpawnBehavior | shape spawn behavior}.
 export interface SpawnShape {
-    getRandPos(particle: Particle): void // Assign a random position to the given particle. Rotation may optionally be applied assigning any other properties, while allowed, would be improper.
+    getRandomPosition(particle: Particle): void // Assign a random position to the given particle. Rotation may optionally be applied assigning any other properties, while allowed, would be improper.
 }
 
 // Class definition/static properties for a shape capable of generating a random position for the {@link ShapeSpawnBehavior | shape spawn behavior}.

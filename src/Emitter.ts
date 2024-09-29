@@ -219,17 +219,17 @@ export class Emitter {
     // Gets the instantiated behavior of the specified type, if it is present on this emitter. @param type The behavior type to find.
     public getBehavior(type: string): IEmitterBehavior | null {
         if (!Emitter.knownBehaviors[type]) {
-            return null
-        } // bail if we don't know about such an emitter
+            return null // bail if we don't know about such an emitter
+        }
         return this.initBehaviors.find((b) => b instanceof Emitter.knownBehaviors[type]) as IEmitterBehavior || null // find one that is an instance of the specified type
     }
 
     // Fills the pool with the specified number of particles, so that they don't have to be instantiated later. @param count The number of particles to create.
     public fillPool(count: number): void {
         for (; count > 0; --count) {
-            const p = new Particle(this)
-            p.next = this._poolFirst
-            this._poolFirst = p
+            const particle: Particle = new Particle(this)
+            particle.next = this._poolFirst
+            this._poolFirst = particle
         }
     }
 
@@ -264,7 +264,7 @@ export class Emitter {
         if (this.rotation === newRot) {
             return
         }
-        const diff = newRot - this.rotation // caclulate the difference in rotation for rotating spawnPos
+        const diff: number = newRot - this.rotation // caclulate the difference in rotation for rotating spawnPos
         this.rotation = newRot
         rotatePoint(diff, this.spawnPos) // rotate spawnPos
         this._posChanged = true // mark the position as having changed
@@ -339,7 +339,7 @@ export class Emitter {
         /* existing particles */
 
         // update all particle lifetimes before turning them over to behaviors
-        for (let particle = this._activeParticlesFirst, next; particle; particle = next) {
+        for (let particle: Particle = this._activeParticlesFirst, next: Particle; particle; particle = next) {
             next = particle.next // save next particle in case we recycle this one
             particle.age += delta // increase age
             if (particle.age > particle.maxLife || particle.age < 0) {
@@ -473,7 +473,7 @@ export class Emitter {
                         const behavior = this.initBehaviors[i]
                         // if we hit our special key, interrupt behaviors to apply emitter position/rotation
                         if (behavior === PositionParticle) {
-                            for (let particle = waveFirst, next; particle; particle = next) {
+                            for (let particle: Particle = waveFirst, next: Particle; particle; particle = next) {
                                 // save next particle in case we recycle this one
                                 next = particle.next
                                 // rotate the particle's position by the emitter's rotation
@@ -504,7 +504,7 @@ export class Emitter {
                             behavior.initParticles(waveFirst)
                         }
                     }
-                    for (let particle = waveFirst, next; particle; particle = next) {
+                    for (let particle: Particle = waveFirst, next: Particle; particle; particle = next) {
                         next = particle.next // save next particle in case we recycle this one
                         // now update the particles by the time passed, so the particles are spread out properly
                         for (let i = 0; i < this.updateBehaviors.length; ++i) {
@@ -545,8 +545,8 @@ export class Emitter {
 
     // Emits a single wave of particles, using standard spawnChance & particlesPerWave settings. Does not affect regular spawning through the frequency, and ignores the emit property. The max particle count is respected, however, so if there are already too many particles then nothing will happen.
     public emitNow(): void {
-        const emitPosX = this.ownerPos.x + this.spawnPos.x
-        const emitPosY = this.ownerPos.y + this.spawnPos.y
+        const emitPosX: number = this.ownerPos.x + this.spawnPos.x
+        const emitPosY: number = this.ownerPos.y + this.spawnPos.y
         let waveFirst: Particle = null
         let waveLast: Particle = null
 

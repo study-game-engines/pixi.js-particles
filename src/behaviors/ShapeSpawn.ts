@@ -28,7 +28,7 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class ShapeSpawnBehavior implements IEmitterBehavior {
 
-    public static type = 'spawnShape'
+    public static type: string = 'spawnShape'
     public static editorConfig: BehaviorEditorConfig = null
     private static shapes: { [key: string]: SpawnShapeClass } = {} // Dictionary of all registered shape classes.
 
@@ -37,7 +37,7 @@ export class ShapeSpawnBehavior implements IEmitterBehavior {
         ShapeSpawnBehavior.shapes[typeOverride || constructor.type] = constructor
     }
 
-    order = BehaviorOrder.Spawn
+    order: BehaviorOrder = BehaviorOrder.Spawn
     private shape: SpawnShape
 
     constructor(config: {
@@ -52,9 +52,9 @@ export class ShapeSpawnBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
-            this.shape.getRandPos(next)
+            this.shape.getRandomPosition(next)
             next = next.next
         }
     }

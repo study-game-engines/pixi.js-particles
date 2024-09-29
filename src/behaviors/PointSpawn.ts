@@ -13,10 +13,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class PointSpawnBehavior implements IEmitterBehavior {
 
-    public static type = 'spawnPoint'
+    public static type: string = 'spawnPoint'
     public static editorConfig: BehaviorEditorConfig = null
 
-    order = BehaviorOrder.Spawn
+    order: BehaviorOrder = BehaviorOrder.Spawn
 
     initParticles(first: Particle): void {
         // no op

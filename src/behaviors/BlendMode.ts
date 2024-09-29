@@ -16,10 +16,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class BlendModeBehavior implements IEmitterBehavior {
 
-    public static type = 'blendMode'
+    public static type: string = 'blendMode'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private readonly value: string
 
     constructor(config: {
@@ -29,7 +29,7 @@ export class BlendModeBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.blendMode = getBlendMode(this.value)
             next = next.next

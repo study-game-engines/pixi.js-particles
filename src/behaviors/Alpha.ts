@@ -19,10 +19,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class AlphaBehavior implements IEmitterBehavior {
 
-    public static type = 'alpha'
+    public static type: string = 'alpha'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<number>
 
     constructor(config: {
@@ -33,7 +33,7 @@ export class AlphaBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.alpha = this.list.first.value
             next = next.next
@@ -59,10 +59,10 @@ export class AlphaBehavior implements IEmitterBehavior {
  */
 export class StaticAlphaBehavior implements IEmitterBehavior {
 
-    public static type = 'alphaStatic'
+    public static type: string = 'alphaStatic'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private value: number
 
     constructor(config: {
@@ -72,7 +72,7 @@ export class StaticAlphaBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.alpha = this.value
             next = next.next

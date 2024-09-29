@@ -23,10 +23,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class AccelerationBehavior implements IEmitterBehavior {
 
-    public static type = 'moveAcceleration'
+    public static type: string = 'moveAcceleration'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Late // doesn't _really_ need to be late, but doing so ensures that we can override any rotation behavior that is mistakenly added
+    public order: BehaviorOrder = BehaviorOrder.Late // doesn't _really_ need to be late, but doing so ensures that we can override any rotation behavior that is mistakenly added
     private readonly minStart: number
     private readonly maxStart: number
     private accel: { x: number; y: number }
@@ -50,7 +50,7 @@ export class AccelerationBehavior implements IEmitterBehavior {
     initParticles(first: Particle): void {
         let next = first
         while (next) {
-            const speed = (Math.random() * (this.maxStart - this.minStart)) + this.minStart
+            const speed: number = (Math.random() * (this.maxStart - this.minStart)) + this.minStart
             if (!next.config.velocity) {
                 next.config.velocity = new Point(speed, 0)
             } else {
@@ -62,9 +62,9 @@ export class AccelerationBehavior implements IEmitterBehavior {
     }
 
     updateParticle(particle: Particle, deltaSec: number): void {
-        const vel = particle.config.velocity
-        const oldVX = vel.x
-        const oldVY = vel.y
+        const vel: any = particle.config.velocity
+        const oldVX: any = vel.x
+        const oldVY: any = vel.y
         vel.x += this.accel.x * deltaSec
         vel.y += this.accel.y * deltaSec
         if (this.maxSpeed) {

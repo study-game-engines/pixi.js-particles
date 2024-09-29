@@ -46,8 +46,8 @@ export class PropertyNode<V> {
      */
     public static createList<T extends (string | number)>(data: ValueList<T> | BasicTweenable<T>): PropertyNode<T extends string ? Color : T> {
         if ('list' in data) {
-            const array = data.list
-            let node
+            const array: ValueStep<T>[] = data.list
+            let node: PropertyNode<Color | T>
             const { value, time } = array[0]
             const first = node = new PropertyNode(typeof value === 'string' ? hexToRGB(value) : value, time, data.ease)
             // only set up subsequent nodes if there are a bunch or the 2nd one is different from the first

@@ -17,10 +17,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class OrderedTextureBehavior implements IEmitterBehavior {
 
-    public static type = 'textureOrdered'
+    public static type: string = 'textureOrdered'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private readonly textures: Texture[]
     private index: number
 
@@ -32,7 +32,7 @@ export class OrderedTextureBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.texture = this.textures[this.index]
             if (++this.index >= this.textures.length) {

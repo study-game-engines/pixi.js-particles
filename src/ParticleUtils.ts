@@ -24,19 +24,19 @@ export interface EaseSegment {
 export type SimpleEase = (time: number) => number
 
 // If errors and warnings should be logged within the library.
-export const verbose = false
+export const verbose: boolean = false
 
-export const DEG_TO_RADS = Math.PI / 180
+export const DEG_TO_RADS: number = Math.PI / 180
 
 // Rotates a point by a given angle. @param angle The angle to rotate by in radians @param p The point to rotate around 0,0.
 export function rotatePoint(angle: number, p: IPointData): void {
     if (!angle) {
         return
     }
-    const s = Math.sin(angle)
-    const c = Math.cos(angle)
-    const xnew = (p.x * c) - (p.y * s)
-    const ynew = (p.x * s) + (p.y * c)
+    const s: number = Math.sin(angle)
+    const c: number = Math.cos(angle)
+    const xnew: number = (p.x * c) - (p.y * s)
+    const ynew: number = (p.x * s) + (p.y * c)
     p.x = xnew
     p.y = ynew
 }
@@ -59,7 +59,7 @@ export function length(point: IPointData): number {
 
 // Reduces the point to a length of 1. @param point The point to normalize
 export function normalize(point: IPointData): void {
-    const oneOverLen = 1 / length(point)
+    const oneOverLen: number = 1 / length(point)
     point.x *= oneOverLen
     point.y *= oneOverLen
 }
@@ -105,8 +105,8 @@ export function hexToRGB(color: string, output?: Color): Color {
  * @return A function that calculates the percentage of change at a given point in time (0-1 inclusive).
  */
 export function generateEase(segments: EaseSegment[]): SimpleEase {
-    const qty = segments.length
-    const oneOverQty = 1 / qty
+    const qty: number = segments.length
+    const oneOverQty: number = 1 / qty
 
     /*
     * Calculates the percentage of change at a given point in time (0-1 inclusive).
@@ -114,9 +114,9 @@ export function generateEase(segments: EaseSegment[]): SimpleEase {
     * @return {Number} The percentage of the change, 0-1 inclusive (unless your ease goes outside those bounds).
     */
     return function (time: number): number {
-        const i = (qty * time) | 0// do a quick floor operation
-        const t = (time - (i * oneOverQty)) * qty
-        const s = segments[i] || segments[qty - 1]
+        const i: number = (qty * time) | 0// do a quick floor operation
+        const t: number = (time - (i * oneOverQty)) * qty
+        const s: EaseSegment = segments[i] || segments[qty - 1]
         return (s.s + (t * ((2 * (1 - t) * (s.cp - s.s)) + (t * (s.e - s.s)))))
     }
 }
@@ -140,22 +140,22 @@ export function createSteppedGradient(list: ValueStep<string>[], numSteps = 10):
     if (typeof numSteps !== 'number' || numSteps <= 0) {
         numSteps = 10
     }
-    const first = new PropertyNode<Color>(hexToRGB(list[0].value), list[0].time)
+    const first: PropertyNode<Color> = new PropertyNode<Color>(hexToRGB(list[0].value), list[0].time)
     first.isStepped = true
-    let currentNode = first
-    let current = list[0]
-    let nextIndex = 1
-    let next = list[nextIndex]
+    let currentNode: PropertyNode<Color> = first
+    let current: ValueStep<string> = list[0]
+    let nextIndex: number = 1
+    let next: ValueStep<string> = list[nextIndex]
     for (let i = 1; i < numSteps; ++i) {
-        let lerp = i / numSteps
+        let lerp: number = i / numSteps
         // ensure we are on the right segment, if multiple
         while (lerp > next.time) {
             current = next
             next = list[++nextIndex]
         }
         lerp = (lerp - current.time) / (next.time - current.time) // convert the lerp value to the segment range
-        const curVal = hexToRGB(current.value)
-        const nextVal = hexToRGB(next.value)
+        const curVal: Color = hexToRGB(current.value)
+        const nextVal: Color = hexToRGB(next.value)
         const output: Color = {
             r: ((nextVal.r - curVal.r) * lerp) + curVal.r,
             g: ((nextVal.g - curVal.g) * lerp) + curVal.g,

@@ -20,10 +20,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class RotationBehavior implements IEmitterBehavior {
 
-    public static type = 'rotation'
+    public static type: string = 'rotation'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private readonly minStart: number
     private readonly maxStart: number
     private readonly minSpeed: number
@@ -45,7 +45,7 @@ export class RotationBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             if (this.minStart === this.maxStart) {
                 next.rotation += this.maxStart
@@ -59,7 +59,7 @@ export class RotationBehavior implements IEmitterBehavior {
 
     updateParticle(particle: Particle, deltaSec: number): void {
         if (this.accel) {
-            const oldSpeed = particle.config.rotSpeed
+            const oldSpeed: any = particle.config.rotSpeed
             particle.config.rotSpeed += this.accel * deltaSec
             particle.rotation += (particle.config.rotSpeed + oldSpeed) / 2 * deltaSec
         } else {
@@ -83,10 +83,10 @@ export class RotationBehavior implements IEmitterBehavior {
  */
 export class StaticRotationBehavior implements IEmitterBehavior {
 
-    public static type = 'rotationStatic'
+    public static type: string = 'rotationStatic'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private readonly min: number
     private readonly max: number
 
@@ -99,7 +99,7 @@ export class StaticRotationBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             if (this.min === this.max) {
                 next.rotation += this.max
@@ -125,10 +125,10 @@ export class StaticRotationBehavior implements IEmitterBehavior {
  */
 export class NoRotationBehavior implements IEmitterBehavior {
 
-    public static type = 'noRotation'
+    public static type: string = 'noRotation'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Late + 1
+    public order: BehaviorOrder = BehaviorOrder.Late + 1
     private readonly rotation: number
 
     constructor(config: {
@@ -138,7 +138,7 @@ export class NoRotationBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.rotation = this.rotation
             next = next.next

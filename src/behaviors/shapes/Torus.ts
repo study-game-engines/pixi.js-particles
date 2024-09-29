@@ -20,7 +20,7 @@ import { SpawnShape } from './SpawnShape'
  */
 export class Torus implements SpawnShape {
 
-    public static type = 'torus'
+    public static type: string = 'torus'
     public static editorConfig: ObjectProperty = null
 
     public x: number
@@ -43,14 +43,14 @@ export class Torus implements SpawnShape {
         this.rotation = !!config.affectRotation
     }
 
-    getRandPos(particle: Particle): void {
+    getRandomPosition(particle: Particle): void {
         if (this.innerRadius !== this.radius) {
             particle.x = (Math.random() * (this.radius - this.innerRadius)) + this.innerRadius
         } else {
             particle.x = this.radius
         }
         particle.y = 0
-        const angle = Math.random() * Math.PI * 2
+        const angle: number = Math.random() * Math.PI * 2
         if (this.rotation) {
             particle.rotation += angle
         }

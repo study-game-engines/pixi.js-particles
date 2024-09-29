@@ -17,10 +17,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class RandomTextureBehavior implements IEmitterBehavior {
 
-    public static type = 'textureRandom'
+    public static type: string = 'textureRandom'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private readonly textures: Texture[]
 
     constructor(config: {
@@ -30,9 +30,9 @@ export class RandomTextureBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
-            const index = Math.floor(Math.random() * this.textures.length)
+            const index: number = Math.floor(Math.random() * this.textures.length)
             next.texture = this.textures[index]
             next = next.next
         }

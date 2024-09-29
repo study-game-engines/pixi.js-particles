@@ -17,10 +17,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class SingleTextureBehavior implements IEmitterBehavior {
 
-    public static type = 'textureSingle'
+    public static type: string = 'textureSingle'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private readonly texture: Texture
 
     constructor(config: {
@@ -30,7 +30,7 @@ export class SingleTextureBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.texture = this.texture
             next = next.next

@@ -18,7 +18,7 @@ import { SpawnShape } from './SpawnShape'
  */
 export class Rectangle implements SpawnShape {
 
-    public static type = 'rect'
+    public static type: string = 'rect'
     public static editorConfig: ObjectProperty = null
 
     public x: number
@@ -38,7 +38,7 @@ export class Rectangle implements SpawnShape {
         this.h = config.h
     }
 
-    getRandPos(particle: Particle): void {
+    getRandomPosition(particle: Particle): void {
         particle.x = (Math.random() * this.w) + this.x
         particle.y = (Math.random() * this.h) + this.y
     }

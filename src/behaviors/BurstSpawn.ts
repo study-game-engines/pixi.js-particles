@@ -18,10 +18,10 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class BurstSpawnBehavior implements IEmitterBehavior {
 
-    public static type = 'spawnBurst'
+    public static type: string = 'spawnBurst'
     public static editorConfig: BehaviorEditorConfig = null
 
-    order = BehaviorOrder.Spawn
+    order: BehaviorOrder = BehaviorOrder.Spawn
     private readonly spacing: number
     private readonly start: number
     private readonly distance: number
@@ -37,8 +37,8 @@ export class BurstSpawnBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let count = 0
-        let next = first
+        let count: number = 0
+        let next: Particle = first
         while (next) {
             let angle: number
             if (this.spacing) {

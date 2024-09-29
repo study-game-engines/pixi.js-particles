@@ -23,7 +23,7 @@ export class ColorBehavior implements IEmitterBehavior {
     public static type = 'color'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<Color>
 
     constructor(config: {
@@ -34,9 +34,9 @@ export class ColorBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
-        const color = this.list.first.value
-        const tint = combineRGBComponents(color.r, color.g, color.b)
+        let next: Particle = first
+        const color: Color = this.list.first.value
+        const tint: number = combineRGBComponents(color.r, color.g, color.b)
         while (next) {
             next.tint = tint
             next = next.next
@@ -62,16 +62,16 @@ export class ColorBehavior implements IEmitterBehavior {
  */
 export class StaticColorBehavior implements IEmitterBehavior {
 
-    public static type = 'colorStatic'
+    public static type: string = 'colorStatic'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
-    private value: number
+    public order: BehaviorOrder = BehaviorOrder.Normal
+    private readonly value: number
 
     constructor(config: {
         color: string // Color of the particles as 6 digit hex codes.
     }) {
-        let color = config.color
+        let color: string = config.color
         if (color.charAt(0) === '#') {
             color = color.substr(1)
         } else if (color.indexOf('0x') === 0) {
@@ -81,7 +81,7 @@ export class StaticColorBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.tint = this.value
             next = next.next

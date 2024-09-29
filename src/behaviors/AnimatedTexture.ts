@@ -20,13 +20,13 @@ export interface ParsedAnimatedParticleArt {
 }
 
 function getTextures(textures: (string | Texture | { texture: string | Texture; count: number })[]): Texture[] {
-    const outTextures: Texture[] = []
+    const result: Texture[] = []
     for (let j = 0; j < textures.length; ++j) {
         let tex = textures[j]
         if (typeof tex === 'string') {
-            outTextures.push(GetTextureFromString(tex))
+            result.push(GetTextureFromString(tex))
         } else if (tex instanceof Texture) {
-            outTextures.push(tex)
+            result.push(tex)
         } else {
             let dupe = tex.count || 1
             if (typeof tex.texture === 'string') {
@@ -35,11 +35,11 @@ function getTextures(textures: (string | Texture | { texture: string | Texture; 
                 tex = tex.texture
             }
             for (; dupe > 0; --dupe) {
-                outTextures.push(tex)
+                result.push(tex)
             }
         }
     }
-    return outTextures
+    return result
 }
 
 /**
@@ -66,10 +66,10 @@ function getTextures(textures: (string | Texture | { texture: string | Texture; 
  */
 export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
 
-    public static type = 'animatedRandom'
+    public static type: string = 'animatedRandom'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private anims: ParsedAnimatedParticleArt[]
 
     constructor(config: {
@@ -77,9 +77,9 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
     }) {
         this.anims = []
         for (let i = 0; i < config.anims.length; ++i) {
-            const anim = config.anims[i]
-            const textures = getTextures(anim.textures)
-            const framerate = anim.framerate < 0 ? -1 : (anim.framerate > 0 ? anim.framerate : 60)
+            const anim: AnimatedParticleArt = config.anims[i]
+            const textures: Texture[] = getTextures(anim.textures)
+            const framerate: -1 | number = anim.framerate < 0 ? -1 : (anim.framerate > 0 ? anim.framerate : 60)
             const parsedAnim: ParsedAnimatedParticleArt = {
                 textures,
                 duration: framerate > 0 ? textures.length / framerate : 0,
@@ -91,10 +91,10 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
-            const index = Math.floor(Math.random() * this.anims.length)
-            const anim = next.config.anim = this.anims[index]
+            const index: number = Math.floor(Math.random() * this.anims.length)
+            const anim: ParsedAnimatedParticleArt = next.config.anim = this.anims[index]
             next.texture = anim.textures[0]
             next.config.animElapsed = 0
             // if anim should match particle life exactly
@@ -110,7 +110,7 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
     }
 
     updateParticle(particle: Particle, deltaSec: number): void {
-        const config = particle.config
+        const config: { [p: string]: any } = particle.config
         const anim = config.anim
         config.animElapsed += deltaSec
         if (config.animElapsed >= config.animDuration) {
@@ -120,7 +120,7 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
                 config.animElapsed = config.animDuration - 0.000001 // subtract a small amount to prevent attempting to go past the end of the animation
             }
         }
-        const frame = ((config.animElapsed * config.animFramerate) + 0.0000001) | 0 // add a very small number to the frame and then floor it to avoid the frame being one short due to floating point errors.
+        const frame: number = ((config.animElapsed * config.animFramerate) + 0.0000001) | 0 // add a very small number to the frame and then floor it to avoid the frame being one short due to floating point errors.
         particle.texture = anim.textures[frame] || anim.textures[anim.textures.length - 1] || Texture.EMPTY // in the very rare case that framerate * elapsed math ends up going past the end, use the last texture
     }
 }
@@ -142,17 +142,18 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
  */
 export class SingleAnimatedTextureBehavior implements IEmitterBehavior {
 
-    public static type = 'animatedSingle'
+    public static type: string = 'animatedSingle'
     public static editorConfig: BehaviorEditorConfig = null
+
     public order = BehaviorOrder.Normal
-    private anim: ParsedAnimatedParticleArt
+    private readonly anim: ParsedAnimatedParticleArt
 
     constructor(config: {
         anim: AnimatedParticleArt // Animation configuration to use for each particle.
     }) {
-        const anim = config.anim
-        const textures = getTextures(anim.textures)
-        const framerate = anim.framerate < 0 ? -1 : (anim.framerate > 0 ? anim.framerate : 60)
+        const anim: AnimatedParticleArt = config.anim
+        const textures: Texture[] = getTextures(anim.textures)
+        const framerate: -1 | number = anim.framerate < 0 ? -1 : (anim.framerate > 0 ? anim.framerate : 60)
         this.anim = {
             textures,
             duration: framerate > 0 ? textures.length / framerate : 0,
@@ -162,8 +163,8 @@ export class SingleAnimatedTextureBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
-        const anim = this.anim
+        let next: Particle = first
+        const anim: ParsedAnimatedParticleArt = this.anim
         while (next) {
             next.texture = anim.textures[0]
             next.config.animElapsed = 0
@@ -180,8 +181,8 @@ export class SingleAnimatedTextureBehavior implements IEmitterBehavior {
     }
 
     updateParticle(particle: Particle, deltaSec: number): void {
-        const anim = this.anim
-        const config = particle.config
+        const anim: ParsedAnimatedParticleArt = this.anim
+        const config: { [p: string]: any } = particle.config
         config.animElapsed += deltaSec
         if (config.animElapsed >= config.animDuration) {
             if (anim.loop) {
@@ -190,7 +191,7 @@ export class SingleAnimatedTextureBehavior implements IEmitterBehavior {
                 config.animElapsed = config.animDuration - 0.000001 // subtract a small amount to prevent attempting to go past the end of the animation
             }
         }
-        const frame = ((config.animElapsed * config.animFramerate) + 0.0000001) | 0 // add a very small number to the frame and then floor it to avoid the frame being one short due to floating point errors.
+        const frame: number = ((config.animElapsed * config.animFramerate) + 0.0000001) | 0 // add a very small number to the frame and then floor it to avoid the frame being one short due to floating point errors.
         particle.texture = anim.textures[frame] || anim.textures[anim.textures.length - 1] || Texture.EMPTY // in the very rare case that framerate * elapsed math ends up going past the end, use the last texture
     }
 

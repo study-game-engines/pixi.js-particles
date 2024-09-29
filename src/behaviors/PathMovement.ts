@@ -95,10 +95,10 @@ function parsePath(pathString: string): (x: number) => number {
  */
 export class PathBehavior implements IEmitterBehavior {
 
-    public static type = 'movePath'
+    public static type: string = 'movePath'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Late // *MUST* happen after other behaviors do initialization so that we can read initial transformations
+    public order: BehaviorOrder = BehaviorOrder.Late // *MUST* happen after other behaviors do initialization so that we can read initial transformations
     private path: (x: number) => number // The function representing the path the particle should take.
     private list: PropertyList<number>
     private minMult: number
@@ -133,7 +133,7 @@ export class PathBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             next.config.initRotation = next.rotation // The initial rotation in degrees of the particle, because the direction of the path is based on that.
             if (!next.config.initPosition) {
@@ -142,14 +142,14 @@ export class PathBehavior implements IEmitterBehavior {
                 (next.config.initPosition as Point).copyFrom(next.position)
             }
             next.config.movement = 0 // Total single directional movement, due to speed
-            const mult = (Math.random() * (1 - this.minMult)) + this.minMult // also do speed multiplier, since this includes basic speed movement
+            const mult: number = (Math.random() * (1 - this.minMult)) + this.minMult // also do speed multiplier, since this includes basic speed movement
             next.config.speedMult = mult
             next = next.next
         }
     }
 
     updateParticle(particle: Particle, deltaSec: number): void {
-        const speed = this.list.interpolate(particle.agePercent) * particle.config.speedMult // increase linear movement based on speed
+        const speed: number = this.list.interpolate(particle.agePercent) * particle.config.speedMult // increase linear movement based on speed
         particle.config.movement += speed * deltaSec
         helperPoint.x = particle.config.movement
         helperPoint.y = this.path(helperPoint.x)
