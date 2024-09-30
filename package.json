@@ -13,6 +13,7 @@
         "@pixi/settings": "6.0.4",
         "@pixi/sprite": "6.0.4",
         "@pixi/ticker": "6.0.4",
+        "http-server": "14.1.1",
         "pixi.js": "6.0.4",
         "rimraf": "2.6.3",
         "rollup": "2.7.6",
