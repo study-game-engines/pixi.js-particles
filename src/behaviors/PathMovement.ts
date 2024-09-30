@@ -6,10 +6,7 @@ import { PropertyNode, ValueList } from '../PropertyNode'
 import { IEmitterBehavior, BehaviorOrder } from './Behaviors'
 import { BehaviorEditorConfig } from './editor/Types'
 
-const helperPoint = new Point()
-
-// A hand-picked list of Math functions (and a couple properties) that are allowable. They should be used without the preceding "Math."
-const MATH_FUNCS = [
+const MATH_FUNCTIONS: string[] = [
     'E',
     'LN2',
     'LN10',
@@ -53,13 +50,13 @@ const MATH_FUNCS = [
 ]
 
 // Allow the 4 basic operations, parentheses and all numbers/decimals, as well as 'x', for the variable usage.
-const WHITE_LISTER: RegExp = new RegExp(['[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]'].concat(MATH_FUNCS).join('|'), 'g')
+const WHITE_LISTER: RegExp = new RegExp(['[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]'].concat(MATH_FUNCTIONS).join('|'), 'g')
 
 // Parses a string into a function for path following. This involves whitelisting the string for safety, inserting "Math." to math function names, and using `new Function()` to generate a function.
 function parsePath(pathString: string): (x: number) => number {
     const matches: RegExpMatchArray = pathString.match(WHITE_LISTER)
     for (let index = matches.length - 1; index >= 0; index--) {
-        if (MATH_FUNCS.indexOf(matches[index]) >= 0) {
+        if (MATH_FUNCTIONS.indexOf(matches[index]) >= 0) {
             matches[index] = `Math.${matches[index]}`
         }
     }
@@ -88,7 +85,7 @@ function parsePath(pathString: string): (x: number) => number {
  *          "speed": {
  *              "list": [{value: 10, time: 0}, {value: 100, time: 0.25}, {value: 0, time: 1}],
  *          },
- *          "minMult": 0.8
+ *          "minMultiplier": 0.8
  *     }
  *}
  *```
@@ -99,14 +96,14 @@ export class PathBehavior implements IEmitterBehavior {
     public static editorConfig: BehaviorEditorConfig = null
 
     public order: BehaviorOrder = BehaviorOrder.Late // *MUST* happen after other behaviors do initialization so that we can read initial transformations
-    private path: (x: number) => number // The function representing the path the particle should take.
+    private readonly path: (x: number) => number // The function representing the path the particle should take.
     private list: PropertyList<number>
-    private minMult: number
+    private readonly minMultiplier: number
 
     constructor(config: {
         path: string | ((x: number) => number) // Algebraic expression describing the movement of the particle.
         speed: ValueList<number> // Speed of the particles in world units/second. This affects the x value in the path. Unlike normal speed movement, this can have negative values.
-        minMult: number // A value between minimum speed multipler and 1 is randomly generated and multiplied with each speed value to generate the actual speed for each particle.
+        minMultiplier: number // A value between minimum speed multiplier and 1 is randomly generated and multiplied with each speed value to generate the actual speed for each particle.
     }) {
         if (config.path) {
             if (typeof config.path === 'function') {
@@ -129,7 +126,7 @@ export class PathBehavior implements IEmitterBehavior {
         }
         this.list = new PropertyList(false)
         this.list.reset(PropertyNode.createList(config.speed))
-        this.minMult = config.minMult ?? 1
+        this.minMultiplier = config.minMultiplier ?? 1
     }
 
     initParticles(first: Particle): void {
@@ -142,8 +139,7 @@ export class PathBehavior implements IEmitterBehavior {
                 (next.config.initPosition as Point).copyFrom(next.position)
             }
             next.config.movement = 0 // Total single directional movement, due to speed
-            const mult: number = (Math.random() * (1 - this.minMult)) + this.minMult // also do speed multiplier, since this includes basic speed movement
-            next.config.speedMult = mult
+            next.config.speedMult = (Math.random() * (1 - this.minMultiplier)) + this.minMultiplier // also do speed multiplier, since this includes basic speed movement
             next = next.next
         }
     }
@@ -159,3 +155,5 @@ export class PathBehavior implements IEmitterBehavior {
     }
 
 }
+
+const helperPoint: Point = new Point()

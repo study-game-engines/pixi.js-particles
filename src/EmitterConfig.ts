@@ -112,10 +112,9 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
         })
     } else if (config.extraData?.path) {
         let list: ValueList<number>
-        let mult: number
-
+        let multiplier: number
         if ('start' in config.speed) {
-            mult = config.speed.minimumSpeedMultiplier ?? 1
+            multiplier = config.speed.minimumSpeedMultiplier ?? 1
             if (config.speed.start === config.speed.end) {
                 list = {
                     list: [{ time: 0, value: config.speed.start }],
@@ -130,14 +129,14 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
             }
         } else {
             list = config.speed
-            mult = ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1)
+            multiplier = ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1)
         }
         result.behaviors.push({
             type: 'movePath',
             config: {
                 path: config.extraData.path,
                 speed: list,
-                minMult: mult,
+                minMultiplier: multiplier,
             },
         })
     } else {
@@ -160,7 +159,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                     }
                     result.behaviors.push({
                         type: 'moveSpeed',
-                        config: { speed: list, minMult: config.speed.minimumSpeedMultiplier },
+                        config: { speed: list, minMultiplier: config.speed.minimumSpeedMultiplier },
                     })
                 }
             } else if (config.speed.list.length === 1) {
@@ -174,19 +173,19 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
             } else {
                 result.behaviors.push({
                     type: 'moveSpeed',
-                    config: { speed: config.speed, minMult: ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1) },
+                    config: { speed: config.speed, minMultiplier: ((config as EmitterConfigV2).minimumSpeedMultiplier ?? 1) },
                 })
             }
         }
     }
     if (config.scale) {
         if ('start' in config.scale) {
-            const mult: number = config.scale.minimumScaleMultiplier ?? 1
+            const multiplier: number = config.scale.minimumScaleMultiplier ?? 1
             if (config.scale.start === config.scale.end) {
                 result.behaviors.push({
                     type: 'scaleStatic',
                     config: {
-                        min: config.scale.start * mult,
+                        min: config.scale.start * multiplier,
                         max: config.scale.start,
                     },
                 })
@@ -199,20 +198,20 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                 }
                 result.behaviors.push({
                     type: 'scale',
-                    config: { scale: list, minMult: mult },
+                    config: { scale: list, minMultiplier: multiplier },
                 })
             }
         } else if (config.scale.list.length === 1) {
-            const mult = (config as EmitterConfigV2).minimumScaleMultiplier ?? 1
-            const scale = config.scale.list[0].value
+            const multiplier: number = (config as EmitterConfigV2).minimumScaleMultiplier ?? 1
+            const scale: number = config.scale.list[0].value
             result.behaviors.push({
                 type: 'scaleStatic',
-                config: { min: scale * mult, max: scale },
+                config: { min: scale * multiplier, max: scale },
             })
         } else {
             result.behaviors.push({
                 type: 'scale',
-                config: { scale: config.scale, minMult: (config as EmitterConfigV2).minimumScaleMultiplier ?? 1 },
+                config: { scale: config.scale, minMultiplier: (config as EmitterConfigV2).minimumScaleMultiplier ?? 1 },
             })
         }
     }
