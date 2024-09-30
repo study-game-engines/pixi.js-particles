@@ -6,7 +6,6 @@ import typescript from 'rollup-plugin-typescript';
 import jscc from 'rollup-plugin-jscc';
 
 export default function () {
-    const packageJson = require('./package.json');
     const plugins = [
         sourcemaps(),
         typescript(),
@@ -19,7 +18,7 @@ export default function () {
     return [{
         input: path.join(__dirname, 'src/index.ts'),
         output: {
-            file: path.join(__dirname, packageJson.bundle),
+            file: path.join(__dirname, "dist/particle-emitter.js"),
             format: 'iife',
             freeze: false,
             name: 'PIXI.particles',
