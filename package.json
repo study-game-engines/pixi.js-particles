@@ -14,12 +14,11 @@
     }
   ],
   "scripts": {
-    "clean": "rimraf dist docs/dist docs/docs docs/examples/libs/pixi.js lib",
+    "clean": "rimraf dist docs/* examples/libs/* lib",
     "build": "tsc && rollup -c && yarn build:min && yarn build:dts",
     "build:min": "terser dist/particle-emitter.js -c -m -o dist/particle-emitter.min.js --source-map \"content='dist/particle-emitter.js.map',includeSources=true,filename='dist/particle-emitter.min.js.map',url='particle-emitter.min.js.map'\" --comments \"/particle-emitter.js - /\"",
     "build:dts": "tsc --noEmit false --declaration --emitDeclarationOnly --declarationDir lib",
-    "postbuild": "ncp dist docs/dist",
-    "predocs": "ncp node_modules/pixi.js docs/examples/libs/pixi.js",
+    "predocs": "ncp node_modules/pixi.js examples/libs/pixi.js",
     "docs": "typedoc src/index.ts",
     "predocs-live": "npm run build && npm run docs",
     "docs-live": "gh-pages -d docs",

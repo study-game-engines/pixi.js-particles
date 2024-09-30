@@ -3,7 +3,7 @@
 - code: 2800 loc
 - install: `npm install`
 - run: `npm run clean && npm run predocs-live`
-- main: `docs/examples/index.html`
+- main: `examples/index.html`
 
 # PixiJS Particle Emitter
 
