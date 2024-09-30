@@ -3,7 +3,7 @@ import { ValueList } from './PropertyNode'
 import { IPointData } from '@pixi/math'
 
 export interface EmitterConfigV3 {
-    lifetime: RandNumber // Random number configuration for picking the lifetime for each particle..
+    lifetime: RandNumber // Random number configuration for picking the lifetime for each particle.
     ease?: SimpleEase | EaseSegment[] // Easing to be applied to all interpolated or stepped values across the particle lifetime.
     particlesPerWave?: number // How many particles to spawn at once, each time that it is determined that particles should be spawned. If omitted, only one particle will spawn at a time.
     frequency: number // How often to spawn particles. This is a value in seconds, so a value of 0.5 would be twice a second.
@@ -13,8 +13,8 @@ export interface EmitterConfigV3 {
     addAtBack?: boolean // If newly spawned particles should be added to the back of the parent container (to make them less conspicuous as they pop in). If omitted, particles will be added to the top of the container.
     pos: { x: number; y: number } // Default position to spawn particles from inside the parent container.
     emit?: boolean // If the emitter should start out emitting particles. If omitted, it will be treated as `true` and will emit particles immediately.
-    autoUpdate?: boolean // If the Emitter should hook into PixiJS's shared ticker. If this is false or emitted, you will be responsible for connecting it to update ticks.
-    behaviors: BehaviorEntry[] // The list of behaviors to apply to this emitter. See the behaviors namespace for a list of built in behaviors. Custom behaviors may be registered with {@link Emitter.registerBehavior}.
+    autoUpdate?: boolean // If the Emitter should hook into shared ticker. If this is false or emitted, you will be responsible for connecting it to update ticks.
+    behaviors: BehaviorEntry[] // The list of behaviors to apply to this emitter. See the behaviors namespace for a list of built-in behaviors. Custom behaviors may be registered with {@link Emitter.registerBehavior}.
 }
 
 export interface BehaviorEntry {
@@ -286,9 +286,9 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
         })
     }
     if (Array.isArray(art) && typeof art[0] !== 'string' && 'framerate' in art[0]) {
-        for (let i = 0; i < art.length; ++i) {
-            if (art[i].framerate === 'matchLife') {
-                art[i].framerate = -1
+        for (let index = 0; index < art.length; ++index) {
+            if (art[index].framerate === 'matchLife') {
+                art[index].framerate = -1
             }
         }
         result.behaviors.push({
@@ -430,7 +430,8 @@ export interface BasicTweenable<T> {
     end: T
 }
 
-// The obsolete emitter configuration format of the initial library release. This type information is kept to maintain compatibility with the older particle tool, but otherwise configuration should be made as {@link EmitterConfigV3}.
+// The obsolete emitter configuration format of the initial library release. This type information is kept to maintain compatibility with the older particle tool,
+// but otherwise configuration should be made as {@link EmitterConfigV3}.
 export interface EmitterConfigV1 {
     alpha?: BasicTweenable<number>
     speed?: BasicTweenable<number> & { minimumSpeedMultiplier?: number }

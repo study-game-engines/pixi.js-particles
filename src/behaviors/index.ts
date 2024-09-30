@@ -1,4 +1,4 @@
-/* export support types for external use */
+/* support types */
 
 import * as spawnShapes from './shapes'
 
@@ -9,7 +9,7 @@ import * as editor from './editor/Types'
 
 export { editor }
 
-/* export all the individual behaviors */
+/* individual behaviors */
 
 export * from './AccelerationMovement'
 export * from './Alpha'

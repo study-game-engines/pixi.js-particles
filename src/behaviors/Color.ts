@@ -20,7 +20,7 @@ import { BehaviorEditorConfig } from './editor/Types'
  */
 export class ColorBehavior implements IEmitterBehavior {
 
-    public static type = 'color'
+    public static type: string = 'color'
     public static editorConfig: BehaviorEditorConfig = null
 
     public order: BehaviorOrder = BehaviorOrder.Normal

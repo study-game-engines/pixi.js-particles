@@ -30,8 +30,8 @@ export class LinkedListContainer extends Container {
 
     public addChild<T extends DisplayObject[]>(...children: T): T[0] {
         if (children.length > 1) {
-            for (let i = 0; i < children.length; i++) {
-                this.addChild(children[i])
+            for (let index = 0; index < children.length; index++) {
+                this.addChild(children[index])
             }
         } else {
             const child = children[0] as LinkedListChild
@@ -49,7 +49,7 @@ export class LinkedListContainer extends Container {
             } else {
                 this._firstChild = this._lastChild = child
             }
-            ++this._childCount // update child count
+            this._childCount++ // update child count
             this._boundsID++ // ensure bounds will be recalculated
             this.onChildrenChange()
             this.emit('childAdded', child, this, this._childCount)
@@ -96,7 +96,7 @@ export class LinkedListContainer extends Container {
             c.nextChild = target
             target.prevChild = c
         }
-        ++this._childCount // update child count
+        this._childCount++ // update child count
         this._boundsID++ // ensure bounds will be recalculated
         this.onChildrenChange(index)
         child.emit('added', this)
@@ -122,7 +122,7 @@ export class LinkedListContainer extends Container {
         if (this._firstChild === relative) {
             this._firstChild = (child as any as LinkedListChild)
         }
-        ++this._childCount // update child count
+        this._childCount++ // update child count
         this._boundsID++ // ensure bounds will be recalculated
         this.onChildrenChange()
         this.emit('childAdded', child, this, this._childCount)
@@ -148,7 +148,7 @@ export class LinkedListContainer extends Container {
         if (this._lastChild === relative) {
             this._lastChild = (child as any as LinkedListChild)
         }
-        ++this._childCount // update child count
+        this._childCount++ // update child count
         this._boundsID++ // ensure bounds will be recalculated
         this.onChildrenChange()
         this.emit('childAdded', child, this, this._childCount)
@@ -179,14 +179,14 @@ export class LinkedListContainer extends Container {
     }
 
     public getChildIndex(child: DisplayObject): number {
-        let index = 0
+        let index: number = 0
         let test = this._firstChild
         while (test) {
             if (test === child) {
                 break
             }
             test = test.nextChild
-            ++index
+            index++
         }
         if (!test) {
             throw new Error('The supplied DisplayObject must be a child of the caller')
@@ -338,8 +338,8 @@ export class LinkedListContainer extends Container {
         if (range > 0 && range <= end) {
             const removed: LinkedListChild[] = []
             let child = this._firstChild
-            for (let i = 0; i <= end && child; ++i, child = child.nextChild) {
-                if (i >= begin) {
+            for (let index = 0; index <= end && child; ++index, child = child.nextChild) {
+                if (index >= begin) {
                     removed.push(child)
                 }
             }
@@ -356,19 +356,19 @@ export class LinkedListContainer extends Container {
                 prevChild.nextChild = nextChild // otherwise stich the child after the section to the one before
             }
             // clear parenting and sibling references for all removed children
-            for (let i = 0; i < removed.length; ++i) {
-                removed[i].parent = null
-                if (removed[i].transform) {
-                    removed[i].transform._parentID = -1
+            for (let index = 0; index < removed.length; ++index) {
+                removed[index].parent = null
+                if (removed[index].transform) {
+                    removed[index].transform._parentID = -1
                 }
-                removed[i].nextChild = null
-                removed[i].prevChild = null
+                removed[index].nextChild = null
+                removed[index].prevChild = null
             }
             this._boundsID++
             this.onChildrenChange(beginIndex)
-            for (let i = 0; i < removed.length; ++i) {
-                removed[i].emit('removed', this)
-                this.emit('childRemoved', removed[i], this, i)
+            for (let index = 0; index < removed.length; ++index) {
+                removed[index].emit('removed', this)
+                this.emit('childRemoved', removed[index], this, index)
             }
             return removed
         } else if (range === 0 && this._childCount === 0) {
@@ -464,9 +464,9 @@ export class LinkedListContainer extends Container {
                 this._enabledFilters = []
             }
             this._enabledFilters.length = 0
-            for (let i = 0; i < filters.length; i++) {
-                if (filters[i].enabled) {
-                    this._enabledFilters.push(filters[i])
+            for (let index = 0; index < filters.length; index++) {
+                if (filters[index].enabled) {
+                    this._enabledFilters.push(filters[index])
                 }
             }
             if (this._enabledFilters.length) {

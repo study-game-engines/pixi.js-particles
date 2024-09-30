@@ -131,7 +131,8 @@ export function getBlendMode(name: string): number {
 }
 
 /**
- * Converts a list of {value, time} objects starting at time 0 and ending at time 1 into an evenly spaced stepped list of PropertyNodes for color values. This is primarily to handle conversion of linear gradients to fewer colors, allowing for some optimization for Canvas2d fallbacks.
+ * Converts a list of {value, time} objects starting at time 0 and ending at time 1 into an evenly spaced stepped list of PropertyNodes for color values.
+ * This is primarily to handle conversion of linear gradients to fewer colors, allowing for some optimization for Canvas2d fallbacks.
  * @param list The list of data to convert.
  * @param [numSteps=10] The number of steps to use.
  * @return The blend mode as specified in the PIXI.blendModes enumeration.
@@ -146,8 +147,8 @@ export function createSteppedGradient(list: ValueStep<string>[], numSteps = 10):
     let current: ValueStep<string> = list[0]
     let nextIndex: number = 1
     let next: ValueStep<string> = list[nextIndex]
-    for (let i = 1; i < numSteps; ++i) {
-        let lerp: number = i / numSteps
+    for (let index = 1; index < numSteps; ++index) {
+        let lerp: number = index / numSteps
         // ensure we are on the right segment, if multiple
         while (lerp > next.time) {
             current = next
@@ -161,7 +162,7 @@ export function createSteppedGradient(list: ValueStep<string>[], numSteps = 10):
             g: ((nextVal.g - curVal.g) * lerp) + curVal.g,
             b: ((nextVal.b - curVal.b) * lerp) + curVal.b,
         }
-        currentNode.next = new PropertyNode(output, i / numSteps)
+        currentNode.next = new PropertyNode(output, index / numSteps)
         currentNode = currentNode.next
     }
     return first // we don't need to have a PropertyNode for time of 1, because in a stepped version at that point the particle has died of old age

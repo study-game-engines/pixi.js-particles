@@ -76,8 +76,8 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
         anims: AnimatedParticleArt[] // Animation configuration to use for each particle, randomly chosen from the list.
     }) {
         this.anims = []
-        for (let i = 0; i < config.anims.length; ++i) {
-            const anim: AnimatedParticleArt = config.anims[i]
+        for (let index = 0; index < config.anims.length; ++index) {
+            const anim: AnimatedParticleArt = config.anims[index]
             const textures: Texture[] = getTextures(anim.textures)
             const framerate: -1 | number = anim.framerate < 0 ? -1 : (anim.framerate > 0 ? anim.framerate : 60)
             const parsedAnim: ParsedAnimatedParticleArt = {
@@ -145,7 +145,7 @@ export class SingleAnimatedTextureBehavior implements IEmitterBehavior {
     public static type: string = 'animatedSingle'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order = BehaviorOrder.Normal
+    public order: BehaviorOrder = BehaviorOrder.Normal
     private readonly anim: ParsedAnimatedParticleArt
 
     constructor(config: {

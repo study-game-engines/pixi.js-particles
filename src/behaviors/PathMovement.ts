@@ -53,14 +53,14 @@ const MATH_FUNCS = [
 ]
 
 // Allow the 4 basic operations, parentheses and all numbers/decimals, as well as 'x', for the variable usage.
-const WHITE_LISTER = new RegExp(['[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]'].concat(MATH_FUNCS).join('|'), 'g')
+const WHITE_LISTER: RegExp = new RegExp(['[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]'].concat(MATH_FUNCS).join('|'), 'g')
 
 // Parses a string into a function for path following. This involves whitelisting the string for safety, inserting "Math." to math function names, and using `new Function()` to generate a function.
 function parsePath(pathString: string): (x: number) => number {
-    const matches = pathString.match(WHITE_LISTER)
-    for (let i = matches.length - 1; i >= 0; --i) {
-        if (MATH_FUNCS.indexOf(matches[i]) >= 0) {
-            matches[i] = `Math.${matches[i]}`
+    const matches: RegExpMatchArray = pathString.match(WHITE_LISTER)
+    for (let index = matches.length - 1; index >= 0; --index) {
+        if (MATH_FUNCS.indexOf(matches[index]) >= 0) {
+            matches[index] = `Math.${matches[index]}`
         }
     }
     pathString = matches.join('')

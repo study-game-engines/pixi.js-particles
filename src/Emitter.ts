@@ -354,8 +354,8 @@ export class Emitter {
                 }
                 particle.agePercent = lerp // set age percent for all interpolation calculations
                 // let each behavior run wild on the active particles
-                for (let i = 0; i < this.updateBehaviors.length; ++i) {
-                    if (this.updateBehaviors[i].updateParticle(particle, delta)) {
+                for (let index = 0; index < this.updateBehaviors.length; ++index) {
+                    if (this.updateBehaviors[index].updateParticle(particle, delta)) {
                         this.recycle(particle)
                         break
                     }
@@ -452,7 +452,7 @@ export class Emitter {
                     } else {
                         waveLast = waveFirst = particle
                     }
-                    ++this.particleCount // increase our particle count
+                    this.particleCount++ // increase our particle count
                 }
 
                 if (waveFirst) {
@@ -466,8 +466,8 @@ export class Emitter {
                         this._activeParticlesLast = waveLast
                     }
                     // run behavior init on particles
-                    for (let i = 0; i < this.initBehaviors.length; ++i) {
-                        const behavior = this.initBehaviors[i]
+                    for (let index = 0; index < this.initBehaviors.length; ++index) {
+                        const behavior = this.initBehaviors[index]
                         // if we hit our special key, interrupt behaviors to apply emitter position/rotation
                         if (behavior === PositionParticle) {
                             for (let particle: Particle = waveFirst, next: Particle; particle; particle = next) {
@@ -503,19 +503,15 @@ export class Emitter {
                     }
                     for (let particle: Particle = waveFirst, next: Particle; particle; particle = next) {
                         next = particle.next // save next particle in case we recycle this one
-                        // now update the particles by the time passed, so the particles are spread out properly
-                        for (let i = 0; i < this.updateBehaviors.length; ++i) {
-                            // we want a positive delta, because a negative delta messes things up
-                            if (this.updateBehaviors[i].updateParticle(particle, -this._spawnTimer)) {
-                                // bail if the particle got reycled
-                                this.recycle(particle)
+                        for (let index = 0; index < this.updateBehaviors.length; ++index) { // now update the particles by the time passed, so the particles are spread out properly
+                            if (this.updateBehaviors[index].updateParticle(particle, -this._spawnTimer)) { // we want a positive delta, because a negative delta messes things up
+                                this.recycle(particle) // bail if the particle got recycled
                                 break
                             }
                         }
                     }
                 }
-                // increase timer and continue on to any other particles that need to be created
-                this._spawnTimer += this._frequency
+                this._spawnTimer += this._frequency // increase timer and continue on to any other particles that need to be created
             }
         }
 
@@ -540,7 +536,8 @@ export class Emitter {
         }
     }
 
-    // Emits a single wave of particles, using standard spawnChance & particlesPerWave settings. Does not affect regular spawning through the frequency, and ignores the emit property. The max particle count is respected, however, so if there are already too many particles then nothing will happen.
+    // Emits a single wave of particles, using standard spawnChance & particlesPerWave settings. Does not affect regular spawning through the frequency, and ignores to emit property.
+    // The max particle count is respected, however, so if there are already too many particles then nothing will happen.
     public emitNow(): void {
         const emitPosX: number = this.ownerPosition.x + this.spawnPosition.x
         const emitPosY: number = this.ownerPosition.y + this.spawnPosition.y
@@ -585,8 +582,7 @@ export class Emitter {
             } else {
                 waveLast = waveFirst = particle
             }
-            // increase our particle count
-            ++this.particleCount
+            this.particleCount++ // increase our particle count
         }
 
         if (waveFirst) {
@@ -600,8 +596,8 @@ export class Emitter {
                 this._activeParticlesLast = waveLast
             }
             // run behavior init on particles
-            for (let i = 0; i < this.initBehaviors.length; ++i) {
-                const behavior = this.initBehaviors[i]
+            for (let index = 0; index < this.initBehaviors.length; ++index) {
+                const behavior: IEmitterBehavior | typeof PositionParticle = this.initBehaviors[index]
 
                 // if we hit our special key, interrupt behaviors to apply emitter position/rotation
                 if (behavior === PositionParticle) {

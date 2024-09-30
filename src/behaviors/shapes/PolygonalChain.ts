@@ -43,8 +43,8 @@ export class PolygonalChain implements SpawnShape {
         if (!data || !data.length) {
             this.segments.push({ p1: { x: 0, y: 0 }, p2: { x: 0, y: 0 }, l: 0 })
         } else if (Array.isArray(data[0])) {
-            for (let i = 0; i < data.length; ++i) {
-                const chain: IPointData[] = data[i] as IPointData[]
+            for (let index = 0; index < data.length; ++index) {
+                const chain: IPointData[] = data[index] as IPointData[]
                 let prevPoint: IPointData = chain[0] as IPointData
                 for (let j = 1; j < chain.length; ++j) {
                     const second: IPointData = chain[j] as IPointData
@@ -54,17 +54,17 @@ export class PolygonalChain implements SpawnShape {
             }
         } else {
             let prevPoint: IPointData = data[0] as IPointData
-            for (let i = 1; i < data.length; ++i) {
-                const second: IPointData = data[i] as IPointData
+            for (let index = 1; index < data.length; ++index) {
+                const second: IPointData = data[index] as IPointData
                 this.segments.push({ p1: prevPoint, p2: second, l: 0 })
                 prevPoint = second
             }
         }
         // now go through our segments to calculate the lengths so that we can set up a nice weighted random distribution
-        for (let i = 0; i < this.segments.length; ++i) {
-            const { p1, p2 } = this.segments[i]
+        for (let index = 0; index < this.segments.length; ++index) {
+            const { p1, p2 } = this.segments[index]
             const segLength: number = Math.sqrt(((p2.x - p1.x) * (p2.x - p1.x)) + ((p2.y - p1.y) * (p2.y - p1.y)))
-            this.segments[i].l = segLength // save length, so we can turn a random number into a 0-1 interpolation value later
+            this.segments[index].l = segLength // save length, so we can turn a random number into a 0-1 interpolation value later
             this.totalLength += segLength
             this.countingLengths.push(this.totalLength) // keep track of the length so far, counting up
         }
@@ -79,10 +79,10 @@ export class PolygonalChain implements SpawnShape {
             chosenSeg = this.segments[0]
             lerp = rand
         } else {
-            for (let i = 0; i < this.countingLengths.length; ++i) {
-                if (rand < this.countingLengths[i]) {
-                    chosenSeg = this.segments[i]
-                    lerp = i === 0 ? rand : rand - this.countingLengths[i - 1] // set lerp equal to the length into that segment (i.e. the remainder after subtracting all the segments before it)
+            for (let index = 0; index < this.countingLengths.length; ++index) {
+                if (rand < this.countingLengths[index]) {
+                    chosenSeg = this.segments[index]
+                    lerp = index === 0 ? rand : rand - this.countingLengths[index - 1] // set lerp equal to the length into that segment (i.e. the remainder after subtracting all the segments before it)
                     break
                 }
             }

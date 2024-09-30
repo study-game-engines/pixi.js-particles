@@ -80,7 +80,7 @@ function intColorStepped(this: PropertyList<Color>, lerp: number): number {
 export class PropertyList<V> {
 
     public first: PropertyNode<V> // The first property node in the linked list.
-    public interpolate: (lerp: number) => number // Calculates the correct value for the current interpolation value. This method is set in the reset() method. @param lerp The interpolation value from 0-1. @return The interpolated value. Colors are converted to the hex value.
+    public interpolate: (lerp: number) => number // Calculates the correct value for the current interpolation value. This method is set in the reset() method. @param lerp The interpolation value from 0-1. @return hex colors
     public ease: SimpleEase // A custom easing method for this list. @param lerp The interpolation value from 0-1. @return The eased value, also from 0-1.
     private readonly isColor: boolean // If this list manages colors, which requires a different method for interpolation.
 

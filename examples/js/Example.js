@@ -55,8 +55,8 @@
                 urls = imagePaths.slice();
             }
             const loader = PIXI.Loader.shared;
-            for (let i = 0; i < urls.length; ++i) {
-                loader.add('img' + i, urls[i]);
+            for (let index = 0; index < urls.length; ++index) {
+                loader.add('img' + index, urls[index]);
             }
             loader.load(() => {
                 this.bg = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -94,7 +94,7 @@
                         .list
                         .reset(PIXI.particles.ParticleUtils.createSteppedGradient(config.behaviors.find((b) => b.type === 'color').config.color.list, stepColors));
                 }
-                this.emitter.updateOwnerPos(window.innerWidth / 2, window.innerHeight / 2);
+                this.emitter.updateOwnerPosition(window.innerWidth / 2, window.innerHeight / 2);
                 canvas.addEventListener('mouseup', (event) => {
                     if (!this.emitter) return;
                     if (event.button) {
@@ -115,7 +115,7 @@
                     else {
                         this.emitter.emit = true;
                         this.emitter.resetPositionTracking();
-                        this.emitter.updateOwnerPos(event.offsetX || event.layerX, event.offsetY || event.layerY);
+                        this.emitter.updateOwnerPosition(event.offsetX || event.layerX, event.offsetY || event.layerY);
                     }
                 });
                 document.body.addEventListener('contextmenu', (event) => {

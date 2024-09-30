@@ -2,14 +2,14 @@ import { BlendModeBehavior } from '../../BlendMode'
 import { BLEND_MODES } from '@pixi/constants'
 
 function makeReadable(input: string) {
-    const words = input.split('_')
-    for (let i = 0; i < words.length; ++i) {
-        if (words[i] === 'SRC') {
-            words[i] = 'Source'
-        } else if (words[i] === 'DST') {
-            words[i] = 'Destination'
+    const words: string[] = input.split('_')
+    for (let index = 0; index < words.length; ++index) {
+        if (words[index] === 'SRC') {
+            words[index] = 'Source'
+        } else if (words[index] === 'DST') {
+            words[index] = 'Destination'
         } else {
-            words[i] = words[i][0] + words[i].substring(1).toLowerCase()
+            words[index] = words[index][0] + words[index].substring(1).toLowerCase()
         }
     }
     return words.join(' ')
