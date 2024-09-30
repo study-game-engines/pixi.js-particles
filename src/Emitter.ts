@@ -32,6 +32,7 @@ export class Emitter {
 
     /* spawning particles */
 
+    protected _particlesContainer: Container // The container to add particles to.
     protected _frequency: number // Time between particle spawns in seconds.
     public spawnChance: number // Chance that a particle will be spawned on each opportunity to spawn one. 0 is 0%, 1 is 100%.
     public maxParticles: number // Maximum number of particles to keep alive at a time. If this limit is reached, no more particles will spawn until some have died.
@@ -43,7 +44,6 @@ export class Emitter {
     protected _prevEmitterPosition: Point // The origin + spawnPos in the previous update, so that the spawn position can be interpolated to space out particles better.
     protected _prevPosIsValid: boolean // If _prevEmitterPos is valid, to prevent interpolation on the first update
     protected _posChanged: boolean // If either ownerPos or spawnPos has changed since the previous update.
-    protected _parent: Container // The container to add particles to.
     public addAtBack: boolean // If particles should be added at the back of the display list instead of the front.
     public particleCount: number // The current number of active particles.
     protected _emit: boolean // If particles should be emitted during update() calls. Setting this to false stops new particles from being created, but allows existing ones to die out.
@@ -89,7 +89,7 @@ export class Emitter {
         this._prevEmitterPosition = new Point()
         this._prevPosIsValid = false
         this._posChanged = false
-        this._parent = null
+        this._particlesContainer = null
         this.addAtBack = false
         this.particleCount = 0
         this._emit = false
@@ -105,7 +105,7 @@ export class Emitter {
 
         /* initial parent */
 
-        this.parent = particleParent
+        this.particlesContainer = particleParent
 
         if (config) {
             this.init(config)
@@ -134,14 +134,13 @@ export class Emitter {
         }
     }
 
-    // The container to add particles to. Settings this will dump any active particles.
-    public get parent(): Container {
-        return this._parent
+    public get particlesContainer(): Container {
+        return this._particlesContainer
     }
 
-    public set parent(value: Container) {
+    public set particlesContainer(value: Container) {
         this.cleanup()
-        this._parent = value
+        this._particlesContainer = value
     }
 
     // Sets up the emitter based on the config settings. @param config A configuration object containing settings for the emitter.
@@ -329,7 +328,7 @@ export class Emitter {
         if (this._autoUpdate) {
             delta = ticker.elapsedMS * 0.001
         }
-        if (!this._parent) {
+        if (!this._particlesContainer) {
             return // if we don't have a parent to add particles to, then don't do anything. this also works as a isDestroyed check
         }
 
@@ -438,11 +437,10 @@ export class Emitter {
                     /* initialize */
 
                     particle.init(lifetime)
-                    // add the particle to the display list
                     if (this.addAtBack) {
-                        this._parent.addChildAt(particle, 0)
+                        this._particlesContainer.addChildAt(particle, 0)
                     } else {
-                        this._parent.addChild(particle)
+                        this._particlesContainer.addChild(particle)
                     }
                     // add particles to list of ones in this wave
                     if (waveFirst) {
@@ -566,14 +564,13 @@ export class Emitter {
                 lifetime = (Math.random() * (this.maxLifetime - this.minLifetime)) + this.minLifetime
             }
 
-            // initialize particle
             particle.init(lifetime)
-            // add the particle to the display list
             if (this.addAtBack) {
-                this._parent.addChildAt(particle, 0)
+                this._particlesContainer.addChildAt(particle, 0)
             } else {
-                this._parent.addChild(particle)
+                this._particlesContainer.addChild(particle)
             }
+
             // add particles to list of ones in this wave
             if (waveFirst) {
                 waveLast.next = particle
@@ -632,7 +629,7 @@ export class Emitter {
 
     // If this emitter has been destroyed. Note that a destroyed emitter can still be reused, after having a new parent set and being reinitialized.
     public get destroyed(): boolean {
-        return !(this._parent && this.initBehaviors.length)
+        return !(this._particlesContainer && this.initBehaviors.length)
     }
 
     // Destroys the emitter and all of its particles.
@@ -644,7 +641,7 @@ export class Emitter {
             next = particle.next // store next value, so we don't lose it in our destroy call
             particle.destroy()
         }
-        this._poolFirst = this._parent = this.spawnPosition = this.ownerPosition = this.customEase = this._completeCallback = null
+        this._poolFirst = this._particlesContainer = this.spawnPosition = this.ownerPosition = this.customEase = this._completeCallback = null
         this.initBehaviors.length = this.updateBehaviors.length = this.recycleBehaviors.length = 0
     }
 

@@ -104,7 +104,7 @@
                             [emitterContainer, containerName] = getContainer();
                             if (containerType) containerType.innerHTML = containerName;
                             this.stage.addChild(emitterContainer);
-                            this.emitter.parent = emitterContainer;
+                            this.emitter.particlesContainer = emitterContainer;
                             this.stage.removeChild(oldParent);
                             oldParent.destroy();
                             if (this.containerHook) {
