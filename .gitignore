@@ -1,6 +1,4 @@
 .DS_Store
-docs
-examples/libs/pixi.js
 node_modules
 npm-debug.log
 dist

@@ -3,7 +3,7 @@
 - code: 2800 loc
 - install: `npm install`
 - clean: `npm run clean`
-- build: `npm run build`
+- dist: `npm run dist`
 - main: `examples/index.html`
 
 # PixiJS Particle Emitter
