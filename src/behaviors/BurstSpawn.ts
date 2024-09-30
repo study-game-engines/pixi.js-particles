@@ -19,9 +19,9 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class BurstSpawnBehavior implements IEmitterBehavior {
 
     public static type: string = 'spawnBurst'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
-    order: BehaviorOrder = BehaviorOrder.Spawn
+    public readonly order: BehaviorOrder = BehaviorOrder.Spawn
     private readonly spacing: number
     private readonly start: number
     private readonly distance: number

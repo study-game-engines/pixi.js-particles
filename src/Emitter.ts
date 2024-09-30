@@ -409,8 +409,8 @@ export class Emitter {
                     emitPosY = curY
                 }
 
-                let waveFirst: Particle = null
-                let waveLast: Particle = null
+                let waveFirst: Particle
+                let waveLast: Particle
 
                 // create enough particles to fill the wave
                 for (let len = Math.min(this.particlesPerWave, this.maxParticles - this.particleCount), i = 0; i < len; i++) {
@@ -541,8 +541,8 @@ export class Emitter {
     public emitNow(): void {
         const emitPosX: number = this.ownerPosition.x + this.spawnPosition.x
         const emitPosY: number = this.ownerPosition.y + this.spawnPosition.y
-        let waveFirst: Particle = null
-        let waveLast: Particle = null
+        let waveFirst: Particle
+        let waveLast: Particle
 
         // create enough particles to fill the wave
         for (let len = Math.min(this.particlesPerWave, this.maxParticles - this.particleCount), i = 0; i < len; i++) {
@@ -620,8 +620,8 @@ export class Emitter {
 
     // Kills all active particles immediately.
     public cleanup(): void {
-        let particle
-        let next
+        let particle: Particle
+        let next: Particle
         for (particle = this._activeParticlesFirst; particle; particle = next) {
             next = particle.next
             this.recycle(particle, true)
@@ -639,8 +639,8 @@ export class Emitter {
     public destroy(): void {
         this.autoUpdate = false // make sure we aren't still listening to any tickers
         this.cleanup() // puts all active particles in the pool, and removes them from the particle parent
-        let next // wipe the pool clean
-        for (let particle = this._poolFirst; particle; particle = next) {
+        let next: Particle // wipe the pool clean
+        for (let particle: Particle = this._poolFirst; particle; particle = next) {
             next = particle.next // store next value, so we don't lose it in our destroy call
             particle.destroy()
         }

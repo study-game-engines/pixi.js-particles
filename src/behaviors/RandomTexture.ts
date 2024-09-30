@@ -18,7 +18,7 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class RandomTextureBehavior implements IEmitterBehavior {
 
     public static type: string = 'textureRandom'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly textures: Texture[]

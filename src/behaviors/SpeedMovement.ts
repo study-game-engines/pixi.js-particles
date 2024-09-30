@@ -23,7 +23,7 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class SpeedBehavior implements IEmitterBehavior {
 
     public static type: string = 'moveSpeed'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Late
     private list: PropertyList<number>
@@ -55,11 +55,11 @@ export class SpeedBehavior implements IEmitterBehavior {
 
     updateParticle(particle: Particle, deltaSec: number): void {
         const speed: number = this.list.interpolate(particle.agePercent) * particle.config.speedMult
-        const vel: IPointData = particle.config.velocity
-        normalize(vel)
-        scaleBy(vel, speed)
-        particle.x += vel.x * deltaSec
-        particle.y += vel.y * deltaSec
+        const velocity: IPointData = particle.config.velocity
+        normalize(velocity)
+        scaleBy(velocity, speed)
+        particle.x += velocity.x * deltaSec
+        particle.y += velocity.y * deltaSec
     }
 
 }
@@ -79,7 +79,7 @@ export class SpeedBehavior implements IEmitterBehavior {
 export class StaticSpeedBehavior implements IEmitterBehavior {
 
     public static type: string = 'moveSpeedStatic'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Late
     private readonly min: number
@@ -96,7 +96,7 @@ export class StaticSpeedBehavior implements IEmitterBehavior {
     initParticles(first: Particle): void {
         let next: Particle = first
         while (next) {
-            const speed = (Math.random() * (this.max - this.min)) + this.min
+            const speed: number = (Math.random() * (this.max - this.min)) + this.min
             if (!next.config.velocity) {
                 next.config.velocity = new Point(speed, 0)
             } else {

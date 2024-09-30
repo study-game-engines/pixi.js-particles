@@ -21,7 +21,7 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class ColorBehavior implements IEmitterBehavior {
 
     public static type: string = 'color'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<Color>
@@ -63,7 +63,7 @@ export class ColorBehavior implements IEmitterBehavior {
 export class StaticColorBehavior implements IEmitterBehavior {
 
     public static type: string = 'colorStatic'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly value: number

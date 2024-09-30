@@ -22,7 +22,7 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class ScaleBehavior implements IEmitterBehavior {
 
     public static type: string = 'scale'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<number>
@@ -68,7 +68,7 @@ export class ScaleBehavior implements IEmitterBehavior {
 export class StaticScaleBehavior implements IEmitterBehavior {
 
     public static type: string = 'scaleStatic'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly min: number
@@ -85,7 +85,7 @@ export class StaticScaleBehavior implements IEmitterBehavior {
     initParticles(first: Particle): void {
         let next: Particle = first
         while (next) {
-            const scale = (Math.random() * (this.max - this.min)) + this.min
+            const scale: number = (Math.random() * (this.max - this.min)) + this.min
             next.scale.x = next.scale.y = scale
             next = next.next
         }

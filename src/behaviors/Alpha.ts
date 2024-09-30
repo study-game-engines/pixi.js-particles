@@ -20,7 +20,7 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class AlphaBehavior implements IEmitterBehavior {
 
     public static type: string = 'alpha'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<number>
@@ -60,7 +60,7 @@ export class AlphaBehavior implements IEmitterBehavior {
 export class StaticAlphaBehavior implements IEmitterBehavior {
 
     public static type: string = 'alphaStatic'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly value: number

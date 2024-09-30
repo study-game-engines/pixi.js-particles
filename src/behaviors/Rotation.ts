@@ -21,7 +21,7 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class RotationBehavior implements IEmitterBehavior {
 
     public static type: string = 'rotation'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly minStart: number
@@ -84,7 +84,7 @@ export class RotationBehavior implements IEmitterBehavior {
 export class StaticRotationBehavior implements IEmitterBehavior {
 
     public static type: string = 'rotationStatic'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly min: number
@@ -126,7 +126,7 @@ export class StaticRotationBehavior implements IEmitterBehavior {
 export class NoRotationBehavior implements IEmitterBehavior {
 
     public static type: string = 'noRotation'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Late + 1
     private readonly rotation: number

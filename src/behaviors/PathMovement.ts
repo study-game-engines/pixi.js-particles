@@ -93,7 +93,7 @@ function parsePath(pathString: string): (x: number) => number {
 export class PathBehavior implements IEmitterBehavior {
 
     public static type: string = 'movePath'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Late // *MUST* happen after other behaviors do initialization so that we can read initial transformations
     private readonly path: (x: number) => number // The function representing the path the particle should take.

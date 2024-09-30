@@ -67,7 +67,7 @@ function getTextures(textures: (string | Texture | { texture: string | Texture; 
 export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
 
     public static type: string = 'animatedRandom'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private anims: ParsedAnimatedParticleArt[]
@@ -143,7 +143,7 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
 export class SingleAnimatedTextureBehavior implements IEmitterBehavior {
 
     public static type: string = 'animatedSingle'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly anim: ParsedAnimatedParticleArt

@@ -24,7 +24,7 @@ import { BehaviorEditorConfig } from './editor/Types'
 export class AccelerationBehavior implements IEmitterBehavior {
 
     public static type: string = 'moveAcceleration'
-    public static editorConfig: BehaviorEditorConfig = null
+    public static editorConfig: BehaviorEditorConfig | null = null
 
     public readonly order: BehaviorOrder = BehaviorOrder.Late // doesn't *really* need to be late, but doing so ensures that we can override any rotation behavior that is mistakenly added
     private readonly minStart: number
@@ -48,7 +48,7 @@ export class AccelerationBehavior implements IEmitterBehavior {
     }
 
     initParticles(first: Particle): void {
-        let next = first
+        let next: Particle = first
         while (next) {
             const speed: number = (Math.random() * (this.maxStart - this.minStart)) + this.minStart
             if (!next.config.velocity) {
@@ -62,21 +62,21 @@ export class AccelerationBehavior implements IEmitterBehavior {
     }
 
     updateParticle(particle: Particle, deltaSec: number): void {
-        const vel: any = particle.config.velocity
-        const oldVX: any = vel.x
-        const oldVY: any = vel.y
-        vel.x += this.accel.x * deltaSec
-        vel.y += this.accel.y * deltaSec
+        const velocity: any = particle.config.velocity
+        const oldVX: any = velocity.x
+        const oldVY: any = velocity.y
+        velocity.x += this.accel.x * deltaSec
+        velocity.y += this.accel.y * deltaSec
         if (this.maxSpeed) {
-            const currentSpeed = length(vel)
+            const currentSpeed = length(velocity)
             if (currentSpeed > this.maxSpeed) {
-                scaleBy(vel, this.maxSpeed / currentSpeed) // if we are going faster than we should, clamp at the max speed DO NOT recalculate vector length
+                scaleBy(velocity, this.maxSpeed / currentSpeed) // if we are going faster than we should, clamp at the max speed DO NOT recalculate vector length
             }
         }
-        particle.x += (oldVX + vel.x) / 2 * deltaSec
-        particle.y += (oldVY + vel.y) / 2 * deltaSec
+        particle.x += (oldVX + velocity.x) / 2 * deltaSec
+        particle.y += (oldVY + velocity.y) / 2 * deltaSec
         if (this.rotate) {
-            particle.rotation = Math.atan2(vel.y, vel.x)
+            particle.rotation = Math.atan2(velocity.y, velocity.x)
         }
     }
 
