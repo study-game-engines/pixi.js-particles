@@ -1,6 +1,16 @@
-# Examples
+# Particle Editor
 
-`npm run clean && npm run dist && http-server . -o examples`
+[Particle Editor](http://pixijs.github.io/pixi-particles-editor/) to design and preview custom particle emitters which
+utilitze PixiJS Particle Emitter. The editor was built for an older version of the library, so to use its output use the
+[`upgradeConfig()`](https://pixijs.github.io/particle-emitter/docs/modules.html#upgradeConfig) function.
+
+## Breaking changes in v5 from v4
+
+* Project has been renamed from `pixi-particles` to `@pixi/particle-emitter`
+* On `Emitter`, configuration format has drastically changed.
+* `PathParticle` and `AnimatedParticle` no longer exist, use the new behaviors instead.
+* Dropped support for PixiJS v4. Please use v6, because v5 will cause you a headache.
+* The library now outputs ES6, so if you need it in ES5, you'll need to make sure your build process transpiles it.
 
 ## Example
 
@@ -130,20 +140,6 @@ var update = function () {
 emitter.emit = true;
 update();
 ```
-
-# Particle Editor
-
-[Particle Editor](http://pixijs.github.io/pixi-particles-editor/) to design and preview custom particle emitters which
-utilitze PixiJS Particle Emitter. The editor was built for an older version of the library, so to use its output use the
-[`upgradeConfig()`](https://pixijs.github.io/particle-emitter/docs/modules.html#upgradeConfig) function.
-
-## Breaking changes in v5 from v4
-
-* Project has been renamed from `pixi-particles` to `@pixi/particle-emitter`
-* On `Emitter`, configuration format has drastically changed.
-* `PathParticle` and `AnimatedParticle` no longer exist, use the new behaviors instead.
-* Dropped support for PixiJS v4. Please use v6, because v5 will cause you a headache.
-* The library now outputs ES6, so if you need it in ES5, you'll need to make sure your build process transpiles it.
 
 ## License
 
