@@ -147,12 +147,13 @@ export function createSteppedGradient(list: ValueStep<string>[], numSteps = 10):
     let current: ValueStep<string> = list[0]
     let nextIndex: number = 1
     let next: ValueStep<string> = list[nextIndex]
-    for (let index = 1; index < numSteps; ++index) {
+    for (let index = 1; index < numSteps; index++) {
         let lerp: number = index / numSteps
         // ensure we are on the right segment, if multiple
         while (lerp > next.time) {
             current = next
-            next = list[++nextIndex]
+            nextIndex++
+            next = list[nextIndex]
         }
         lerp = (lerp - current.time) / (next.time - current.time) // convert the lerp value to the segment range
         const curVal: Color = hexToRGB(current.value)

@@ -88,7 +88,7 @@ export class LinkedListContainer extends Container {
             let target: LinkedListChild = this._firstChild
             while (i < index) {
                 target = target.nextChild
-                ++i
+                i++
             }
             // insert before the target that we found at the specified index
             target.prevChild.nextChild = c
@@ -235,7 +235,7 @@ export class LinkedListContainer extends Container {
 
             while (i < index) {
                 target = target.nextChild
-                ++i
+                i++
             }
             target.prevChild.nextChild = (child as LinkedListChild);
             (child as LinkedListChild).prevChild = target.prevChild;
@@ -295,7 +295,7 @@ export class LinkedListContainer extends Container {
         let target: LinkedListChild = this._firstChild
         while (i < index) {
             target = target.nextChild
-            ++i
+            i++
         }
         return target
     }
@@ -338,7 +338,7 @@ export class LinkedListContainer extends Container {
         if (range > 0 && range <= end) {
             const removed: LinkedListChild[] = []
             let child = this._firstChild
-            for (let index = 0; index <= end && child; ++index, child = child.nextChild) {
+            for (let index = 0; index <= end && child; index++, child = child.nextChild) {
                 if (index >= begin) {
                     removed.push(child)
                 }
@@ -356,7 +356,7 @@ export class LinkedListContainer extends Container {
                 prevChild.nextChild = nextChild // otherwise stich the child after the section to the one before
             }
             // clear parenting and sibling references for all removed children
-            for (let index = 0; index < removed.length; ++index) {
+            for (let index = 0; index < removed.length; index++) {
                 removed[index].parent = null
                 if (removed[index].transform) {
                     removed[index].transform._parentID = -1
@@ -366,7 +366,7 @@ export class LinkedListContainer extends Container {
             }
             this._boundsID++
             this.onChildrenChange(beginIndex)
-            for (let index = 0; index < removed.length; ++index) {
+            for (let index = 0; index < removed.length; index++) {
                 removed[index].emit('removed', this)
                 this.emit('childRemoved', removed[index], this, index)
             }

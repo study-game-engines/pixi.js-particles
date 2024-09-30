@@ -3,7 +3,7 @@ import { BLEND_MODES } from '@pixi/constants'
 
 function makeReadable(input: string) {
     const words: string[] = input.split('_')
-    for (let index = 0; index < words.length; ++index) {
+    for (let index = 0; index < words.length; index++) {
         if (words[index] === 'SRC') {
             words[index] = 'Source'
         } else if (words[index] === 'DST') {

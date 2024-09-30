@@ -52,7 +52,7 @@ export class BurstSpawnBehavior implements IEmitterBehavior {
                 rotatePoint(angle, next.position)
             }
             next = next.next
-            ++count
+            count++
         }
     }
 

@@ -21,7 +21,7 @@ export interface ParsedAnimatedParticleArt {
 
 function getTextures(textures: (string | Texture | { texture: string | Texture; count: number })[]): Texture[] {
     const result: Texture[] = []
-    for (let j = 0; j < textures.length; ++j) {
+    for (let j = 0; j < textures.length; j++) {
         let tex = textures[j]
         if (typeof tex === 'string') {
             result.push(GetTextureFromString(tex))
@@ -34,7 +34,7 @@ function getTextures(textures: (string | Texture | { texture: string | Texture; 
             } else /* if(tex.texture instanceof Texture) */ {
                 tex = tex.texture
             }
-            for (; dupe > 0; --dupe) {
+            for (; dupe > 0; dupe--) {
                 result.push(tex)
             }
         }
@@ -76,7 +76,7 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
         anims: AnimatedParticleArt[] // Animation configuration to use for each particle, randomly chosen from the list.
     }) {
         this.anims = []
-        for (let index = 0; index < config.anims.length; ++index) {
+        for (let index = 0; index < config.anims.length; index++) {
             const anim: AnimatedParticleArt = config.anims[index]
             const textures: Texture[] = getTextures(anim.textures)
             const framerate: -1 | number = anim.framerate < 0 ? -1 : (anim.framerate > 0 ? anim.framerate : 60)

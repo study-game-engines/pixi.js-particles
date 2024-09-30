@@ -52,7 +52,7 @@ export class PropertyNode<V> {
             const first = node = new PropertyNode(typeof value === 'string' ? hexToRGB(value) : value, time, data.ease)
             // only set up subsequent nodes if there are a bunch or the 2nd one is different from the first
             if (array.length > 2 || (array.length === 2 && array[1].value !== value)) {
-                for (let index = 1; index < array.length; ++index) {
+                for (let index = 1; index < array.length; index++) {
                     const { value, time } = array[index]
                     node.next = new PropertyNode(typeof value === 'string' ? hexToRGB(value) : value, time)
                     node = node.next

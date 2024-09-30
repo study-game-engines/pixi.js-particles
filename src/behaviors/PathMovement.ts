@@ -58,7 +58,7 @@ const WHITE_LISTER: RegExp = new RegExp(['[01234567890\\.\\*\\-\\+\\/\\(\\)x ,]'
 // Parses a string into a function for path following. This involves whitelisting the string for safety, inserting "Math." to math function names, and using `new Function()` to generate a function.
 function parsePath(pathString: string): (x: number) => number {
     const matches: RegExpMatchArray = pathString.match(WHITE_LISTER)
-    for (let index = matches.length - 1; index >= 0; --index) {
+    for (let index = matches.length - 1; index >= 0; index--) {
         if (MATH_FUNCS.indexOf(matches[index]) >= 0) {
             matches[index] = `Math.${matches[index]}`
         }

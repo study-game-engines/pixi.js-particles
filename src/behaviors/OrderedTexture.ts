@@ -35,7 +35,8 @@ export class OrderedTextureBehavior implements IEmitterBehavior {
         let next: Particle = first
         while (next) {
             next.texture = this.textures[this.index]
-            if (++this.index >= this.textures.length) {
+            this.index++
+            if (this.index >= this.textures.length) {
                 this.index = 0
             }
             next = next.next

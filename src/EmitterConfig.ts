@@ -286,7 +286,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
         })
     }
     if (Array.isArray(art) && typeof art[0] !== 'string' && 'framerate' in art[0]) {
-        for (let index = 0; index < art.length; ++index) {
+        for (let index = 0; index < art.length; index++) {
             if (art[index].framerate === 'matchLife') {
                 art[index].framerate = -1
             }

@@ -223,7 +223,7 @@ export class Emitter {
 
     // Fills the pool with the specified number of particles, so that they don't have to be instantiated later. @param count The number of particles to create.
     public fillPool(count: number): void {
-        for (; count > 0; --count) {
+        for (; count > 0; count--) {
             const particle: Particle = new Particle(this)
             particle.next = this._poolFirst
             this._poolFirst = particle
@@ -354,7 +354,7 @@ export class Emitter {
                 }
                 particle.agePercent = lerp // set age percent for all interpolation calculations
                 // let each behavior run wild on the active particles
-                for (let index = 0; index < this.updateBehaviors.length; ++index) {
+                for (let index = 0; index < this.updateBehaviors.length; index++) {
                     if (this.updateBehaviors[index].updateParticle(particle, delta)) {
                         this.recycle(particle)
                         break
@@ -413,7 +413,7 @@ export class Emitter {
                 let waveLast: Particle = null
 
                 // create enough particles to fill the wave
-                for (let len = Math.min(this.particlesPerWave, this.maxParticles - this.particleCount), i = 0; i < len; ++i) {
+                for (let len = Math.min(this.particlesPerWave, this.maxParticles - this.particleCount), i = 0; i < len; i++) {
                     if (this.spawnChance < 1 && Math.random() >= this.spawnChance) {
                         continue // see if we actually spawn one
                     }
@@ -466,7 +466,7 @@ export class Emitter {
                         this._activeParticlesLast = waveLast
                     }
                     // run behavior init on particles
-                    for (let index = 0; index < this.initBehaviors.length; ++index) {
+                    for (let index = 0; index < this.initBehaviors.length; index++) {
                         const behavior = this.initBehaviors[index]
                         // if we hit our special key, interrupt behaviors to apply emitter position/rotation
                         if (behavior === PositionParticle) {
@@ -503,7 +503,7 @@ export class Emitter {
                     }
                     for (let particle: Particle = waveFirst, next: Particle; particle; particle = next) {
                         next = particle.next // save next particle in case we recycle this one
-                        for (let index = 0; index < this.updateBehaviors.length; ++index) { // now update the particles by the time passed, so the particles are spread out properly
+                        for (let index = 0; index < this.updateBehaviors.length; index++) { // now update the particles by the time passed, so the particles are spread out properly
                             if (this.updateBehaviors[index].updateParticle(particle, -this._spawnTimer)) { // we want a positive delta, because a negative delta messes things up
                                 this.recycle(particle) // bail if the particle got recycled
                                 break
@@ -545,7 +545,7 @@ export class Emitter {
         let waveLast: Particle = null
 
         // create enough particles to fill the wave
-        for (let len = Math.min(this.particlesPerWave, this.maxParticles - this.particleCount), i = 0; i < len; ++i) {
+        for (let len = Math.min(this.particlesPerWave, this.maxParticles - this.particleCount), i = 0; i < len; i++) {
             if (this.spawnChance < 1 && Math.random() >= this.spawnChance) {
                 continue // see if we actually spawn one
             }
@@ -596,7 +596,7 @@ export class Emitter {
                 this._activeParticlesLast = waveLast
             }
             // run behavior init on particles
-            for (let index = 0; index < this.initBehaviors.length; ++index) {
+            for (let index = 0; index < this.initBehaviors.length; index++) {
                 const behavior: IEmitterBehavior | typeof PositionParticle = this.initBehaviors[index]
 
                 // if we hit our special key, interrupt behaviors to apply emitter position/rotation
