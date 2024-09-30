@@ -24,7 +24,7 @@ export class ScaleBehavior implements IEmitterBehavior {
     public static type: string = 'scale'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<number>
     private readonly minMultiplier: number
 
@@ -70,7 +70,7 @@ export class StaticScaleBehavior implements IEmitterBehavior {
     public static type: string = 'scaleStatic'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly min: number
     private readonly max: number
 

@@ -22,7 +22,7 @@ export class AlphaBehavior implements IEmitterBehavior {
     public static type: string = 'alpha'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<number>
 
     constructor(config: {
@@ -63,8 +63,8 @@ export class StaticAlphaBehavior implements IEmitterBehavior {
     public static type: string = 'alphaStatic'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
-    private value: number
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
+    private readonly value: number
 
     constructor(config: {
         alpha: number

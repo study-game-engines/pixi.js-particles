@@ -23,7 +23,7 @@ export class ColorBehavior implements IEmitterBehavior {
     public static type: string = 'color'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private list: PropertyList<Color>
 
     constructor(config: {
@@ -65,7 +65,7 @@ export class StaticColorBehavior implements IEmitterBehavior {
     public static type: string = 'colorStatic'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly value: number
 
     constructor(config: {

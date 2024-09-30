@@ -19,7 +19,7 @@ export class BlendModeBehavior implements IEmitterBehavior {
     public static type: string = 'blendMode'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly value: string
 
     constructor(config: {

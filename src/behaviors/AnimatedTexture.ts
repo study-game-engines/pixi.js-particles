@@ -69,7 +69,7 @@ export class RandomAnimatedTextureBehavior implements IEmitterBehavior {
     public static type: string = 'animatedRandom'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private anims: ParsedAnimatedParticleArt[]
 
     constructor(config: {
@@ -145,7 +145,7 @@ export class SingleAnimatedTextureBehavior implements IEmitterBehavior {
     public static type: string = 'animatedSingle'
     public static editorConfig: BehaviorEditorConfig = null
 
-    public order: BehaviorOrder = BehaviorOrder.Normal
+    public readonly order: BehaviorOrder = BehaviorOrder.Normal
     private readonly anim: ParsedAnimatedParticleArt
 
     constructor(config: {
