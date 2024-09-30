@@ -2,9 +2,7 @@
 
 - code: 2800 loc
 - install: `npm install`
-- clean: `npm run clean`
-- dist: `npm run dist`
-- run: `http-server examples -o /`
+- run: `npm run clean && npm run dist && http-server . -o examples`
 
 # PixiJS Particle Emitter
 
