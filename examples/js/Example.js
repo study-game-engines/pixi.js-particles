@@ -1,5 +1,5 @@
 (function (window) {
-    class ParticleExample {
+    class Example {
         constructor(imagePaths, config, testContainers, stepColors) {
             const canvas = document.getElementById('stage');
             const rendererOptions = {
@@ -133,5 +133,5 @@
         }
     }
 
-    window.ParticleExample = ParticleExample;
+    window.Example = Example;
 })(window);
