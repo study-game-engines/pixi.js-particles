@@ -15,20 +15,10 @@
   ],
   "scripts": {
     "clean": "rimraf dist docs/* examples/libs/* lib",
+    "prebuild": "ncp node_modules/pixi.js examples/libs/pixi.js",
     "build": "tsc && rollup -c && yarn build:min && yarn build:dts",
     "build:min": "terser dist/particle-emitter.js -c -m -o dist/particle-emitter.min.js --source-map \"content='dist/particle-emitter.js.map',includeSources=true,filename='dist/particle-emitter.min.js.map',url='particle-emitter.min.js.map'\" --comments \"/particle-emitter.js - /\"",
-    "build:dts": "tsc --noEmit false --declaration --emitDeclarationOnly --declarationDir lib",
-    "predocs": "ncp node_modules/pixi.js examples/libs/pixi.js",
-    "docs": "typedoc src/index.ts",
-    "predocs-live": "npm run build && npm run docs",
-    "docs-live": "gh-pages -d docs",
-    "postdocs-live": "git checkout .",
-    "version": "npm run build",
-    "publish:patch": "npm version patch && node build/publish.js",
-    "publish:minor": "npm version minor && node build/publish.js",
-    "publish:major": "npm version major && node build/publish.js",
-    "postpublish": "git push && git push --tags && npm run docs-live",
-    "test": "echo done"
+    "build:dts": "tsc --noEmit false --declaration --emitDeclarationOnly --declarationDir lib"
   },
   "peerDependencies": {
     "@pixi/constants": "6.0.4",

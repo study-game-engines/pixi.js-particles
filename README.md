@@ -2,21 +2,31 @@
 
 - code: 2800 loc
 - install: `npm install`
-- run: `npm run clean && npm run predocs-live`
+- clean: `npm run clean`
+- build: `npm run build`
 - main: `examples/index.html`
 
 # PixiJS Particle Emitter
 
 [![Build Status](https://github.com/pixijs/particle-emitter/workflows/Build/badge.svg)](https://github.com/pixijs/particle-emitter/actions?query=workflow%3A%22Build%22) [![GitHub version](https://badge.fury.io/gh/pixijs%2Fparticle-emitter.svg)](https://github.com/pixijs/particle-emitter/releases/latest)
 
-A particle system library for the [PixiJS](https://github.com/pixijs/pixi.js) library. Also, we created an [interactive particle editor](http://pixijs.github.io/pixi-particles-editor/) to design and preview custom particle emitters which utilitze PixiJS Particle Emitter. Note that the editor was built for an older version of the library - to use its output you'll have to use the [`upgradeConfig()`](https://pixijs.github.io/particle-emitter/docs/modules.html#upgradeConfig) function.
+A particle system library for the [PixiJS](https://github.com/pixijs/pixi.js) library. Also, we created
+an [interactive particle editor](http://pixijs.github.io/pixi-particles-editor/) to design and preview custom particle
+emitters which utilitze PixiJS Particle Emitter. Note that the editor was built for an older version of the library - to
+use its output you'll have to use
+the [`upgradeConfig()`](https://pixijs.github.io/particle-emitter/docs/modules.html#upgradeConfig) function.
 
 ## Breaking changes in v5 from v4
+
 * Project has been renamed from `pixi-particles` to `@pixi/particle-emitter`
-* On `Emitter`, configuration format has drastically changed. Use [`upgradeConfig()`](https://pixijs.github.io/particle-emitter/docs/modules.html#upgradeConfig) to convert old configuration objects automatically.
+* On `Emitter`, configuration format has drastically changed.
+  Use [`upgradeConfig()`](https://pixijs.github.io/particle-emitter/docs/modules.html#upgradeConfig) to convert old
+  configuration objects automatically.
 * `PathParticle` and `AnimatedParticle` no longer exist, use the new behaviors instead.
-* Dropped support for PixiJS v4. Please use v6 - while v5 may work, Typescript definitions won't work and will cause you a headache.
-* The library now outputs ES6 code - if you need it in ES5 code, you'll need to make sure your build process transpiles it.
+* Dropped support for PixiJS v4. Please use v6 - while v5 may work, Typescript definitions won't work and will cause you
+  a headache.
+* The library now outputs ES6 code - if you need it in ES5 code, you'll need to make sure your build process transpiles
+  it.
 
 ## Sample Usage
 
@@ -29,7 +39,6 @@ Please see the examples for various pre-made particle configurations.
 // not be modified, and may not exist - use "new particles.Emitter()", or whatever
 // your imported namespace is
 var emitter = new PIXI.particles.Emitter(
-
     // The PIXI.Container to put the emitter in
     // if using blend modes, it's important to put this
     // on top of a bitmap, and not use the root stage Container
@@ -153,17 +162,17 @@ var emitter = new PIXI.particles.Emitter(
 var elapsed = Date.now();
 
 // Update function every frame
-var update = function(){
+var update = function () {
 
-	// Update the next frame
-	requestAnimationFrame(update);
+    // Update the next frame
+    requestAnimationFrame(update);
 
-	var now = Date.now();
+    var now = Date.now();
 
-	// The emitter requires the elapsed
-	// number of seconds since the last update
-	emitter.update((now - elapsed) * 0.001);
-	elapsed = now;
+    // The emitter requires the elapsed
+    // number of seconds since the last update
+    emitter.update((now - elapsed) * 0.001);
+    elapsed = now;
 };
 
 // Start emitting
@@ -217,7 +226,9 @@ npm install @pixi/particle-emitter
 * [Particle Container Performance](https://pixijs.github.io/particle-emitter/examples/particleContainerPerformance.html)
 
 ## Contributer Note
-This project uses `yarn` rather than `npm` to take advantage of the workspaces feature for the tests, making it easier to have standalone tests that share dependencies where possible.
+
+This project uses `yarn` rather than `npm` to take advantage of the workspaces feature for the tests, making it easier
+to have standalone tests that share dependencies where possible.
 
 ## License
 

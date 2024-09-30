@@ -95,9 +95,9 @@
                         .reset(PIXI.particles.ParticleUtils.createSteppedGradient(config.behaviors.find((b) => b.type === 'color').config.color.list, stepColors));
                 }
                 this.emitter.updateOwnerPos(window.innerWidth / 2, window.innerHeight / 2);
-                canvas.addEventListener('mouseup', (e) => {
+                canvas.addEventListener('mouseup', (event) => {
                     if (!this.emitter) return;
-                    if (e.button) {
+                    if (event.button) {
                         if (testContainers) {
                             if (++parentType >= 3) parentType = 0;
                             const oldParent = emitterContainer;
@@ -115,11 +115,11 @@
                     else {
                         this.emitter.emit = true;
                         this.emitter.resetPositionTracking();
-                        this.emitter.updateOwnerPos(e.offsetX || e.layerX, e.offsetY || e.layerY);
+                        this.emitter.updateOwnerPos(event.offsetX || event.layerX, event.offsetY || event.layerY);
                     }
                 });
-                document.body.addEventListener('contextmenu', (e) => {
-                    e.preventDefault();
+                document.body.addEventListener('contextmenu', (event) => {
+                    event.preventDefault();
                     return false;
                 });
                 update();
