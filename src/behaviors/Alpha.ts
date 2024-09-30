@@ -30,6 +30,7 @@ export class AlphaBehavior implements IEmitterBehavior {
     }) {
         this.list = new PropertyList(false)
         this.list.reset(PropertyNode.createList(config.alpha))
+        console.log('breakpoint')
     }
 
     initParticles(first: Particle): void {
