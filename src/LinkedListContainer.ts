@@ -272,7 +272,7 @@ export class LinkedListContainer extends Container {
             }
             child.nextChild = null
             child.prevChild = null
-            --this._childCount // update child count
+            this._childCount-- // update child count
             this._boundsID++ // ensure bounds will be recalculated
             this.onChildrenChange()
             child.emit('removed', this)
@@ -320,7 +320,7 @@ export class LinkedListContainer extends Container {
         // clear sibling references
         child.nextChild = null
         child.prevChild = null
-        --this._childCount // update child count
+        this._childCount-- // update child count
         this._boundsID++ // ensure bounds will be recalculated
         this.onChildrenChange(index)
         child.emit('removed', this)

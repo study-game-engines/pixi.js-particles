@@ -36,11 +36,11 @@ export class Emitter {
     public spawnChance: number // Chance that a particle will be spawned on each opportunity to spawn one. 0 is 0%, 1 is 100%.
     public maxParticles: number // Maximum number of particles to keep alive at a time. If this limit is reached, no more particles will spawn until some have died.
     public emitterLifetime: number // The amount of time in seconds to emit for before setting emit to false. A value of -1 is an unlimited amount of time.
-    public spawnPos: Point // Position at which to spawn particles, relative to the emitter's owner's origin. For example, the flames of a rocket travelling right might have a spawnPos of {x:-50, y:0}. to spawn at the rear of the rocket. To change this, use updateSpawnPos().
+    public spawnPosition: Point // Position at which to spawn particles, relative to the emitter's owner's origin. For example, the flames of a rocket travelling right might have a spawnPos of {x:-50, y:0}. to spawn at the rear of the rocket. To change this, use updateSpawnPos().
     public particlesPerWave: number // Number of particles to spawn time that the frequency allows for particles to spawn.
     protected rotation: number // Rotation of the emitter or emitter's owner in degrees. This is added to the calculated spawn angle. To change this, use rotate().
-    protected ownerPos: Point // The world position of the emitter's owner, to add spawnPos to when spawning particles. To change this, use updateOwnerPos().
-    protected _prevEmitterPos: Point // The origin + spawnPos in the previous update, so that the spawn position can be interpolated to space out particles better.
+    protected ownerPosition: Point // The world position of the emitter's owner, to add spawnPos to when spawning particles. To change this, use updateOwnerPos().
+    protected _prevEmitterPosition: Point // The origin + spawnPos in the previous update, so that the spawn position can be interpolated to space out particles better.
     protected _prevPosIsValid: boolean // If _prevEmitterPos is valid, to prevent interpolation on the first update
     protected _posChanged: boolean // If either ownerPos or spawnPos has changed since the previous update.
     protected _parent: Container // The container to add particles to.
@@ -81,12 +81,12 @@ export class Emitter {
         this.spawnChance = 1
         this.maxParticles = 1000
         this.emitterLifetime = -1
-        this.spawnPos = new Point()
+        this.spawnPosition = new Point()
         this.particlesPerWave = 1
         // emitter properties
         this.rotation = 0
-        this.ownerPos = new Point()
-        this._prevEmitterPos = new Point()
+        this.ownerPosition = new Point()
+        this._prevEmitterPosition = new Point()
         this._prevPosIsValid = false
         this._posChanged = false
         this._parent = null
@@ -117,13 +117,10 @@ export class Emitter {
         this.update = this.update
         this.rotate = this.rotate
         this.updateSpawnPos = this.updateSpawnPos
-        this.updateOwnerPos = this.updateOwnerPos
+        this.updateOwnerPosition = this.updateOwnerPosition
     }
 
-    /**
-     * Time between particle spawns in seconds. If this value is not a number greater than 0,
-     * it will be set to 1 (particle per second) to prevent infinite loops.
-     */
+    // Time between particle spawns in seconds. If this value is not a number greater than 0, it will be set to 1 (particle per second) to prevent infinite loops.
     public get frequency(): number {
         return this._frequency
     }
@@ -179,13 +176,13 @@ export class Emitter {
         this.maxParticles = config.maxParticles > 0 ? config.maxParticles : 1000 // set the max particles
         this.addAtBack = !!config.addAtBack // determine if we should add the particle at the back of the list or not
         this.rotation = 0
-        this.ownerPos.set(0)
+        this.ownerPosition.set(0)
         if (config.pos) {
-            this.spawnPos.copyFrom(config.pos)
+            this.spawnPosition.copyFrom(config.pos)
         } else {
-            this.spawnPos.set(0)
+            this.spawnPosition.set(0)
         }
-        this._prevEmitterPos.copyFrom(this.spawnPos)
+        this._prevEmitterPosition.copyFrom(this.spawnPosition)
         this._prevPosIsValid = false // previous emitter position is invalid and should not be used for interpolation
         this._spawnTimer = 0
         this.emit = config.emit === undefined ? true : !!config.emit
@@ -256,7 +253,7 @@ export class Emitter {
         if (particle.parent) {
             particle.parent.removeChild(particle) // remove child from display, or make it invisible if it is in a ParticleContainer
         }
-        --this.particleCount // decrease count
+        this.particleCount-- // decrease count
     }
 
     // Sets the rotation of the emitter to a new value. This rotates the spawn position in addition to particle direction. @param newRot The new rotation, in degrees.
@@ -266,22 +263,22 @@ export class Emitter {
         }
         const diff: number = newRot - this.rotation // caclulate the difference in rotation for rotating spawnPos
         this.rotation = newRot
-        rotatePoint(diff, this.spawnPos) // rotate spawnPos
+        rotatePoint(diff, this.spawnPosition) // rotate spawnPos
         this._posChanged = true // mark the position as having changed
     }
 
     // Changes the spawn position of the emitter. @param x The new x value of the spawn position for the emitter. @param y The new y value of the spawn position for the emitter.
     public updateSpawnPos(x: number, y: number): void {
         this._posChanged = true
-        this.spawnPos.x = x
-        this.spawnPos.y = y
+        this.spawnPosition.x = x
+        this.spawnPosition.y = y
     }
 
     // Changes the position of the emitter's owner. You should call this if you are adding particles to the world container that your emitter's owner is moving around in.
-    public updateOwnerPos(x: number, y: number): void {
+    public updateOwnerPosition(x: number, y: number): void {
         this._posChanged = true
-        this.ownerPos.x = x
-        this.ownerPos.y = y
+        this.ownerPosition.x = x
+        this.ownerPosition.y = y
     }
 
     // Prevents emitter position interpolation in the next update. This should be used if you made a major position change of your emitter's owner that was not normal movement.
@@ -371,12 +368,12 @@ export class Emitter {
 
         // if the previous position is valid, store these for later interpolation
         if (this._prevPosIsValid) {
-            prevX = this._prevEmitterPos.x
-            prevY = this._prevEmitterPos.y
+            prevX = this._prevEmitterPosition.x
+            prevY = this._prevEmitterPosition.y
         }
         // store current position of the emitter as local variables
-        const curX = this.ownerPos.x + this.spawnPos.x
-        const curY = this.ownerPos.y + this.spawnPos.y
+        const curX = this.ownerPosition.x + this.spawnPosition.x
+        const curY = this.ownerPosition.y + this.spawnPosition.y
 
         /* new particles */
 
@@ -524,8 +521,8 @@ export class Emitter {
 
         // if the position changed before this update, then keep track of that
         if (this._posChanged) {
-            this._prevEmitterPos.x = curX
-            this._prevEmitterPos.y = curY
+            this._prevEmitterPosition.x = curX
+            this._prevEmitterPosition.y = curY
             this._prevPosIsValid = true
             this._posChanged = false
         }
@@ -545,8 +542,8 @@ export class Emitter {
 
     // Emits a single wave of particles, using standard spawnChance & particlesPerWave settings. Does not affect regular spawning through the frequency, and ignores the emit property. The max particle count is respected, however, so if there are already too many particles then nothing will happen.
     public emitNow(): void {
-        const emitPosX: number = this.ownerPos.x + this.spawnPos.x
-        const emitPosY: number = this.ownerPos.y + this.spawnPos.y
+        const emitPosX: number = this.ownerPosition.x + this.spawnPosition.x
+        const emitPosY: number = this.ownerPosition.y + this.spawnPosition.y
         let waveFirst: Particle = null
         let waveLast: Particle = null
 
@@ -651,7 +648,7 @@ export class Emitter {
             next = particle.next // store next value, so we don't lose it in our destroy call
             particle.destroy()
         }
-        this._poolFirst = this._parent = this.spawnPos = this.ownerPos = this.customEase = this._completeCallback = null
+        this._poolFirst = this._parent = this.spawnPosition = this.ownerPosition = this.customEase = this._completeCallback = null
         this.initBehaviors.length = this.updateBehaviors.length = this.recycleBehaviors.length = 0
     }
 

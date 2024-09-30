@@ -10,7 +10,6 @@ import { BehaviorEditorConfig } from './editor/Types'
  * A Spawn behavior that places (and optionally rotates) particles according to a specified shape. Additional shapes can be registered with {@link registerShape | SpawnShape.registerShape()}.
  * Additional shapes must implement the {@link SpawnShape} interface, and their class must match the {@link SpawnShapeClass} interface.
  * Shapes included by default are: {@link Rectangle}, {@link Torus}, {@link PolygonalChain}
- *
  * ```javascript
  * {
  *     type: 'spawnShape',
