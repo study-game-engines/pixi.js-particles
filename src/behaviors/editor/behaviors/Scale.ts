@@ -16,7 +16,7 @@ ScaleBehavior.editorConfig = {
             type: 'number',
             name: 'minMultiplier',
             title: 'Minimum Scale Multiplier',
-            description: 'A value between minimum scale multipler and 1 is randomly '
+            description: 'A value between minimum scale multiplier and 1 is randomly '
                 + 'generated and multiplied with each scale value to provide the actual scale for each particle.',
             default: 1,
             min: 0,

@@ -30,7 +30,7 @@ export class ScaleBehavior implements IEmitterBehavior {
 
     constructor(config: {
         scale: ValueList<number> // Scale of the particles, with a minimum value of 0
-        minMultiplier: number // A value between minimum scale multipler and 1 is randomly generated and multiplied with each scale value to provide the actual scale for each particle.
+        minMultiplier: number // A value between minimum scale multiplier and 1 is randomly generated and multiplied with each scale value to provide the actual scale for each particle.
     }) {
         this.list = new PropertyList(false)
         this.list.reset(PropertyNode.createList(config.scale))

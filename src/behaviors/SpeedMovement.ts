@@ -31,7 +31,7 @@ export class SpeedBehavior implements IEmitterBehavior {
 
     constructor(config: {
         speed: ValueList<number> // Speed of the particles in world units/second, with a minimum value of 0
-        minMultiplier: number // A value between minimum speed multipler and 1 is randomly generated and multiplied with each speed value to generate the actual speed for each particle.
+        minMultiplier: number // A value between minimum speed multiplier and 1 is randomly generated and multiplied with each speed value to generate the actual speed for each particle.
     }) {
         this.list = new PropertyList(false)
         this.list.reset(PropertyNode.createList(config.speed))
