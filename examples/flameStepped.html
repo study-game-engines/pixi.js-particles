@@ -14,7 +14,7 @@
 		<div id="framerate"></div>
 		<canvas id="stage" width="400" height="400"></canvas>
 		<script>
-			new Example(
+			const example = new Example(
 				["images/particle.png", "images/Fire.png"],
 				{
 					"lifetime": {
@@ -123,6 +123,10 @@
 						}
 					]
 				}, false, 5);
+
+			example.emitter.getBehavior('color')
+					.list
+					.reset(PIXI.particles.ParticleUtils.createSteppedGradient(config.behaviors.find((b) => b.type === 'color').config.color.list, 5));
 		</script>
 	</body>
 </html>

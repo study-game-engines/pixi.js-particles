@@ -3,7 +3,8 @@
     "version": "1",
     "scripts": {
         "clean": "rimraf dist",
-        "dist": "rollup -c"
+        "dist": "rollup -c",
+        "start": "npm run clean && npm run dist && http-server . -o examples"
     },
     "devDependencies": {
         "@pixi/constants": "6.0.4",

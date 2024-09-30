@@ -70,7 +70,6 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
                         { time: 1, value: config.alpha.end },
                     ],
                 }
-
                 result.behaviors.push({
                     type: 'alpha',
                     config: { alpha: list },
@@ -334,8 +333,7 @@ export function upgradeConfig(config: EmitterConfigV2 | EmitterConfigV1, art: an
             config: {
                 start: config.angleStart || 0,
                 spacing: config.particleSpacing,
-                // older formats bursted from a single point
-                distance: 0,
+                distance: 0, // older formats burst from a single point
             },
         })
     } else if (config.spawnType === 'point') {

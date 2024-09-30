@@ -1,6 +1,6 @@
 (function (window) {
     class Example {
-        constructor(imagePaths, config, testContainers, stepColors) {
+        constructor(imagePaths, config, testPixiContainerTypes) {
             const canvas = document.getElementById('stage');
             const rendererOptions = {
                 width: canvas.width,
@@ -89,22 +89,19 @@
                 this.stage.addChild(emitterContainer);
                 if (containerType) containerType.innerHTML = containerName;
                 window.emitter = this.emitter = new PIXI.particles.Emitter(emitterContainer, config);
-                if (stepColors) {
-                    this.emitter.getBehavior('color')
-                        .list
-                        .reset(PIXI.particles.ParticleUtils.createSteppedGradient(config.behaviors.find((b) => b.type === 'color').config.color.list, stepColors));
-                }
                 this.emitter.updateOwnerPosition(window.innerWidth / 2, window.innerHeight / 2);
                 canvas.addEventListener('mouseup', (event) => {
                     if (!this.emitter) return;
                     if (event.button) {
-                        if (testContainers) {
+                        if (testPixiContainerTypes) {
                             if (++parentType >= 3) parentType = 0;
                             const oldParent = emitterContainer;
-                            [emitterContainer, containerName] = getContainer();
+
+                            const [newContainer, containerName] = getContainer();
                             if (containerType) containerType.innerHTML = containerName;
-                            this.stage.addChild(emitterContainer);
-                            this.emitter.particlesContainer = emitterContainer;
+                            this.stage.addChild(newContainer);
+                            this.emitter.particlesContainer = newContainer;
+
                             this.stage.removeChild(oldParent);
                             oldParent.destroy();
                             if (this.containerHook) {
